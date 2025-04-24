@@ -4,29 +4,36 @@ import Image from 'next/image'
 import React from 'react'
 import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
+import { Button, Typography } from '@mui/material'
 
 export default function Home() {
   return (
-    <div className='min-h-screen items-center justify-center'>
-      <Grid container spacing={5}>
-        <Grid size={5}>
+    <div className='h-full'>
+      <Grid container spacing={2} 
+        >
+        <Grid size={6}>
           <Image
             src='/elimsoullogo.png'
-            width={850}
-            height={800}
+            width={950}
+            height={750}
             alt='Elimsoul Logo'/>
         </Grid>
 
-        <Grid size={7}>
-          <Typography>
-            Welcome to Elimsoul
-          </Typography>
-          <Image
-            src='/elimsoullogo.png'
-            width={850}
-            height={800}
-            alt='Elimsoul Logo'/>
+        <Grid size={6} sx={{backgroundColor: 'background.default'}}>
+          <Box >
+            <Grid container spacing={2}>
+              <Grid size={4}>
+                <Image
+                 src='/bg.jpeg'
+                  width={890}
+                  height={850}
+                  alt='Elimsoul Logo'/>
+
+              </Grid>
+
+            </Grid>
+
+          </Box>
         </Grid>
 
       </Grid>
