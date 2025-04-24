@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "ElimSoul",
+  title: "ElimSoul | Ortho Foundation",
   description: "Powered by Ortho Foundation",
 };
 
