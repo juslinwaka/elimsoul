@@ -13,7 +13,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-       >
+       style={{backgroundColor: theme.palette.background.default}}>
         <ThemeProvider theme={theme}>
         {children}
         </ThemeProvider>
