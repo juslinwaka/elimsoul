@@ -8,7 +8,6 @@ export default function LandingPage() {
     
         <Grid container spacing={2}>
      
-
       </Grid>
     </div>
   );
