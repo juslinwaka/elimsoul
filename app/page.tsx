@@ -20,7 +20,7 @@ export default function Home() {
           <Grid size={9}>
           <Image
             src='/elimsoullogo.png'
-            width={320}
+            width={300}
             height={270}
             alt='Elimsoul Logo'/>
           </Grid>
@@ -77,8 +77,8 @@ export default function Home() {
           <Grid size={6}>
             <Image
               src='/elimsoullogo.png'
-              width={910}
-              height={810}
+              width={610}
+              height={510}
               alt='Elimsoul Logo'/>
           </Grid>
 
