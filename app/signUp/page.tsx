@@ -32,7 +32,7 @@ export default function SignUp() {
     router.push('/dashboard');
     }catch (error){
       console.error("Error Signing Up: ", error);
-      alert(error.message)
+      alert(error)
     }
   }
 
@@ -64,6 +64,13 @@ export default function SignUp() {
               margin='normal'
               value={password}
               onChange={(e) => setPassword(e.target.value)}/>
+
+              <Typography color='secondary' variant='subtitle1' mt={2}>Select Role: </Typography>
+
+              <RadioGroup value={role} onChange={(e) => setRole(e.target.value)}>
+                <FormControlLabel value='Parent' control={<Radio/>} label='Parent'/>
+                <FormControlLabel value='Kid' control={<Radio/>} label='Kid'/>
+              </RadioGroup>
 
               <Typography color='secondary' variant='subtitle1' mt={2}>Select Role: </Typography>
 
