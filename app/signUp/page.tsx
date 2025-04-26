@@ -32,7 +32,6 @@ export default function SignUp() {
     router.push('/dashboard');
     }catch (error){
       console.error("Error Signing Up: ", error);
-      alert(error)
     }
   }
 
