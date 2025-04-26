@@ -21,7 +21,7 @@ export default function Home() {
   }
   return (
     <div className='min-h-screen bg-cover bg-center'>
-
+      <title>Sign In | ElimSoul</title>
       {isMobile&& 
       <div>
         <Grid container spacing={2} 
@@ -87,10 +87,10 @@ export default function Home() {
               </Box>
 
               <Box pt={1} justifySelf='center'>
-                <Button 
-                  variant='text'
-                  color='secondary'
-                  size='small'> Create An Account</Button>
+               <Typography color='secondary' variant='body2' align='center'
+                   sx={{mt: 2}}>{"Don't have an account? "}
+                   <Link href='/signUp' style={{textDecoration: 'none',
+                    color: '#196d2', fontWeight: 'bold'}} passHref>Sign Up</Link></Typography>
               </Box>
           </Grid>
         </Grid>
@@ -165,10 +165,11 @@ export default function Home() {
               </Box>
 
               <Box pt={1} justifySelf='center'>
-                <Button 
-                  variant='text'
-                  color='secondary'
-                  size='large'>Create An Account </Button>
+
+                <Typography color='secondary' variant='body2' align='center'
+                   sx={{mt: 2}}>{"Don't have an account? "}
+                   <Link href='/signUp' style={{textDecoration: 'none',
+                    color: '#196d2', fontWeight: 'bold'}} passHref>Sign Up</Link></Typography>
               </Box>
           </Grid>
             </Grid>
