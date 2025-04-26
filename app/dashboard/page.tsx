@@ -2,7 +2,7 @@
 import Grid from '@mui/material/Grid'
 
 
-export default function TopNavBar() {
+export default function Dashboard() {
   return (
     <div className='h-fill bg-cover bg-center' >
     
