@@ -9,7 +9,10 @@ import {auth, db} from '@/lib/firebase'
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import {doc, setDoc} from 'firebase/firestore'
 
-import { useToast } from '@/hooks/toast';
+import {useToast} from '@/hooks/toast';
+import { useLoading } from '@/hooks/loadingspinners';
+
+
 
 export default function SignUp() {
   const router = useRouter();
@@ -19,12 +22,14 @@ export default function SignUp() {
   const [password, setPassword] = useState("");
 
   const [role, setRole] = useState("Kid");
-  const [faith, setFaith] = useState("Christian")
+  const [faith, setFaith] = useState("Christian");
 
-  const {showToast, Toast} = useToast();
+  const {showToast} = useToast();
+  const {showLoading, hideLoading} = useLoading();
 
   const handleSignUp = async () => {
     try {
+      showLoading();
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
       await setDoc(doc(db, "users", user.uid), 
@@ -36,12 +41,15 @@ export default function SignUp() {
     });
 
     router.push('/dashboard');
+    hideLoading();
     }catch (error){
       console.error("Error Signing Up: ", error);
       if (error instanceof Error) {
-        showToast(error.message, "error");
+        hideLoading();
+        showToast(error.message, 'error');
       } else {
-        showToast("An unknown error occurred.", "error")
+        hideLoading();
+        showToast("An unknown error occurred", 'error');
         }
       }
   }
@@ -94,7 +102,6 @@ export default function SignUp() {
             </Box>
           </Grid>
       </Grid>
-      <Toast/>
     </div>
   );
 }

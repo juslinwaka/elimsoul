@@ -1,6 +1,8 @@
 'use client'
 import {ThemeProvider} from '@mui/material/styles'
 import theme from '@/lib/theme'
+import {ToastProvider} from '@/hooks/toast';
+import { LoadingProvider } from '@/hooks/loadingspinners';
 import "./globals.css";
 
 export default function RootLayout({
@@ -12,9 +14,13 @@ export default function RootLayout({
     <html lang="en">
       <body
        style={{backgroundColor: theme.palette.background.default}}>
-        <ThemeProvider theme={theme}>
-        {children}
-        </ThemeProvider>
+        <ToastProvider>
+          <LoadingProvider>
+            <ThemeProvider theme={theme}>
+                {children}
+            </ThemeProvider>
+          </LoadingProvider>
+        </ToastProvider>
       </body>
     </html>
   );

@@ -1,19 +1,53 @@
-'use client'
-import { useState } from 'react';
+import React, { createContext, useContext, useState } from 'react';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 
-import { CircularProgress, Backdrop } from '@mui/material';
+// Define a proper type for the loading context
+interface LoadingContextType {
+  showLoading: () => void;
+  hideLoading: () => void;
+}
+
+// Create the context for loading state
+const LoadingContext = createContext<LoadingContextType | undefined>(undefined);
 
 export const useLoading = () => {
-    const [open, setOpen] = useState(false);
+  const context = useContext(LoadingContext);
+  if (!context) {
+    throw new Error("useLoading must be used within a LoadingProvider");
+  }
+  return context;
+};
 
-    const showLoading = () => useState(true);
-    const hideLoading = () => useState(false);
+export const LoadingProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [loading, setLoading] = useState(false);
 
-    const Loading = () => (
-        <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-            open={open}>
-                <CircularProgress color='inherit'/>
-        </Backdrop>
-    );
-    return {showLoading, hideLoading, Loading}
-}
+  const showLoading = () => setLoading(true);
+  const hideLoading = () => setLoading(false);
+
+  return (
+    <LoadingContext.Provider value={{ showLoading, hideLoading }}>
+      {children}
+      {loading && (
+        <Box
+          sx={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100vw',
+            height: '100vh',
+            backgroundColor: 'rgba(0,0,0,0.5)',
+            zIndex: 9999,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <Typography variant="h6" color="white">
+            Loading...
+          </Typography>
+        </Box>
+      )}
+    </LoadingContext.Provider>
+  );
+};

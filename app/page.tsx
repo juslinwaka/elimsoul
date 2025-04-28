@@ -9,7 +9,6 @@ import { Button, Typography, TextField,
   IconButton, InputAdornment } from '@mui/material'
 import { useScreenConfig } from '@/hooks/screenConfig'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
-import { text } from 'stream/consumers'
 
 export default function Home() {
   const {isMobile, isTablet, isDesktop} = useScreenConfig();
