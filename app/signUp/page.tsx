@@ -1,11 +1,15 @@
 'use client'
-import { Box, Typography, TextField, RadioGroup, Radio, FormControlLabel, Button } from '@mui/material';
+import { Box, Typography, TextField, 
+  RadioGroup, Radio, FormControlLabel,
+   Button, Snackbar, Alert } from '@mui/material';
 import Grid from '@mui/material/Grid'
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import {auth, db} from '@/lib/firebase'
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import {doc, setDoc} from 'firebase/firestore'
+
+import { useToast } from '@/hooks/toast';
 
 export default function SignUp() {
   const router = useRouter();
@@ -16,6 +20,8 @@ export default function SignUp() {
 
   const [role, setRole] = useState("Kid");
   const [faith, setFaith] = useState("Christian")
+
+  const {showToast, Toast} = useToast();
 
   const handleSignUp = async () => {
     try {
@@ -32,7 +38,12 @@ export default function SignUp() {
     router.push('/dashboard');
     }catch (error){
       console.error("Error Signing Up: ", error);
-    }
+      if (error instanceof Error) {
+        showToast(error.message, "error");
+      } else {
+        showToast("An unknown error occurred.", "error")
+        }
+      }
   }
 
   return (
@@ -71,7 +82,7 @@ export default function SignUp() {
                 <FormControlLabel value='Kid' control={<Radio/>} label='Kid'/>
               </RadioGroup>
 
-              <Typography color='secondary' variant='subtitle1' mt={2}>Select Role: </Typography>
+              <Typography color='secondary' variant='subtitle1' mt={2}>Select Faith: </Typography>
 
               <RadioGroup value={faith} onChange={(e) => setFaith(e.target.value)}>
                 <FormControlLabel value='Christian' control={<Radio/>} label='Christian'/>
@@ -82,8 +93,8 @@ export default function SignUp() {
 
             </Box>
           </Grid>
-     
       </Grid>
+      <Toast/>
     </div>
   );
 }
