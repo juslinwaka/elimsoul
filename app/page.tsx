@@ -6,14 +6,75 @@ import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
 import { useTheme } from '@mui/material/styles'
 import { Button, Typography, TextField, 
-  IconButton, InputAdornment } from '@mui/material'
+  IconButton, InputAdornment, Divider } from '@mui/material'
 import { useScreenConfig } from '@/hooks/screenConfig'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
+
+import {useRouter} from 'next/navigation'
+import { useToast } from '@/hooks/toast'
+import { useLoading } from '@/hooks/loadingspinners'
+import {auth, db, provider} from '@/lib/firebase'
+import {doc, getDoc} from 'firebase/firestore'
+import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 
 export default function Home() {
   const {isMobile, isTablet, isDesktop} = useScreenConfig();
   const theme = useTheme();
   const [showPassword, setShowPassword] = useState(false);
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const {showToast, Toast} = useToast();
+  const {showLoading, hideLoading} = useLoading();
+  const router = useRouter();
+
+  const checkUserProfileAndRedirect = async (uid: string) => {
+    const userDoc = await getDoc(doc(db, 'users', uid));
+
+    if (!userDoc.exists()){
+      showToast("User profile not found. Redirecting to onboarding.", "info");
+      router.push('/')
+      hideLoading();
+    }else{
+
+      const userData = userDoc.data();
+      if (!userData.fullName || !userData.role){
+        router.push('/')
+        hideLoading();
+      }else{
+        router.push('/dashboard')
+        hideLoading();
+      }
+    }
+  }
+
+  const handleSignIn = async () => {
+    try{
+      showLoading();
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      await checkUserProfileAndRedirect(userCredential.user.uid);
+      showToast("Sign In Successful", "success");
+      router.push('/dashboard')
+    }catch (error: any) {
+      showToast(error.message, "error");
+    }finally{
+      hideLoading();
+    }
+  }
+
+  const handleGoogleSignIn = async () => {
+    try{
+      showLoading();
+      const result = await signInWithPopup(auth, provider);
+      await checkUserProfileAndRedirect(result.user.uid);
+      showToast("Signed in successful", "success");
+    }catch (error: any) {
+      showToast(error.message, "error");
+    }finally{
+      hideLoading();
+    }
+  }
 
   const handleTogglePassword = () => {
     setShowPassword(prev => !prev);
@@ -50,8 +111,11 @@ export default function Home() {
                   size='small' 
                   color='primary'
                   label='Email'
+                  value={email}
                   variant='outlined'
-                  type='email'/>
+                  onChange={(e) => setEmail(e.target.value)}
+                  type='email'
+                  required/>
 
                 <TextField 
                   size='small' 
@@ -69,7 +133,10 @@ export default function Home() {
                       </InputAdornment>
                     )
                   }}
-                  variant='outlined'/>
+                  variant='outlined'
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required/>
 
               </form>
               
@@ -82,7 +149,17 @@ export default function Home() {
               <Box justifySelf='center'>
                 <Button 
                   variant='contained'
-                  color='secondary'> Sign In</Button>
+                  color='secondary'
+                  onClick={handleSignIn}> Sign In</Button>
+              </Box>
+
+              <Divider>OR</Divider>
+
+              <Box pt={1} justifySelf='center'>
+                <Button 
+                  variant='outlined'
+                  color='secondary'
+                  onClick={handleGoogleSignIn}> Sign In with Google</Button>
               </Box>
 
               <Box pt={1} justifySelf='center'>
@@ -91,6 +168,8 @@ export default function Home() {
                    <Link href='/signUp' style={{textDecoration: 'none',
                     color: '#196d2', fontWeight: 'bold'}} passHref>Sign Up</Link></Typography>
               </Box>
+
+              
           </Grid>
         </Grid>
       </div>
@@ -129,7 +208,9 @@ export default function Home() {
                   color='primary'
                   label='Email'
                   variant='outlined'
-                  type='email'/>
+                  type='email'
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}/>
 
                 <TextField 
                   size='small' 
@@ -147,7 +228,10 @@ export default function Home() {
                       </InputAdornment>
                     )
                   }}
-                  variant='outlined'/>
+                  variant='outlined'
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required/>
 
               </form>
             </Box>
@@ -161,6 +245,15 @@ export default function Home() {
                   variant='contained'
                   color='secondary'
                   size='large'> Sign In</Button>
+              </Box>
+
+              <Divider>OR</Divider>
+
+              <Box pt={1} justifySelf='center'>
+                <Button 
+                  variant='outlined'
+                  color='secondary'
+                  onClick={handleGoogleSignIn}> Sign In with Google</Button>
               </Box>
 
               <Box pt={1} justifySelf='center'>
