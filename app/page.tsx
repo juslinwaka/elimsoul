@@ -82,7 +82,7 @@ export default function Home() {
   }
   return (
     <div className='min-h-screen bg-cover bg-center'>
-      <ProtectedRoute/>
+      <ProtectedRoute>
       <title>Sign In | ElimSoul</title>
       {isMobile&& 
       <div>
@@ -273,6 +273,7 @@ export default function Home() {
 
       </Grid>
       }
+      </ProtectedRoute>
     </div>
   );
 }
