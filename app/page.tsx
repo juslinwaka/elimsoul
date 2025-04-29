@@ -1,4 +1,5 @@
 'use client'
+import {ProtectedRoute} from '@/components/ProtectedRoute'
 import Link from 'next/link'
 import Image from 'next/image'
 import React, {useState} from 'react'
@@ -81,6 +82,7 @@ export default function Home() {
   }
   return (
     <div className='min-h-screen bg-cover bg-center'>
+      <ProtectedRoute/>
       <title>Sign In | ElimSoul</title>
       {isMobile&& 
       <div>
@@ -244,7 +246,8 @@ export default function Home() {
                 <Button 
                   variant='contained'
                   color='secondary'
-                  size='large'> Sign In</Button>
+                  size='large'
+                  onClick={handleSignIn}> Sign In</Button>
               </Box>
 
               <Divider>OR</Divider>
