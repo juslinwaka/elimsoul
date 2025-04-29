@@ -1,6 +1,6 @@
 'use client'
 import Grid from '@mui/material/Grid'
-import {ProtectedRoute} from '@/components/ProtectedRoute'
+import ProtectedRoute from '@/components/ProtectedRoute'
 
 
 export default function Dashboard() {
