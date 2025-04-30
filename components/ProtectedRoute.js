@@ -12,7 +12,7 @@ const ProtectedRoute = ({ children }) => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (!user) {
+      if (user) {
         setIsAuthenticate(true);
       }else{
         router.push('/')
@@ -26,7 +26,7 @@ const ProtectedRoute = ({ children }) => {
   if (loading) {
     return <div className='text-center p-4'>Loading...</div>;
   }
-  return isAuthenticated ? children : null;
+  return isAuthenticate ? children : null;
 };
 
 export default ProtectedRoute;
