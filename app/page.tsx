@@ -17,6 +17,9 @@ import {auth, db, provider} from '@/lib/firebase'
 import {doc, getDoc} from 'firebase/firestore'
 import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 
+import {useEffect} from 'react'
+import {onAuthStateChanged} from 'firebase/auth'
+
 export default function Home() {
   const {isMobile, isTablet, isDesktop} = useScreenConfig();
   const theme = useTheme();
@@ -97,6 +100,16 @@ export default function Home() {
   const handleTogglePassword = () => {
     setShowPassword(prev => !prev);
   }
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user){
+        router.push('/dashboard');
+      }
+    });
+
+    return () => unsubscribe();
+  })
   return (
     <div className='min-h-screen bg-cover bg-center'>
       <title>Sign In | ElimSoul</title>
