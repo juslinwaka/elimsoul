@@ -8,21 +8,25 @@ import { auth } from '@/lib/firebase';
 const ProtectedRoute = ({ children }) => {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
+  const [isAuthenticate, setIsAuthenticate] = useState(false);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (!user) {
-        router.push('/');
+        setIsAuthenticate(true);
       }else{
-        setLoading(false);
+        router.push('/')
       }
+      setLoading(false);
     });
     return () => unsubscribe();
+
   }, [router]);
+
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className='text-center p-4'>Loading...</div>;
   }
-  return children;
+  return isAuthenticated ? children : null;
 };
 
 export default ProtectedRoute;

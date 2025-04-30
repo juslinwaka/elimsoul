@@ -53,9 +53,27 @@ export default function Home() {
     try{
       showLoading();
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
+
+      const token = await userCredential.user.getIdToken();
+
+      const res = await fetch('/api/set-token', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({token}),
+      });
+
+      const data = await res.json();
+      
+      if (!res.ok){
+        showToast(data.message || "Error signing in", "error");
+        return;
+      }
+
+      showToast("Signed in successfully", "success");
       await checkUserProfileAndRedirect(userCredential.user.uid);
-      showToast("Sign In Successful", "success");
-      router.push('/dashboard')
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      router.push('/dashboard');
+
     }catch (error: any) {
       showToast(error.message, "error");
     }finally{
