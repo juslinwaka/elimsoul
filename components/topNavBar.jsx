@@ -13,6 +13,7 @@ import { AppBar, Toolbar,
 import Image from 'next/image';
 import { useScreenConfig } from '@/hooks/screenConfig'
 import MenuIcon from '@mui/icons-material/Menu';
+import LogoutButton from '@/components/signOutButton';
 
 const TopNavBar = () => {
 
@@ -30,6 +31,8 @@ const TopNavBar = () => {
                   sx={{display: {xs: 'block', md: 'none'}}}>
                   <MenuIcon />
                 </IconButton>
+              
+
               </Box>
             </Grid>
 
@@ -52,7 +55,34 @@ const TopNavBar = () => {
       <Toolbar>
         <Image src='/elimsoulnavlogo.png' alt='Logo' width={60} height={60}/>
 
-        <Typography variant='h5' fontWeight={600}>ElimSoul</Typography>
+        <Typography pl={5} variant='h5' fontWeight={600}>ElimSoul</Typography>
+
+        <Box pl={9} sx={{position: 'static',left: 0, top:0,  right: 0}} elevation={3}>
+            <Grid container spacing={2} direction='row'>
+
+              <Grid>
+                <Button variant='text'>Dashboard</Button>
+              </Grid>
+
+              <Grid>
+                <Button variant='text'>Messages</Button>
+              </Grid>
+
+              <Grid>
+                <Button variant='text'>AboutUs</Button>
+              </Grid>
+
+              <Grid>
+                <Button variant='text'>Settings</Button>
+              </Grid>
+
+
+            </Grid>
+          </Box>
+       
+          <Box pr={1} sx={{position: 'fixed', right: 0}}>
+            <LogoutButton />
+          </Box>
       </Toolbar>
       }
     </AppBar>

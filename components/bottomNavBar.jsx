@@ -27,11 +27,13 @@ const BottomNavBar = () => {
 
   return (
     <Paper sx={{position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
-      <BottomNavigation value={value} onChange={handleChange} showLabels>
+      {isMobile&& 
+        <BottomNavigation value={value} onChange={handleChange} showLabels>
         <BottomNavigationAction label="Dashboard" icon={<DashboardIcon />}/>
         <BottomNavigationAction label="Messages" icon={<MessageIcon />}/>
         <BottomNavigationAction label="Settings" icon={<SettingsIcon />} />
       </BottomNavigation>
+      }
     </Paper>
   );
 }
