@@ -3,6 +3,7 @@ import {ThemeProvider} from '@mui/material/styles'
 import theme from '@/lib/theme'
 import {ToastProvider} from '@/hooks/toast';
 import { LoadingProvider } from '@/hooks/loadingspinners';
+import TopNavBar from '@/components/topNavBar'
 import "./globals.css";
 
 export default function RootLayout({
@@ -14,6 +15,7 @@ export default function RootLayout({
     <html lang="en">
       <body
        style={{backgroundColor: theme.palette.background.default}}>
+        <TopNavBar />
         <ToastProvider>
           <LoadingProvider>
             <ThemeProvider theme={theme}>

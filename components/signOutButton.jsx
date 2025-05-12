@@ -48,7 +48,9 @@ const LogoutButton = () => {
         Logout
       </Button>
 
-      <Dialog open={open} onClose={handleClose}>
+      <Dialog open={open} 
+      onClose={handleClose}
+      >
         <DialogTitle>Confirm Logout</DialogTitle>
         <DialogContent>
           <DialogContentText>

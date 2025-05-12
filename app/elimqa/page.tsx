@@ -3,12 +3,11 @@ import Grid from '@mui/material/Grid'
 import ProtectedRoute from '@/components/ProtectedRoute'
 import TopNavBar from '@/components/topNavBar'
 
-
-export default function Settings() {
+export default function ElimA&A() {
   return (
     <div >
     <ProtectedRoute>
-      <title>Settings | ElimSoul</title>
+      <title>Q&A | ElimSoul</title>
         <Grid container spacing={2}>
           <Grid size={13}>
           </Grid>
