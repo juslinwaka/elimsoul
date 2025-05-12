@@ -1,9 +1,8 @@
 'use client'
 import Grid from '@mui/material/Grid'
 import ProtectedRoute from '@/components/ProtectedRoute'
-import TopNavBar from '@/components/topNavBar'
 
-export default function ElimA&A() {
+export default function ElimQA() {
   return (
     <div >
     <ProtectedRoute>
