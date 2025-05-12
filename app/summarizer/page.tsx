@@ -5,7 +5,7 @@ import {Grid,
   Button,
   CircularProgress,
   Paper,
-  TextField} from '@mui/material/'
+  TextField} from '@mui/material'
 import ProtectedRoute from '@/components/ProtectedRoute'
 import React, {useState} from 'react'
 import { useToast } from '@/hooks/toast';
