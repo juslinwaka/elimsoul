@@ -43,7 +43,7 @@ const TopNavBar = () => {
         <Grid container alignItems="center">
           {isMobile && (
             <>
-              <Grid item xs={2}>
+              <Grid xs={2}>
                 <IconButton
                   color="inherit"
                   edge="start"
@@ -53,7 +53,7 @@ const TopNavBar = () => {
                 </IconButton>
               </Grid>
 
-              <Grid item xs={2}>
+              <Grid xs={2}>
                 <Image
                   src="/elimsoulnavlogo.png"
                   alt="Logo"
@@ -62,7 +62,7 @@ const TopNavBar = () => {
                 />
               </Grid>
 
-              <Grid item xs={3}>
+              <Grid  xs={3}>
                 <Typography variant="h6" fontWeight={600}>
                   ElimSoul
                 </Typography>
@@ -72,7 +72,7 @@ const TopNavBar = () => {
 
           {isDesktop && (
             <>
-              <Grid item>
+              <Grid >
                 <Image
                   src="/elimsoulnavlogo.png"
                   alt="Logo"
@@ -81,13 +81,13 @@ const TopNavBar = () => {
                 />
               </Grid>
 
-              <Grid item>
+              <Grid xs>
                 <Typography pl={2} variant="h5" fontWeight={600}>
                   ElimSoul
                 </Typography>
               </Grid>
 
-              <Grid item xs>
+              <Grid xs>
                 <Box display="flex" justifyContent="center" gap={1} pl={2}>
                   <Button href='/' variant="text">Dashboard</Button>
                   <Button href='/elimqa' variant="text">Elim Q&A</Button>
@@ -97,21 +97,21 @@ const TopNavBar = () => {
                 </Box>
               </Grid>
 
-              <Grid item xs>
-                <Box display='flex' justifyContent='center' gap={1} pl={7}>
+              <Grid xs>
+                <Box display='flex' justifyContent='center' gap={1} pl={4}>
                   <Button href='/messages' variant="outlined">Messages</Button>
                   <Button href='/about' variant="outlined">About Us</Button>
                   <Button href='/settings' variant="outlined">Settings</Button>
                 </Box>
               </Grid>
 
-              <Grid item>
-                <Box pl={6} pr={1}>
+              <Grid xs>
+                <Box pl={4} pr={1}>
                   <Button variant='contained'>Donate</Button>
                 </Box>
               </Grid>
 
-              <Grid item>
+              <Grid xs>
                 <Box pr={1}>
                   <LogoutButton />
                 </Box>
