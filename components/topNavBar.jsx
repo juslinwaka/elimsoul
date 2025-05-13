@@ -76,19 +76,19 @@ const TopNavBar = () => {
                 <Image
                   src="/elimsoulnavlogo.png"
                   alt="Logo"
-                  width={60}
-                  height={60}
+                  width={50}
+                  height={50}
                 />
               </Grid>
 
               <Grid item>
-                <Typography pl={3} variant="h5" fontWeight={600}>
+                <Typography pl={2} variant="h5" fontWeight={600}>
                   ElimSoul
                 </Typography>
               </Grid>
 
               <Grid item xs>
-                <Box display="flex" justifyContent="center" gap={1} pl={3}>
+                <Box display="flex" justifyContent="center" gap={1} pl={2}>
                   <Button href='/' variant="text">Dashboard</Button>
                   <Button href='/elimqa' variant="text">Elim Q&A</Button>
                   <Button href='/summarizer' variant="text">Elim Summerizer</Button>
