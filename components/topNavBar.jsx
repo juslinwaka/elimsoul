@@ -88,20 +88,20 @@ const TopNavBar = () => {
               </Grid>
 
               <Grid item xs>
-                <Box display="flex" justifyContent="center" gap={2} pl={5}>
-                  <Button variant="text">Dashboard</Button>
-                  <Button variant="text">Elim Q&A</Button>
-                  <Button variant="text">Elim Summerizer</Button>
-                  <Button variant="text">Elim Academy</Button>
-                  <Button variant="text">ElimSoul Religious</Button>
+                <Box display="flex" justifyContent="center" gap={2} pl={3}>
+                  <Button href='/' variant="text">Dashboard</Button>
+                  <Button href='/elimqa' variant="text">Elim Q&A</Button>
+                  <Button href='/summarizer' variant="text">Elim Summerizer</Button>
+                  <Button href='/elimacademy' variant="text">Elim Academy</Button>
+                  <Button href='/religious' variant="text">ElimSoul Religious</Button>
                 </Box>
               </Grid>
 
               <Grid item xs>
                 <Box display='flex' justifyContent='center' gap={2} pl={7}>
-                  <Button variant="outlined">Messages</Button>
-                  <Button variant="outlined">About Us</Button>
-                  <Button variant="outlined">Settings</Button>
+                  <Button href='/messages' variant="outlined">Messages</Button>
+                  <Button href='/about' variant="outlined">About Us</Button>
+                  <Button href='/settings' variant="outlined">Settings</Button>
                 </Box>
               </Grid>
 

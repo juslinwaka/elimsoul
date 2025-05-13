@@ -100,9 +100,9 @@ export default function Summerizer() {
                   )}
 
                   {summary && (
-                    <Paper elevation={3} sx={{ mt: 4, p: 2 }}>
-                      <Typography variant="subtitle1">Summary:</Typography>
-                      <Typography>{summary}</Typography>
+                    <Paper elevation={3} sx={{ backgroundColor: 'white', mt: 4, p: 2 }}>
+                      <Typography fontWeight='600' variant="subtitle1">Summary:</Typography>
+                      <Typography fontWeight='500' variant="subtitle1">{summary}</Typography>
                     </Paper>
                   )}
               </Box>
