@@ -111,7 +111,7 @@ const TopNavBar = () => {
                 </Box>
               </Grid>
 
-              <Grid xs>
+              <Grid size={12} justifyContent='end' display='flex'>
                 <Box pr={1}>
                   <LogoutButton />
                 </Box>
