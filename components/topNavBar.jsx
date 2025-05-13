@@ -62,7 +62,7 @@ const TopNavBar = () => {
                 />
               </Grid>
 
-              <Grid item xs={5}>
+              <Grid item xs={3}>
                 <Typography variant="h6" fontWeight={600}>
                   ElimSoul
                 </Typography>
@@ -88,7 +88,7 @@ const TopNavBar = () => {
               </Grid>
 
               <Grid item xs>
-                <Box display="flex" justifyContent="center" gap={2} pl={3}>
+                <Box display="flex" justifyContent="center" gap={1} pl={3}>
                   <Button href='/' variant="text">Dashboard</Button>
                   <Button href='/elimqa' variant="text">Elim Q&A</Button>
                   <Button href='/summarizer' variant="text">Elim Summerizer</Button>
@@ -98,7 +98,7 @@ const TopNavBar = () => {
               </Grid>
 
               <Grid item xs>
-                <Box display='flex' justifyContent='center' gap={2} pl={7}>
+                <Box display='flex' justifyContent='center' gap={1} pl={7}>
                   <Button href='/messages' variant="outlined">Messages</Button>
                   <Button href='/about' variant="outlined">About Us</Button>
                   <Button href='/settings' variant="outlined">Settings</Button>
@@ -106,13 +106,13 @@ const TopNavBar = () => {
               </Grid>
 
               <Grid item>
-                <Box pl={6} pr={2}>
+                <Box pl={6} pr={1}>
                   <Button variant='contained'>Donate</Button>
                 </Box>
               </Grid>
 
               <Grid item>
-                <Box pr={2}>
+                <Box pr={1}>
                   <LogoutButton />
                 </Box>
               </Grid>
