@@ -15,10 +15,10 @@ export default function RootLayout({
     <html lang="en">
       <body
        style={{backgroundColor: theme.palette.background.default}}>
-        <TopNavBar />
         <ToastProvider>
           <LoadingProvider>
             <ThemeProvider theme={theme}>
+              <TopNavBar />
                 {children}
             </ThemeProvider>
           </LoadingProvider>

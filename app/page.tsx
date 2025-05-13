@@ -115,9 +115,9 @@ export default function Home() {
       <title>Sign In | ElimSoul</title>
       {isMobile&& 
       <div>
-        <Grid container spacing={2} 
+        <Grid container spacing={2} p={3}
         justifyContent='center' justifyItems='center' justifySelf='center'>
-          <Grid size={9}>
+          <Grid size={9} pt={3}>
           <Image
             src='/elimsoullogo.png'
             width={300}

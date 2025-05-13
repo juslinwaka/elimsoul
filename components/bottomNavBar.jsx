@@ -30,7 +30,7 @@ const BottomNavBar = () => {
       {isMobile&& 
         <BottomNavigation value={value} onChange={handleChange} showLabels>
         <BottomNavigationAction label="Dashboard" icon={<DashboardIcon />}/>
-        <BottomNavigationAction label="Messages" icon={<MessageIcon />}/>
+        <BottomNavigationAction label="Discussion Board" icon={<MessageIcon />}/>
         <BottomNavigationAction label="Settings" icon={<SettingsIcon />} />
       </BottomNavigation>
       }
