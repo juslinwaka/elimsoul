@@ -62,7 +62,7 @@ const TopNavBar = () => {
                 />
               </Grid>
 
-              <Grid item xs={8}>
+              <Grid item xs={5}>
                 <Typography variant="h6" fontWeight={600}>
                   ElimSoul
                 </Typography>
