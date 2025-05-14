@@ -41,7 +41,7 @@ const LogoutButton = () => {
     <>
       <Button
         onClick={handleClickOpen}
-        variant="outlined"
+        variant="contained"
         color="error"
         startIcon={<LogoutIcon />}
       >

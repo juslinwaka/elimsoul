@@ -19,6 +19,7 @@ import {
   Paper,
   Divider,
 } from '@mui/material';
+import '@/app/src/styles.css'
 
 interface Reply {
   id: string;
@@ -77,7 +78,7 @@ export default function TopicPage() {
 
   return (
     <main className="p-6">
-      <Typography variant="h4" gutterBottom>
+      <Typography color='primary' variant="h4" gutterBottom sx={{}}>
         {topic.title}
       </Typography>
       <Typography variant="subtitle1" gutterBottom>
@@ -90,7 +91,7 @@ export default function TopicPage() {
       </Typography>
 
       {replies.map((reply) => (
-        <Paper key={reply.id} className="p-3 my-2" style={{ backgroundColor: 'gray' }}>
+        <Paper key={reply.id} className="p-3 my-2" sx={{padding: '5px', margin: 2}} style={{backgroundColor: 'white', color: 'black' }}>
           <Typography fontWeight='600'>{reply.text}</Typography>
           <Typography variant="caption" color='inherit'>
             — {reply.author} |{' '}

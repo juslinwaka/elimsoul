@@ -18,6 +18,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Image from 'next/image';
 import LogoutButton from '@/components/signOutButton';
 import { useScreenConfig } from '@/hooks/screenConfig';
+import '@/app/src/styles.css'
 
 const TopNavBar = () => {
   const { isMobile, isDesktop } = useScreenConfig();
@@ -38,8 +39,8 @@ const TopNavBar = () => {
   };
 
   return (
-    <AppBar position="fixed" color="default" elevation={1}>
-      <Toolbar disableGutters>
+    <AppBar position="fixed" color='default' elevation={1}>
+      <Toolbar disableGutters className='bg-gradient-blue' >
         <Grid container alignItems="center">
           {isMobile && (
             <>
@@ -89,25 +90,25 @@ const TopNavBar = () => {
 
               <Grid xs>
                 <Box display="flex" justifyContent="center" gap={1} pl={2}>
-                  <Button href='/' variant="text">Dashboard</Button>
-                  <Button href='/elimqa' variant="text">Elim Q&A</Button>
-                  <Button href='/summarizer' variant="text">Elim Summerizer</Button>
-                  <Button href='/elimacademy' variant="text">Elim Academy</Button>
-                  <Button href='/religious' variant="text">ElimSoul Religious</Button>
+                  <Button href='/' variant="text" passHref>Dashboard</Button>
+                  <Button href='/elimqa' variant="text" passHref>Elim Q&A</Button>
+                  <Button href='/summarizer' variant="text" passHref>Elim Summerizer</Button>
+                  <Button href='/elimacademy' variant="text" passHref>Elim Academy</Button>
+                  <Button href='/religious' variant="text" passHref>ElimSoul Religious</Button>
                 </Box>
               </Grid>
 
               <Grid xs>
                 <Box display='flex' justifyContent='center' gap={1} pl={4}>
-                  <Button href='/messages' variant="outlined">Messages</Button>
-                  <Button href='/about' variant="outlined">About Us</Button>
-                  <Button href='/settings' variant="outlined">Settings</Button>
+                  <Button href='/messages' variant="outlined" passHref>Messages</Button>
+                  <Button href='/about' variant="outlined" passHref>About Us</Button>
+                  <Button href='/settings' variant="outlined" passHref>Settings</Button>
                 </Box>
               </Grid>
 
               <Grid xs>
                 <Box pl={4} pr={1}>
-                  <Button variant='contained'>Donate</Button>
+                  <Button href='/donate' variant='contained' passHref>Donate</Button>
                 </Box>
               </Grid>
 
@@ -164,7 +165,7 @@ const TopNavBar = () => {
             <Link href="/about" passHref legacyBehavior>
               <MenuItem onClick={handleDrawerToggle}>About Us</MenuItem>
             </Link>
-            <Link href="/settings" passHref legacyBehavior>
+            <Link href="/donate" passHref legacyBehavior>
               <MenuItem onClick={handleDrawerToggle}>Donate</MenuItem>
             </Link>
             <LogoutButton />

@@ -1,0 +1,149 @@
+/* Global Styles */
+.text-red {
+  color: #e74c3c; /* Red */
+}
+
+.text-green {
+  color: #2ecc71; /* Green */
+}
+
+.text-blue {
+  color: #3498db; /* Blue */
+}
+
+.text-yellow {
+  color: #f39c12; /* Yellow */
+}
+
+.text-gray {
+  color: #333333; /* Dark Gray */
+}
+
+.text-white {
+  color: #ffffff; /* White */
+}
+
+/* Background Colors */
+.bg-red {
+  background-color: #e74c3c; /* Red */
+}
+
+.bg-green {
+  background-color: #2ecc71; /* Green */
+}
+
+.bg-blue {
+  background-color: #3498db; /* Blue */
+}
+
+.bg-yellow {
+  background-color: #f39c12; /* Yellow */
+}
+
+.bg-lightgray {
+  background-color: #f4f4f4; /* Light Gray */
+}
+
+.bg-darkgray {
+  background-color: #333333; /* Dark Gray */
+}
+
+/* Border Colors */
+.border-red {
+  border: 2px solid #e74c3c; /* Red */
+}
+
+.border-green {
+  border: 2px solid #2ecc71; /* Green */
+}
+
+.border-blue {
+  border: 2px solid #3498db; /* Blue */
+}
+
+.border-yellow {
+  border: 2px solid #f39c12; /* Yellow */
+}
+
+/* Button Styles */
+.btn-red {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+}
+
+.btn-green {
+  background-color: #2ecc71;
+  color: white;
+  border: none;
+}
+
+.btn-blue {
+  background-color: #3498db;
+  color: white;
+  border: none;
+}
+
+.btn-yellow {
+  background-color: #f39c12;
+  color: white;
+  border: none;
+}
+
+/* Hover Effects */
+.btn-red:hover {
+  background-color: #c0392b; /* Darker red */
+}
+
+.btn-green:hover {
+  background-color: #27ae60; /* Darker green */
+}
+
+.btn-blue:hover {
+  background-color: #2980b9; /* Darker blue */
+}
+
+.btn-yellow:hover {
+  background-color: #e67e22; /* Darker yellow */
+}
+
+.bg-red:hover {
+  background-color: #c0392b; /* Darker red */
+}
+
+.bg-green:hover {
+  background-color: #27ae60; /* Darker green */
+}
+
+.bg-blue:hover {
+  background-color: #2980b9; /* Darker blue */
+}
+
+.bg-yellow:hover {
+  background-color: #e67e22; /* Darker yellow */
+}
+
+/* Gradient Backgrounds */
+.bg-gradient-blue {
+  background: linear-gradient(135deg, #3498db, #9b59b6, #8e44ad, #2980b9);
+}
+
+.bg-gradient-red {
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
+}
+
+.bg-gradient-green {
+  background: linear-gradient(135deg, #2ecc71,#2980b9, #2980b9,#27ae60,#2980b9);
+}
+
+.bg-gradient-yellow {
+  background: linear-gradient(135deg, #f39c12,#2980b9, #2980b9, #333333, #e67e22);
+}
+
+.bg-gradient-purple {
+  background: linear-gradient(135deg, #9b59b6, #8e44ad);
+}
+
+.bg-gradient-pink {
+  background: linear-gradient(135deg, #ff6ec4, #7873f5);
+}

@@ -19,6 +19,7 @@ import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 
 
 import {useEffect} from 'react'
 import {onAuthStateChanged} from 'firebase/auth'
+import '@/app/src/styles.css'
 
 export default function Home() {
   const {isMobile, isTablet, isDesktop} = useScreenConfig();
@@ -127,8 +128,8 @@ export default function Home() {
 
           <Grid size={9} justifyItems='center' justifyContent='center'>
           <Typography pt={3} pl={3} variant='h1'
-          className='flex justify-center' 
-                  sx={{ fontWeight: 600, fontStyle: 'oblique'}} color='textSecondary'>
+          className='flex justify-center text-white' 
+                  sx={{ fontWeight: 600, fontStyle: 'oblique'}}>
                   Welcome to ElimSoul
                 </Typography>
           </Grid>
@@ -144,6 +145,11 @@ export default function Home() {
                   label='Email'
                   value={email}
                   variant='outlined'
+                  sx={{
+                    input: {color: 'white'},
+                    label: {color: 'white'},
+                    margin: 2
+                  }}
                   onChange={(e) => setEmail(e.target.value)}
                   type='email'
                   required/>
@@ -153,6 +159,11 @@ export default function Home() {
                   fullWidth
                   label='Password'
                   color='primary'
+                  sx={{
+                    input: {color: 'white'},
+                    label: {color: 'white'},
+                    margin: 2
+                  }}
                   type={showPassword ? 'text' : 
                     'password'}
                   InputProps={{
@@ -184,7 +195,9 @@ export default function Home() {
                   onClick={handleSignIn}> Sign In</Button>
               </Box>
 
-              <Divider>OR</Divider>
+              <Divider style={{
+                    margin: 5
+                  }}>OR</Divider>
 
               <Box pt={1} justifySelf='center'>
                 <Button 
@@ -225,7 +238,8 @@ export default function Home() {
             <Grid container spacing={2}>
               <Grid size={8} justifySelf='center'>
                 <Typography pt={3} pl={3} variant='h1' 
-                   color='textSecondary'>
+                   style={{color: 'white'}}
+                   fontSize={80}>
                   Welcome to ElimSoul
                 </Typography>
               </Grid>
@@ -235,19 +249,27 @@ export default function Home() {
             <form>
                 <TextField 
                   fullWidth
-                  size='small' 
-                  color='primary'
+                  sx={{
+                    input: {color: 'white'},
+                    label: {color: 'white'},
+                    margin: 2
+                  }}
                   label='Email'
                   variant='outlined'
                   type='email'
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}/>
 
-                <TextField 
-                  size='small' 
+                <TextField  
                   fullWidth
+                
                   label='Password'
-                  color='primary'
+                  className='text-white'
+                   sx={{
+                    input: {color: 'white'},
+                    label: {color: 'white'},
+                    margin: 2
+                  }}
                   type={showPassword ? 'text' : 
                     'password'}
                   InputProps={{
@@ -274,17 +296,25 @@ export default function Home() {
               <Box justifySelf='center'>
                 <Button 
                   variant='contained'
+                  style={{
+                    margin: 2
+                  }}
                   color='secondary'
                   size='large'
                   onClick={handleSignIn}> Sign In</Button>
               </Box>
 
-              <Divider>OR</Divider>
+              <Divider  style={{
+                    margin: 5
+                  }} >OR</Divider>
 
               <Box pt={1} justifySelf='center'>
                 <Button 
                   variant='outlined'
                   color='secondary'
+                   style={{
+                    margin: 2
+                  }}
                   onClick={handleGoogleSignIn}> Sign In with Google</Button>
               </Box>
 

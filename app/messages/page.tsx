@@ -23,6 +23,7 @@ import {
   TextField,
 } from '@mui/material';
 import { useScreenConfig } from '@/hooks/screenConfig';
+import '@/app/src/styles.css';
 
 interface Topic {
   id: string;
@@ -69,19 +70,19 @@ export default function MessageBoard() {
   };
 
   return (
-    <main className="p-6" >
+    <main className="p-6 bg-gradient-blue" >
       <Grid p={2} spacing={2} container justifyContent='center' className="mb-4">
 
         {isMobile &&(
           <Grid size={12}>
-            <Typography pt={5} variant="h4" gutterBottom>
+            <Typography pt={5} variant="h4" fontSize={40} fontWeight={600} className='text-white' gutterBottom>
               Discussion Topics
             </Typography>
           </Grid>
         )}
 
         {isDesktop &&(
-            <Typography pt={10} variant="h2" gutterBottom>
+            <Typography pt={10} variant="h2" fontSize={60} fontWeight={600} className='text-white' gutterBottom>
               Discussion Topics
             </Typography>
          

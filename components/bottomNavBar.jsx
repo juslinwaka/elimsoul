@@ -9,6 +9,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import MessageIcon from '@mui/icons-material/Message';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { useRouter } from 'next/navigation';
+import '@/app/src/styles.css'
 
 const BottomNavBar = () => {
 
@@ -26,7 +27,8 @@ const BottomNavBar = () => {
   const {isMobile, isTablet, isDesktop} = useScreenConfig();
 
   return (
-    <Paper sx={{position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
+    <Paper color sx={{position: 'fixed', bottom: 0, 
+    left: 0, right: 0}} elevation={3}>
       {isMobile&& 
         <BottomNavigation value={value} onChange={handleChange} showLabels>
         <BottomNavigationAction label="Dashboard" icon={<DashboardIcon />}/>
