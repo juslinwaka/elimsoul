@@ -195,29 +195,38 @@ export default function TopicPage() {
       ))}
 
       <Divider className="my-4" />
-
-      <Typography variant="h6" color="success" gutterBottom>
-        Add a Reply
-      </Typography>
+      
+            <Typography variant="h6" color='success' gutterBottom style={{color: 'black'}}>
+              Add a Reply
+            </Typography>
+            <TextField
+              label="Your Name"
+              fullWidth
+               sx={{
+                  input: {color: 'white'},
+                  label: {color: 'white'},
+                  marginBottom: '5px'
+                    }}
+              className="mb-2"
+              value={replyAuthor}
+              onChange={(e) => setReplyAuthor(e.target.value)}
+            />
       <TextField
-        label="Your Name"
-        fullWidth
-        className="mb-2"
-        value={replyAuthor}
-        onChange={(e) => setReplyAuthor(e.target.value)}
-      />
-      <TextField
-        label="Your Reply"
-        fullWidth
-        multiline
-        rows={3}
-        className="mb-2"
-        value={replyText}
-        onChange={(e) => setReplyText(e.target.value)}
-      />
-      <Button variant="contained" color="success" onClick={handleReply}>
-        Submit Reply
-      </Button>
+              label="Your Reply"
+              fullWidth
+              multiline
+              sx={{
+                  input: {color: 'white'},
+                  label: {color: 'white'},
+                    }}
+              rows={3}
+              className="mb-2"
+              value={replyText}
+              onChange={(e) => setReplyText(e.target.value)}
+            />
+            <Button variant="contained" color="success" onClick={handleReply}>
+              Submit Reply
+            </Button>
     </main>
   );
 }

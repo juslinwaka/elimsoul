@@ -10,7 +10,6 @@ export async function POST() {
     body: JSON.stringify({
       properties: {
         enable_prejoin_ui: true,
-        enable_network_quality: true,
         enable_chat: true,
       },
     }),
