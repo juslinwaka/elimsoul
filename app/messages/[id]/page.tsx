@@ -84,6 +84,20 @@ export default function TopicPage() {
     return () => unsubscribe();
   }, [id]);
 
+  const handleEndCall = async () => {
+    if (!room) return;
+    setLoading(true);
+
+    try{
+      const response = await fetch('/api/daily-api/end-call', {
+        method: 'POST',
+    });
+  }catch(error){
+    console.error('Error ending call:', error);
+  }finally{
+    setLoading(false);
+  }}
+
   //start a call
    const handleCreateRoom = async () => {
     if (!replyAuthor.trim()) return;
@@ -159,6 +173,17 @@ export default function TopicPage() {
           sx={{ marginTop: 2 }}
         >
           🔴 Join Live Chat
+        </Button>
+      )}
+
+      {room && (
+        <Button
+          variant="contained"
+          color="secondary"
+          disabled={!videoRoomUrl || loading}
+          sx={{ marginTop: 2, marginLeft: 2 }}
+        >
+          🔴 End Chat
         </Button>
       )}
 
