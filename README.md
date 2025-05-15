@@ -116,6 +116,7 @@ ElimSoul includes a smart **Summarizing and Q&A AI**, enabling users to:
 |Real-time Chat| firebase firestore          |
 | Video Chat   | [Daily.co](https://www.daily.co)|
 |Backend-API   | FastAPI (Python)            |
+
 > Offline-first architecture + multilingual support for rural Africa (English, Chichewa, Swahili)
 
 ---
@@ -129,8 +130,8 @@ ElimSoul includes a smart **Summarizing and Q&A AI**, enabling users to:
 **Board of Councelors:**
 - Fr. Dieu Donne – Spiritual Oversight  
 - Justin Openzi Waka – Strategic Direction  
-- Pastor Abraham – Educational Programs
-- Jospin Amisi - Technology Oversight
+- Thoto Omakenge – Educational Programs
+- Jospin Amisi - Technology Oversight (Undecided)
 
 > Treasurer provides monthly transparency reports.
 ---
