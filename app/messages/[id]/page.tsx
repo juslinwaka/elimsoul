@@ -168,7 +168,7 @@ export default function TopicPage() {
           variant="contained"
           color="secondary"
           onClick={handleCreateRoom}
-          disabled={!replyAuthor.trim() || loading}
+          disabled={!replyAuthor.trim() || loading || !!videoRoomUrl}
           sx={{ marginTop: 2 }}
         >
            🟢 {loading ? 'Creating Room...' : 'Start A Call'}

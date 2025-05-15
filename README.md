@@ -207,6 +207,7 @@ Non-commercial use permitted for spiritual and educational purposes.
 ```bash
 # clone repo & run in dev mode
 docker-compose up --build
+
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 =======
