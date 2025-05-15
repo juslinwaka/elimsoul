@@ -208,6 +208,10 @@ Non-commercial use permitted for spiritual and educational purposes.
 # clone repo & run in dev mode
 docker-compose up --build
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+# Done with the updates, this is for a rule test
+>>>>>>> Stashed changes
 =======
 # Done with the updates, this is for a rule test
 >>>>>>> Stashed changes
