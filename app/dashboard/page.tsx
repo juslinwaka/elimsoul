@@ -44,6 +44,8 @@ export default function Dashboard() {
             <Box sx={{marginTop:'20', padding: '20px', backgroundColor: '#f5f5f5', borderRadius: '8px' }}>
               <Typography variant='h3'>{userName ? userName: '...'}</Typography>
               <p>Welcome to your ElimSoul dashboard!</p>
+
+              
             </Box>
           </Grid>
      
