@@ -22,6 +22,8 @@ import {
   Divider,
 } from '@mui/material';
 import '@/app/src/styles.css';
+import { useScreenConfig } from '@/hooks/screenConfig';
+import { useLoading } from '@/hooks/loadingspinners'
 
 // Add this declaration to let TypeScript know about JitsiMeetExternalAPI
 declare global {
@@ -57,6 +59,8 @@ export default function TopicPage() {
   const jitsiContainerRef = useRef<HTMLDivElement>(null);
   const [jitsiScriptLoaded, setJitsiScriptLoaded] = useState(false);
   const [jwtToken, setJwtToken] = useState('');
+  const {isMobile, isDesktop} = useScreenConfig();
+  const {showLoading, hideLoading} = useLoading();
 
 
   useEffect(() => {
@@ -68,7 +72,6 @@ export default function TopicPage() {
       document.body.appendChild(script);
     }
   }, []);
-  console.log('Working Token', room?.token);
 
     useEffect(() => {
     if (jitsiScriptLoaded && showJitsi && jitsiContainerRef.current) {
@@ -137,7 +140,7 @@ export default function TopicPage() {
   }, [id]);
 
    const handleStartCall = async () => {
-    setLoading(true)
+    showLoading();
     if (!replyAuthor.trim()) return;
 
     try{
@@ -167,6 +170,7 @@ export default function TopicPage() {
         url: fullRoomUrl,
         expiresAt: Timestamp.now(),
       };
+      hideLoading();
 
       setRoom(newRoom);
       setShowJitsi(true);
@@ -186,6 +190,7 @@ export default function TopicPage() {
   };
   // add reply
   const handleReply = async () => {
+    showLoading();
     if (!replyText.trim() || !replyAuthor.trim()) return;
 
     await addDoc(collection(db, 'topics', id as string, 'replies'), {
@@ -193,14 +198,22 @@ export default function TopicPage() {
       author: replyAuthor.trim(),
       createdAt: Timestamp.now(),
     });
+    hideLoading();
 
     setReplyText('');
     setReplyAuthor('');
   };
 
   const handleJoinCall = () => {
-    console.log(jitsiContainerRef)
-    setShowJitsi(true);
+    showLoading();
+    try{
+      setShowJitsi(true);
+    }catch (error) {
+      console.error('Error joining call:', error);
+    }finally{
+      hideLoading();
+    }
+    
   };
 
 
@@ -229,11 +242,12 @@ export default function TopicPage() {
 
     {showJitsi && (
       <Grid >
-      <div
+        {isMobile && (
+          <div
         ref={jitsiContainerRef}
         style={{
           width: '100%',
-          height: '600',
+          height: '500',
           border: 'none',
           position: 'absolute',
           top: 0,
@@ -241,6 +255,22 @@ export default function TopicPage() {
           zIndex: 9999,
         }}
         className='w-full h-full'/>
+          )}
+
+        {isDesktop && (
+          <div
+        ref={jitsiContainerRef}
+        style={{
+          width: '100%',
+          height: '700',
+          border: 'none',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          zIndex: 9999,
+        }}
+        className='w-full h-full'/>
+        )}
         </Grid>
     )}
       <Divider className="my-4" style={{margin:3}}/>
