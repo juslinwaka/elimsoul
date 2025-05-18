@@ -107,13 +107,13 @@ const TopNavBar = () => {
               </Grid>
 
               <Grid xs>
-                <Box pl={4} pr={1}>
+                <Box pl={2}>
                   <Button href='/donate' variant='contained' passHref>Donate</Button>
                 </Box>
               </Grid>
 
-              <Grid size={12} justifyContent='end' display='flex'>
-                <Box pr={1}>
+              <Grid xs>
+                <Box pl={1}>
                   <LogoutButton />
                 </Box>
               </Grid>

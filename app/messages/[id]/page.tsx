@@ -16,6 +16,7 @@ import {
 import {
   Typography,
   TextField,
+  Grid,
   Button,
   Paper,
   Divider,
@@ -67,7 +68,6 @@ export default function TopicPage() {
       document.body.appendChild(script);
     }
   }, []);
-  console.log('Working Token', room?.token);
 
     useEffect(() => {
     if (jitsiScriptLoaded && showJitsi && jitsiContainerRef.current) {
@@ -228,9 +228,24 @@ export default function TopicPage() {
       )}
 
       <Divider className="my-4" style={{margin:3}}/>
-    {showJitsi && (<div className="w-full h-screen bg-black mb-6">
-      <div ref={jitsiContainerRef} className="w-full h-full" />
-      </div>
+
+
+    {showJitsi && (
+      <Grid sx={{margin: 20}}>
+        
+        <iframe
+          src='https://8x8.vc/${process.env.NEXT_PUBLIC_JAAS_APP_ID}/${room?.url}#jwt=${room?.token}'
+          style={{
+            width: '100%',
+            height: '500px',
+            border: 'none',
+            position: 'absolute',
+            top: 60,
+            left: 5,
+            right: 5,
+            zIndex: 9999,
+          }}/>
+        </Grid>
     )}
       <Divider className="my-4" style={{margin:3}}/>
 
