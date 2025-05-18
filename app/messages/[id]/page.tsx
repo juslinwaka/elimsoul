@@ -234,6 +234,7 @@ export default function TopicPage() {
       <Grid sx={{margin: 20}}>
         
         <iframe
+          sandbox='allow-scripts allow-modal'
           src='https://8x8.vc/${process.env.NEXT_PUBLIC_JAAS_APP_ID}/${room?.url}#jwt=${room?.token}'
           style={{
             width: '100%',
