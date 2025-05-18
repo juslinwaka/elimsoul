@@ -130,8 +130,8 @@ ElimSoul includes a smart **Summarizing and Q&A AI**, enabling users to:
 **Board of Councelors:**
 - Fr. Dieu Donne – Spiritual Oversight  
 - Justin Openzi Waka – Strategic Direction  
-- Thoto Omakenge – Educational Programs
-- Jospin Amisi - Technology Oversight (Undecided)
+- Thondo Omakenge – Educational Programs
+- Jospin Amisi - Technology Oversight
 
 > Treasurer provides monthly transparency reports.
 ---
