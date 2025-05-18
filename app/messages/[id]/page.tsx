@@ -68,6 +68,7 @@ export default function TopicPage() {
       document.body.appendChild(script);
     }
   }, []);
+  console.log('Working Token', room?.token);
 
     useEffect(() => {
     if (jitsiScriptLoaded && showJitsi && jitsiContainerRef.current) {
@@ -76,8 +77,6 @@ export default function TopicPage() {
       const options = {
         roomName:  `ElimSoul-${id}`,
         parentNode: jitsiContainerRef.current,
-        width: '1000px',
-        height: '500px',
         userInfo: {
           id: 'ElimSoul',
           displayName: currentUser.trim(),
@@ -210,10 +209,7 @@ export default function TopicPage() {
 
   return (
     <main className="p-6" style={{ position: 'relative'}}>
-      <Typography color="primary" variant="h4" gutterBottom>
-        {topic.title}
-      </Typography>
-      <Typography variant="subtitle1" gutterBottom>
+      <Typography p={2} variant="subtitle1" gutterBottom>
         Author: {topic.author}
       </Typography>
 
@@ -233,21 +229,18 @@ export default function TopicPage() {
 
 
     {showJitsi && (
-      <Grid sx={{margin: 20}}>
-        
-        <iframe
-          sandbox='allow-scripts allow-modal'
-          src='https://8x8.vc/${process.env.NEXT_PUBLIC_JAAS_APP_ID}/${room?.url}#jwt=${room?.token}'
-          style={{
-            width: '100%',
-            height: '500px',
-            border: 'none',
-            position: 'absolute',
-            top: 60,
-            left: 5,
-            right: 5,
-            zIndex: 9999,
-          }}/>
+      <Grid >
+      <div
+        ref={jitsiContainerRef}
+        style={{
+          width: '100%',
+          height: '500px',
+          border: 'none',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          zIndex: 9999,
+        }}/>
         </Grid>
     )}
       <Divider className="my-4" style={{margin:3}}/>
