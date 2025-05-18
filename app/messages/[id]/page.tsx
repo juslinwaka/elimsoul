@@ -239,7 +239,8 @@ export default function TopicPage() {
           top: 0,
           left: 0,
           zIndex: 9999,
-        }}/>
+        }}
+        className='w-full h-full'/>
         </Grid>
     )}
       <Divider className="my-4" style={{margin:3}}/>
