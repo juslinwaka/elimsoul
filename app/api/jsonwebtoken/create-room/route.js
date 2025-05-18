@@ -1,16 +1,14 @@
 import { NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
-import { config } from 'process';
 
 const APP_ID = process.env.NEXT_PUBLIC_JAAS_APP_ID; // Set in .env.local
 const PRIVATE_KEY = process.env.NEXT_PUBLIC_JAAS_PRIVATE_KEY.replace(/\\n/g, '\n'); // Set in .env.local
-const PUBLIC_KEY = process.env.NEXT_PUBLIC_JAAS_API_KEY
 
 
 export async function POST(req) {
     
   try {
-    const { roomName, userId, displayName, email, isModerator } = await req.json();
+    const { roomName, userId, displayName} = await req.json();
 
     if (!roomName || !userId || !displayName) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
