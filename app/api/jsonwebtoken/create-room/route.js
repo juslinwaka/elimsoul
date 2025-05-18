@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
 
 const APP_ID = process.env.NEXT_PUBLIC_JAAS_APP_ID; // Set in .env.local
-const PRIVATE_KEY = process.env.NEXT_PUBLIC_JAAS_PRIVATE_KEY_RAW.replace(/\\n/g, '\n') : undefined; // Set in .env.local
+const PRIVATE_KEY = process.env.NEXT_PUBLIC_JAAS_PRIVATE_KEY_RAW.replace(/\\n/g, '\n');// Set in .env.local
 
 
 export async function POST(req) {
