@@ -20,6 +20,7 @@ import {
   Button,
   Paper,
   Divider,
+  CircularProgress
 } from '@mui/material';
 import '@/app/src/styles.css';
 import { useScreenConfig } from '@/hooks/screenConfig';
@@ -60,7 +61,6 @@ export default function TopicPage() {
   const [jitsiScriptLoaded, setJitsiScriptLoaded] = useState(false);
   const [jwtToken, setJwtToken] = useState('');
   const {isMobile, isDesktop} = useScreenConfig();
-  const {showLoading, hideLoading} = useLoading();
 
 
   useEffect(() => {
@@ -74,6 +74,7 @@ export default function TopicPage() {
   }, []);
 
     useEffect(() => {
+      console.log('Working Token: ', room?.token)
     if (jitsiScriptLoaded && showJitsi && jitsiContainerRef.current) {
       const domain = '8x8.vc';
 
@@ -92,6 +93,7 @@ export default function TopicPage() {
           SHOW_JITSI_WATERMARK: false,
           SHOW_WATERMARK_FOR_GUESTS: false,
         },
+        jwt:room?.token
       };
 
       new window.JitsiMeetExternalAPI(domain, options);
@@ -140,7 +142,6 @@ export default function TopicPage() {
   }, [id]);
 
    const handleStartCall = async () => {
-    showLoading();
     if (!replyAuthor.trim()) return;
 
     try{
@@ -170,7 +171,6 @@ export default function TopicPage() {
         url: fullRoomUrl,
         expiresAt: Timestamp.now(),
       };
-      hideLoading();
 
       setRoom(newRoom);
       setShowJitsi(true);
@@ -190,7 +190,6 @@ export default function TopicPage() {
   };
   // add reply
   const handleReply = async () => {
-    showLoading();
     if (!replyText.trim() || !replyAuthor.trim()) return;
 
     await addDoc(collection(db, 'topics', id as string, 'replies'), {
@@ -198,20 +197,19 @@ export default function TopicPage() {
       author: replyAuthor.trim(),
       createdAt: Timestamp.now(),
     });
-    hideLoading();
 
     setReplyText('');
     setReplyAuthor('');
   };
 
   const handleJoinCall = () => {
-    showLoading();
+    setLoading(true);
     try{
       setShowJitsi(true);
     }catch (error) {
       console.error('Error joining call:', error);
     }finally{
-      hideLoading();
+      console.log('success');
     }
     
   };
@@ -233,7 +231,11 @@ export default function TopicPage() {
           disabled={!room.url || loading || !!replyAuthor.trim()}
           sx={{ marginTop: 2 }}
         >
-          🔴 Join Live Chat
+          {loading ? (
+                                <CircularProgress size={24} />
+                              ) : (
+                                '🔴 Join Live Chat'
+                              )}
         </Button>
       )}
 
@@ -243,9 +245,9 @@ export default function TopicPage() {
     {showJitsi && (
       <Grid >
         {isMobile && (
-          <div
-        ref={jitsiContainerRef}
-        style={{
+          <iframe
+          src={videoRoomUrl}
+          style={{
           width: '100%',
           height: '500',
           border: 'none',
@@ -254,6 +256,7 @@ export default function TopicPage() {
           left: 0,
           zIndex: 9999,
         }}
+        allow='camera; microphone; fullscreen; display-capture'
         className='w-full h-full'/>
           )}
 
