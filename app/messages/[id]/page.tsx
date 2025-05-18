@@ -84,7 +84,7 @@ export default function TopicPage() {
         userInfo: {
           id: 'ElimSoul',
           displayName: currentUser.trim(),
-          moderator: true,
+          moderator: false,
         },
         configOverwrite: {
           disableDeepLinking: true,
@@ -261,9 +261,9 @@ export default function TopicPage() {
           )}
 
         {isDesktop && (
-          <div
-        ref={jitsiContainerRef}
-        style={{
+          <iframe
+          src={videoRoomUrl}
+          style={{
           width: '100%',
           height: '700',
           border: 'none',
