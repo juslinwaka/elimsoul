@@ -1,16 +1,16 @@
 import { NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
+import { config } from 'process';
 
 const APP_ID = process.env.NEXT_PUBLIC_JAAS_APP_ID; // Set in .env.local
-const PRIVATE_KEY = process.env.NEXT_PUBLIC_JAAS_PRIVATE_KEY_RAW.replace(/\\n/g, '\n');// Set in .env.local
+const PRIVATE_KEY = process.env.NEXT_PUBLIC_JAAS_PRIVATE_KEY.replace(/\\n/g, '\n'); // Set in .env.local
+const PUBLIC_KEY = process.env.NEXT_PUBLIC_JAAS_API_KEY
 
 
 export async function POST(req) {
+    
   try {
-    if (!APP_ID || !PRIVATE_KEY) {
-      return NextResponse.json({ error: 'JAAS_APP_ID or JAAS_PRIVATE_KEY environment variable is missing.' }, { status: 500 });
-    }
-    const { roomName, userId, displayName} = await req.json();
+    const { roomName, userId, displayName, email, isModerator } = await req.json();
 
     if (!roomName || !userId || !displayName) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
@@ -32,7 +32,6 @@ export async function POST(req) {
         authentication: false,
         "lobby": false, 
         "room-lock": false, 
-        
       }
     };
     console.log('JAAS_APP_ID:', APP_ID);
