@@ -89,7 +89,6 @@ export default function TopicPage() {
           SHOW_JITSI_WATERMARK: false,
           SHOW_WATERMARK_FOR_GUESTS: false,
         },
-        jwt: room?.token,
       };
 
       new window.JitsiMeetExternalAPI(domain, options);
@@ -234,7 +233,7 @@ export default function TopicPage() {
         ref={jitsiContainerRef}
         style={{
           width: '100%',
-          height: '500px',
+          height: '600',
           border: 'none',
           position: 'absolute',
           top: 0,
