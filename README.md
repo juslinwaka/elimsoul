@@ -114,7 +114,7 @@ ElimSoul includes a smart **Summarizing and Q&A AI**, enabling users to:
 | DevOps       | Docker, GitHub Actions      |
 | Deployment   | Vercel, Huggingface-space   |
 |Real-time Chat| firebase firestore          |
-| Video Chat   | [Daily.co](https://www.daily.co)|
+| Video Chat   | [Jaas](https://8x8.vc)|
 |Backend-API   | FastAPI (Python)            |
 
 > Offline-first architecture + multilingual support for rural Africa (English, Chichewa, Swahili)
