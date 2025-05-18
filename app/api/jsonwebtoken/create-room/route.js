@@ -32,6 +32,7 @@ export async function POST(req) {
         authentication: false,
         "lobby": false, 
         "room-lock": false, 
+        
       }
     };
     console.log('JAAS_APP_ID:', APP_ID);
