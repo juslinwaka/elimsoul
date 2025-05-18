@@ -76,6 +76,8 @@ export default function TopicPage() {
       const options = {
         roomName:  `ElimSoul-${id}`,
         parentNode: jitsiContainerRef.current,
+        width: '1000px',
+        height: '500px',
         userInfo: {
           id: 'ElimSoul',
           displayName: currentUser.trim(),
