@@ -29,7 +29,7 @@ export async function POST(req) {
         user: {
           id: userId,
           name: displayName,
-          moderator: true
+          moderator: true,
         },
       },
       features: {

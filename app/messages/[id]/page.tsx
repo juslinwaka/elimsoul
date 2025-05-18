@@ -272,6 +272,7 @@ export default function TopicPage() {
           left: 0,
           zIndex: 9999,
         }}
+        allow='camera; microphone; fullscreen; display-capture'
         className='w-full h-full'/>
         )}
         </Grid>
