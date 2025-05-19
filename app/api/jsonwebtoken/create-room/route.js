@@ -34,6 +34,7 @@ export async function POST(req) {
       },
       features: {
         authentication: false,
+        recording: true,
         "lobby": false, 
         "room-lock": false, 
       }
