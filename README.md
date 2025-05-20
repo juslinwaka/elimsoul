@@ -105,17 +105,17 @@ ElimSoul includes a smart **Summarizing and Q&A AI**, enabling users to:
 |--------------|-----------------------------|
 | Frontend     | React.js / Next.js          |
 | Styling      | Tailwind CSS, material UI   |
-| front-end    | Typescript, Javascript, HTML|
-   scripting
+| front-end scripting    | Typescript, Javascript, HTML|
 | Backend      | Node.js Hugging Face, Python|
-| AI/NLP       | BART, DistilBERT models     |
+| AI/NLP       | facebook/bart-large-cnn, deepset/roberta-base-squad2 models|
 | DB/Auth      | Firebase                    |
 | Hosting      | Vercel + Firebase           |
 | DevOps       | Docker, GitHub Actions      |
 | Deployment   | Vercel, Huggingface-space   |
 |Real-time Chat| firebase firestore          |
-| Video Chat   | [Jaas](https://8x8.vc)|
+| Video Chat   | [Jaas](https://8x8.vc)      |
 |Backend-API   | FastAPI (Python)            |
+|Native App    |Android Studio, React Capacitor|
 
 > Offline-first architecture + multilingual support for rural Africa (English, Chichewa, Swahili)
 

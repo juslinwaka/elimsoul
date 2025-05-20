@@ -3,7 +3,7 @@ import type { CapacitorConfig } from '@capacitor/cli';
 const config: CapacitorConfig = {
   appId: 'com.elimsoul.app',
   appName: 'ElimSoul',
-  webDir: 'public'
+  webDir: 'app'
 };
 
 export default config;
