@@ -116,6 +116,7 @@ ElimSoul includes a smart **Summarizing and Q&A AI**, enabling users to:
 | Video Chat   | [Jaas](https://8x8.vc)      |
 |Backend-API   | FastAPI (Python)            |
 |Native App    |Android Studio, React Capacitor|
+|QA Backend    |Llama-index                  |
 
 > Offline-first architecture + multilingual support for rural Africa (English, Chichewa, Swahili)
 
