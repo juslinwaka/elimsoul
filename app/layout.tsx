@@ -15,7 +15,7 @@ export default function RootLayout({
 }>) {
 
   const pathname = usePathname();
-  const hideNavBar = pathname === '/' || pathname === '/signUp';
+  const hideNavBar = pathname === '/' || pathname === '/signUp' || pathname === '/gloss';
 
   return (
     <html lang="en">
