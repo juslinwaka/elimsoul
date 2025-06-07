@@ -9,6 +9,7 @@ import {Grid,
 import ProtectedRoute from '@/components/ProtectedRoute'
 import React, {useState} from 'react'
 import { useToast } from '@/hooks/toast';
+import glossMap from '@/data/gloss_to_video-placeholder.json' assert {type: 'json'};
 
 
 export default function GLOSS() {
@@ -17,10 +18,12 @@ export default function GLOSS() {
   const [email, setEmail] = useState('');
   const [title, setTitle] = useState('')
   const [desc, setDesc] = useState('')
-  const [summary, setSummary] = useState('')
+  const [gloss, setGloss] = useState('')
+  const [glossWords, setGlossWords] = useState<string[]>([]);
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const {showToast, Toast} = useToast();
+  const [videoPath, setVideoPath] = useState<string[]>([]);
 
   const handleReporting = async () => {
     if (!name || !email || !title || !desc) {
@@ -33,7 +36,7 @@ export default function GLOSS() {
         Email: ${email}
         Title: ${title}
         Description: ${desc}
-        Gloss Output: ${summary || 'N/A'}`;
+        Gloss Output: ${gloss || 'N/A'}`;
 
     const encoded = encodeURIComponent(msg);
     const whatsappURL = `https://wa.me/265999636142?text=${encoded}`;
@@ -44,7 +47,7 @@ export default function GLOSS() {
   const handleSummarize = async () => {
     setLoading(true);
     setError('');
-    setSummary('');
+    setGloss('');
 
     try{
       const response = await fetch('https://juslin-elim-api.hf.space/gloss', {
@@ -56,11 +59,30 @@ export default function GLOSS() {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to translate text');
+          const errorText = await response.text();
+          console.error("API error:", errorText);
+          setError(`Failed to translate text: ${errorText}`);
+          throw new Error(`API error: ${errorText}`);
       }
 
       const data = await response.json();
-      setSummary(data.gloss);
+      setGloss(data.gloss);
+
+      const words = data.gloss.trim().split(" ");
+      setGlossWords(words);
+
+      const videoMap: Record<string, string> = glossMap;
+
+      const videos = words
+        .map((word: string) => {
+          const clip = videoMap[word.toUpperCase()];
+
+          if (!clip) console.warn(`No video found for gloss: ${word}`);
+          return clip;
+        })
+        .filter(Boolean);
+
+      setVideoPath(videos);
       setInput(''); // Clear input after successful translation
       }catch{
         setError('Failed to translate text');
@@ -123,10 +145,22 @@ export default function GLOSS() {
                     </Typography>
                   )}
 
-                  {summary && (
+                  {gloss && (
                     <Paper elevation={3} sx={{ backgroundColor: 'white', mt: 4, p: 2 }}>
                         <Typography fontWeight='600' variant="subtitle1">Gloss:</Typography>
-                        <Typography fontWeight='500' variant="subtitle1">{summary}</Typography>
+                        <Typography fontWeight='500' variant="subtitle1">{gloss}</Typography>
+                        <Typography fontWeight='500' variant="subtitle1">{glossWords}</Typography>
+
+                        {videoPath.length > 0 && (
+                          <Box mt={2}>
+                            <Typography fontWeight='600' variant='subtitle1'> Sign Clips</Typography>
+                            <Box sx={{display: 'flex', flexWrap: 'wrap'}}>
+                              {videoPath.map((src, i) => (
+                                <video key={i} src={src} controls width='200' style={{ marginRight: 8, marginBottom: 8 }} />
+                              ))}
+                            </Box>
+                          </Box>
+                        )}
 
                         <TextField label="Your Name" fullWidth sx={{mt: 2}} value={name} onChange={e => setName(e.target.value)} />
                         <TextField label="Your Email" fullWidth sx={{mt: 2}} value={email} onChange={e => setEmail(e.target.value)} />

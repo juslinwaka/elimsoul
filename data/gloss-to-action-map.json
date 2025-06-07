@@ -1,0 +1,5 @@
+{
+  "NEED": { "type": "video", "src": "/msl/need.mp4" },
+  "HELP": { "type": "video", "src": "/msl/help.mp4" },
+  "STRONG": { "type": "video", "src": "/msl/strong.mp4" }
+}

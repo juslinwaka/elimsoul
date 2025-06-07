@@ -1,0 +1,52 @@
+{
+  "HELP": {
+    "description": "Dominant hand in A-handshape lifts flat non-dominant hand.",
+    "handshape": "A-hand + B-hand",
+    "motion": "Upward push"
+  },
+  "WANT": {
+    "description": "Both flat hands face up, pull toward chest with clawing motion.",
+    "handshape": "Clawed-5 hands",
+    "motion": "Pull inward"
+  },
+  "NEED": {
+    "description": "X-handshape bends downward like knocking.",
+    "handshape": "X-hand",
+    "motion": "Downward flick"
+  },
+  "YOU": {
+    "description": "Index finger points directly forward.",
+    "handshape": "1-hand",
+    "motion": "Stationary"
+  },
+  "ME": {
+    "description": "Index finger points to chest.",
+    "handshape": "1-hand",
+    "motion": "Stationary"
+  },
+  "I": {
+    "description": "Index finger touches chest.",
+    "handshape": "1-hand",
+    "motion": "Stationary"
+  },
+  "GO": {
+    "description": "Both index fingers point outward and move in direction.",
+    "handshape": "1-hands",
+    "motion": "Forward"
+  },
+  "COME": {
+    "description": "Both index fingers beckon inward toward signer.",
+    "handshape": "1-hands",
+    "motion": "Inward"
+  },
+  "EAT": {
+    "description": "Flattened O-hand taps mouth.",
+    "handshape": "O-hand",
+    "motion": "Tapping mouth"
+  },
+  "DRINK": {
+    "description": "Mimic holding a cup and sipping.",
+    "handshape": "C-hand",
+    "motion": "Tilt to mouth"
+  }
+}
