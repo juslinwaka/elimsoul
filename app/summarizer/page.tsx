@@ -9,6 +9,7 @@ import {Grid,
 import ProtectedRoute from '@/components/ProtectedRoute'
 import React, {useState} from 'react'
 import { useToast } from '@/hooks/toast';
+import TranslateToMSL from '@/components/translateToMSL';
 
 
 export default function Summerizer() {
@@ -49,7 +50,7 @@ export default function Summerizer() {
 
 
   return (
-    <div >
+    <div>
     <ProtectedRoute>
       <title>Summerizer Ai | ElimSoul</title>
         <Grid container spacing={2} sx={{height: '100vh', paddingTop: 7}}>
@@ -103,6 +104,9 @@ export default function Summerizer() {
                     <Paper elevation={3} sx={{ backgroundColor: 'white', mt: 4, p: 2 }}>
                       <Typography fontWeight='600' variant="subtitle1">Summary:</Typography>
                       <Typography fontWeight='500' variant="subtitle1">{summary}</Typography>
+
+                      {/*Translate to MSL Button Component*/}
+                      <TranslateToMSL text={summary}/>
                     </Paper>
                   )}
               </Box>

@@ -13,6 +13,7 @@ import {Grid,
 import {useEffect, useState } from 'react';
 import mammoth from "mammoth";
 import { useScreenConfig } from "@/hooks/screenConfig";
+import TranslateToMSL from '@/components/translateToMSL';
 
 const loadPdfJs = async () => {
   const pdfjsLib = await import("pdfjs-dist");
@@ -200,6 +201,9 @@ export default function ElimQA() {
                   {result.suggestion && (
                   <Typography color="info.main" sx={{ mt: 2 }}><em>Suggestion:</em> {result.suggestion}</Typography>
            )}
+
+           {/*Translate to MSL Button Component*/}
+               <TranslateToMSL text={result.answer}/>
           </Paper>
             )}
           </Box>
@@ -217,6 +221,8 @@ export default function ElimQA() {
                   {result.suggestion && (
                   <Typography color="info.main" sx={{ mt: 2 }}><em>Suggestion:</em> {result.suggestion}</Typography>
            )}
+           {/*Translate to MSL Button Component*/}
+               <TranslateToMSL text={result.answer}/>
           </Paper>
             )}
           </Box>

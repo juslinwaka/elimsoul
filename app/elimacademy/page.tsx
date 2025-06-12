@@ -1,11 +1,10 @@
 'use client'
 import Grid from '@mui/material/Grid'
 import ProtectedRoute from '@/components/ProtectedRoute'
-import TopNavBar from '@/components/topNavBar'
 
 export default function Academy() {
   return (
-    <div >
+    <div>
     <ProtectedRoute>
       <title>Academy Lab | ElimSoul</title>
         <Grid container spacing={2}>
