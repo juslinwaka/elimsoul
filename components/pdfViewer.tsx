@@ -32,9 +32,10 @@ export default function PDFViewer({ fileUrl }: PDFViewerProps) {
       sx={{
         backgroundColor: 'white',
         borderRadius: 2,
-        padding: 4,
-        maxWidth: '100%',
-        overflow: 'auto'
+        padding: 3,
+        maxWidth: '50%',
+        maxHeight: '90%',
+        overflow: 'inherit'
       }}
     >
       <Typography variant="h6" gutterBottom>
@@ -44,7 +45,7 @@ export default function PDFViewer({ fileUrl }: PDFViewerProps) {
       {loading && <CircularProgress sx={{ marginBottom: 2 }} />}
 
       <Document file={fileUrl} onLoadSuccess={onDocumentLoadSuccess}>
-        <Page pageNumber={pageNumber} width={600} />
+        <Page pageNumber={pageNumber} width={500} height={100} />
       </Document>
 
       <Grid container justifyContent="space-between" alignItems="center" mt={2}>

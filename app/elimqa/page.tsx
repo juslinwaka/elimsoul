@@ -17,7 +17,7 @@ import TranslateToMSL from '@/components/translateToMSL';
 
 const loadPdfJs = async () => {
   const pdfjsLib = await import("pdfjs-dist");
-  const workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/5.2.133/pdf.worker.min.js`;
+  const workerSrc = `/pdf.worker.js`;
 
   // Required for v5+
   pdfjsLib.GlobalWorkerOptions.workerSrc = workerSrc;

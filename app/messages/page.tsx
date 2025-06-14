@@ -83,10 +83,9 @@ export default function MessageBoard() {
         )}
 
         {isDesktop &&(
-            <Typography pt={10} variant="h2" fontSize={60} fontWeight={600} className='text-white' gutterBottom>
+            <Typography pt={10} variant="h2" fontSize={40} fontWeight={600} className='text-white' gutterBottom>
               Discussion Topics
             </Typography>
-         
         )}
        
 
