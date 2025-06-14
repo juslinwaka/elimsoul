@@ -4,15 +4,10 @@ import ProtectedRoute from '@/components/ProtectedRoute'
 
 export default function Academy() {
   return (
-    <div>
-    <ProtectedRoute>
+    <Grid container spacing={2}>
       <title>Academy Lab | ElimSoul</title>
-        <Grid container spacing={2}>
-          <Grid size={13}>
-          </Grid>
-     
+      <Grid size={13}>
       </Grid>
-      </ProtectedRoute>
-    </div>
+    </Grid>
   );
 }

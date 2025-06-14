@@ -71,6 +71,7 @@ export default function MessageBoard() {
 
   return (
     <main className="p-6 bg-gradient-blue" >
+      <title>Message Board | ElimSoul</title>
       <Grid p={2} spacing={2} container justifyContent='center' className="mb-4">
 
         {isMobile &&(

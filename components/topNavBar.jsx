@@ -83,14 +83,14 @@ const TopNavBar = () => {
               </Grid>
 
               <Grid xs>
-                <Typography pl={2} variant="h5" fontWeight={600}>
+                <Typography pl={1} variant="h5" fontWeight={600}>
                   ElimSoul
                 </Typography>
               </Grid>
 
               <Grid xs>
-                <Box display="flex" justifyContent="center" gap={1} pl={2}>
-                  <Button href='/' variant="text" passHref>Dashboard</Button>
+                <Box display="flex" justifyContent="center">
+                  <Button href='/dashboard' variant="text" passHref>Dashboard</Button>
                   <Button href='/elimqa' variant="text" passHref>Elim Q&A</Button>
                   <Button href='/summarizer' variant="text" passHref>Elim Summerizer</Button>
                   <Button href='/elimacademy' variant="text" passHref>Elim Academy</Button>
@@ -99,7 +99,7 @@ const TopNavBar = () => {
               </Grid>
 
               <Grid xs>
-                <Box display='flex' justifyContent='center' gap={1} pl={4}>
+                <Box display='flex' justifyContent='center' gap={1} pl={2}>
                   <Button href='/messages' variant="outlined" passHref>Messages</Button>
                   <Button href='/about' variant="outlined" passHref>About Us</Button>
                   <Button href='/settings' variant="outlined" passHref>Settings</Button>

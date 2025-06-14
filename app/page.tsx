@@ -121,8 +121,8 @@ export default function Home() {
           <Grid size={9} pt={3}>
           <Image
             src='/elimsoullogo.png'
-            width={300}
-            height={270}
+            width={200}
+            height={220}
             alt='Elimsoul Logo'/>
           </Grid>
 
@@ -228,18 +228,18 @@ export default function Home() {
           <Grid size={6}>
             <Image
               src='/elimsoullogo.png'
-              width={610}
-              height={510}
+              width={510}
+              height={410}
               alt='Elimsoul Logo'/>
           </Grid>
 
-        <Grid size={5}>
+        <Grid size={5} pt={3}>
           <Box  justifySelf='center'>
             <Grid container spacing={2}>
               <Grid size={8} justifySelf='center'>
                 <Typography pt={3} pl={3} variant='h1' 
                    style={{color: 'white'}}
-                   fontSize={80}>
+                   fontSize={60}>
                   Welcome to ElimSoul
                 </Typography>
               </Grid>

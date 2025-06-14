@@ -39,8 +39,7 @@ export default function Dashboard() {
     return
   }, []);
   return (
-    <div >
-    <ProtectedRoute>
+    <div className='w-full h-full'>
       <title>Dashboard | ElimSoul</title>
         <Grid container spacing={2}>
           <Grid size={12}>
@@ -97,7 +96,6 @@ export default function Dashboard() {
      
       </Grid>
     <BottomNavBar />
-      </ProtectedRoute>
     </div>
   );
 }
