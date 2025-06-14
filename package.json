@@ -29,10 +29,11 @@
     "mammoth": "^1.9.0",
     "next": "15.3.1",
     "next-auth": "^4.24.11",
-    "pdfjs-dist": "^5.2.133",
+    "pdfjs-dist": "^5.3.31",
     "process": "^0.11.10",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-pdf": "^9.2.1",
     "react-router-dom": "^7.6.0"
   },
   "devDependencies": {

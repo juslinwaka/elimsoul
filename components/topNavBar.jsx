@@ -64,7 +64,7 @@ const TopNavBar = () => {
               </Grid>
 
               <Grid  xs={3}>
-                <Typography variant="h6" fontWeight={600}>
+                <Typography variant="h6" fontWeight={600} sx={{color: 'white'}}>
                   ElimSoul
                 </Typography>
               </Grid>
@@ -83,7 +83,7 @@ const TopNavBar = () => {
               </Grid>
 
               <Grid xs>
-                <Typography pl={1} variant="h5" fontWeight={600}>
+                <Typography pl={1} variant="h5" fontWeight={600} sx={{color: 'white'}}>
                   ElimSoul
                 </Typography>
               </Grid>

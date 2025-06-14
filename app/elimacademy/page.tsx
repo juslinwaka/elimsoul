@@ -1,12 +1,13 @@
 'use client'
 import Grid from '@mui/material/Grid'
-import ProtectedRoute from '@/components/ProtectedRoute'
+import PDFViewer from '@/components/pdfViewer';
 
 export default function Academy() {
   return (
     <Grid container spacing={2}>
       <title>Academy Lab | ElimSoul</title>
-      <Grid size={13}>
+      <Grid size={12} pt={10}>
+        <PDFViewer fileUrl="/docs/Alphabets.pdf" />
       </Grid>
     </Grid>
   );
