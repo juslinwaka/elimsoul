@@ -46,7 +46,7 @@ const TopNavBar = () => {
             <>
               <Grid xs={2}>
                 <IconButton
-                  color="inherit"
+                sx={{ color: 'white', marginLeft: '5px' }}
                   edge="start"
                   onClick={handleDrawerToggle}
                 >
