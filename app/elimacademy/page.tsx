@@ -17,10 +17,12 @@ export default function Academy() {
   const [pdfPath, setPdfPath] = useState(''); 
   const {isMobile, isDesktop} = useScreenConfig();
 
-  const [menuAnchorEl, setMenuAnchorEl] = useState(null);
+  const [menuAnchorEl, setMenuAnchorEl] = useState<HTMLButtonElement | null>(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
   
-  const handleDrawerClick = (event) => {
+  interface DrawerClickEvent extends React.MouseEvent<HTMLButtonElement> {}
+
+  const handleDrawerClick = (event: DrawerClickEvent) => {
       setMenuAnchorEl(event.currentTarget);
   };
   
