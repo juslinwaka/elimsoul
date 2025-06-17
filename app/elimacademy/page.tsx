@@ -160,6 +160,14 @@ export default function Academy() {
                             >
                               <MenuIcon />
                             </IconButton>
+
+            <Box mt={2} textAlign="center">
+              <Typography variant="h5" fontWeight="semibold" sx={{color: 'white'}}>👋 Welcome to ElimSoul Academy – MSL Lessons 📚🤟</Typography>
+              <Typography variant="body1" mt={1} sx={{color: 'white'}}>
+                Dive into the beautiful world of Malawian Sign Language 🌍.  
+                Learn to sign the alphabet 🔤, emotions 😊, professions 👩🏽‍🏫, nature 🌳, and more — one lesson at a time!
+              </Typography>
+          </Box>
           </Grid>
         }
 
