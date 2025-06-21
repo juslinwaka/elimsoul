@@ -1,101 +1,129 @@
-'use client'
-import {Grid, 
-  Box,
-Typography,
-Paper} from '@mui/material'
-import ProtectedRoute from '@/components/ProtectedRoute'
-import TopNavBar from '@/components/topNavBar'
-import BottomNavBar from '@/components/bottomNavBar'
+// app/dashboard/page.tsx
+'use client';
 
-import React from 'react'
-import { useEffect, useState } from 'react'
-import { getAuth, onAuthStateChanged } from 'firebase/auth'
-import {doc, getDoc} from 'firebase/firestore'
-import { db } from '@/lib/firebase'
-import { useScreenConfig } from '@/hooks/screenConfig'
-import Leaderboard from '@/components/leaderBoard'
-import MyESP from '@/components/myesp'
-import '@/app/src/styles.css'
+import { useEffect, useState } from 'react';
+import { Grid, Typography, Box, CircularProgress, Button } from '@mui/material';
+import { doc, getDoc } from 'firebase/firestore';
+import { db, auth } from '@/lib/firebase';
+import XPSummary from '@/components/msl-comps/xpBadgeRank';
+import StreakBar from '@/components/msl-comps/streakXpSys';
+import { useScreenConfig } from '@/hooks/screenConfig';
 
 export default function Dashboard() {
-  const [userName, setUserName] = useState('');
-  const {isMobile, isDesktop} = useScreenConfig();
+  const [xp, setXp] = useState<number>(0);
+  const [streak, setStreak] = useState<number>(0);
+  const [lessonStats, setLessonStats] = useState<{ completed: number; total: number }>({ completed: 0, total: 0 });
+  const [loading, setLoading] = useState(true);
+  const { isMobile, isDesktop } = useScreenConfig();
 
   useEffect(() => {
-    const auth = getAuth();
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      if(user){
-        const userDoc = doc(db, 'users', user.uid);
-        const docSnap = await getDoc(userDoc);
+    const fetchStats = async () => {
+      const user = auth.currentUser;
+      if (!user) return;
 
-        if(docSnap.exists()){
-          setUserName(docSnap.data().name); // in case you want to use the name of the user and exists
-        }else{
-          setUserName(user.displayName || 'User') // fall back to auth display name
-        }
+      // XP and streak
+      const metaRef = doc(db, 'users', user.uid, 'meta', 'academyStats');
+      const metaSnap = await getDoc(metaRef);
+      if (metaSnap.exists()) {
+        const data = metaSnap.data();
+        setXp(data.xp || 0);
+        setStreak(data.streak || 0);
       }
-    });
 
-    return
+      // Lessons progress
+      const lessonIds = [
+        'alphabet', 'basic_convo', 'numbers', 'colors', 'education', 'emotions',
+        'family_people', 'health', 'professions', 'places', 'religion', 'time',
+        'sport', 'transportation'
+      ];
+
+      let completed = 0;
+      await Promise.all(
+        lessonIds.map(async (id) => {
+          const ref = doc(db, 'users', user.uid, 'progress', id);
+          const snap = await getDoc(ref);
+          if (snap.exists() && (snap.data().progress || 0) >= 100) completed++;
+        })
+      );
+      setLessonStats({ completed, total: lessonIds.length });
+      setLoading(false);
+    };
+
+    fetchStats();
   }, []);
+
   return (
-    <div className='w-full h-full'>
-      <title>Dashboard | ElimSoul</title>
-        <Grid container spacing={2}>
-          <Grid size={12}>
-          </Grid>
+    <Box p={3}>
+      {isMobile && (
+        <Box pt={6}>
+          <Typography sx={{ color: 'white', fontSize: 30, fontWeight: 'bold', textAlign: 'center' }}>
+        🎓 Your ElimSoul Academy Dashboard
+      </Typography>
 
-          <Grid size={7} pt={3} sx={{ marginTop: '20px' }} justifyContent='center'>
-            <Box sx={{border: 4, marginTop:'20',
-              padding: '20px', 
-              borderRadius: '8px' }} 
-              justifyItems='center'>
-                
-              <Typography variant='h3' style={{color:'white'}} fontWeight={600}>Verse Of The Day</Typography>
-              <p style={{color:'white', fontSize: 20}}>Psalm: 95:6</p>
+      {loading ? (
+        <Box display="flex" justifyContent="center" mt={4}>
+          <CircularProgress />
+        </Box>
+      ) : (
+        <>
+          <StreakBar streak={streak} xp={xp} />
+          <XPSummary xp={xp} />
 
-              <p style={{color:'white', fontSize: 20}}>"Come, let us bow down and worship; let us kneel before the Lord, our Maker." </p>
-            </Box>
-          </Grid>
+          <Box mt={3} textAlign="center">
+            <Typography variant="h6"
+            sx={{ color: 'pink' }}>
+              
+              📝 Lessons Completed: {lessonStats.completed} / {lessonStats.total}
+            </Typography>
+            <Button href='/elimacademy' variant='outlined'>Continue Lesson...</Button>
+            <Typography
+              variant="body2" sx={{ color: 'white', marginTop: 2, fontSize: 25, fontWeight: 'italic' }}>
+              Keep going! You're building sign language mastery day by day! 💪
+            </Typography>
+          </Box>
+        </>
+      )}
 
-          <Grid size={5} pt={3} sx={{ marginTop: '20px' }} justifyContent='center'>
-            <Box sx={{border: 4, marginTop:'5',
-              padding: '10px', 
-              borderRadius: '8px' }} 
-              justifyItems='center'>
-                
-              <Typography variant='h3' style={{color:'white'}} fontWeight={600}>{userName ? userName: '...'}</Typography>
-              <p style={{color:'white', fontSize: 20}}>Welcome to your ElimSoul dashboard!</p>
-            </Box>
-          </Grid>
+        </Box>
+      )}
 
-          {isMobile&& 
+      {isDesktop && (
+        <Box  pt={6}>
+          <Box display='flex' justifyContent='center'>
+            <XPSummary xp={xp} />
+          <Typography sx={{ color: 'white', fontSize: 30, 
+            fontWeight: 'bold', textAlign: 'center', marginTop: 6, marginLeft: 20 }}>
+        🎓 Your ElimSoul Academy Dashboard
+      </Typography>
 
-            <Grid container size={12}>
-              <Grid> 
-                <MyESP/>
-              </Grid>
+          </Box>
+          
+      {loading ? (
+        <Box display="flex" justifyContent="center" mt={4}>
+          <CircularProgress />
+        </Box>
+      ) : (
+        <>
+          <Typography></Typography>
+          <StreakBar streak={streak} xp={xp} />
 
-              <Grid> 
-                <Leaderboard/>
-              </Grid>
-            </Grid>
-          }
+          <Box mt={3} textAlign="center">
+            <Typography variant="h6"
+            sx={{ color: 'pink' }}>
+              
+              📝 Lessons Completed: {lessonStats.completed} / {lessonStats.total}
+            </Typography>
+            <Button href='/elimacademy' variant='outlined'>Continue Lesson...</Button>
+            <Typography
+              variant="body2" sx={{ color: 'white', marginTop: 2, fontSize: 25, fontWeight: 'italic' }}>
+              Keep going! You're building sign language mastery day by day! 💪
+            </Typography>
+          </Box>
+        </>
+      )}
 
-          {isDesktop &&
-            <Grid container size={12}>
-              <Grid size={6}> 
-                <MyESP/>
-              </Grid>
-
-              <Grid size={6}> 
-                <Leaderboard/>
-              </Grid>
-            </Grid>
-          }
-     
-      </Grid>
-    <BottomNavBar />
-    </div>
+    </Box>
+      )}
+    </Box>
   );
 }

@@ -27,7 +27,16 @@ export const ToastProvider: React.FC<React.PropsWithChildren<{}>> = ({ children 
       onClose={() => setOpen(false)}
       anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
     >
-      <Alert onClose={() => setOpen(false)} severity={severity} sx={{ width: '100%' }}>
+      <Alert
+        onClose={() => setOpen(false)}
+        severity={severity}
+        sx={{
+          width: '100%',
+          fontWeight: 'bold',
+          fontSize: '1rem',
+          animation: 'bounce 0.3s ease',
+        }}
+      >
         {message}
       </Alert>
     </Snackbar>
@@ -36,7 +45,14 @@ export const ToastProvider: React.FC<React.PropsWithChildren<{}>> = ({ children 
   return (
     <ToastContext.Provider value={{ showToast }}>
       {children}
-      <Toast /> 
+      <Toast />
+      <style jsx global>{`
+        @keyframes bounce {
+          0% { transform: scale(0.9); }
+          50% { transform: scale(1.1); }
+          100% { transform: scale(1); }
+        }
+      `}</style>
     </ToastContext.Provider>
   );
 };

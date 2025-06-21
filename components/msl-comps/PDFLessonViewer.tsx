@@ -1,12 +1,14 @@
+// component/msl-comps/PDFLessonViewer.tsx
 'use client'
 
 import { useEffect, useState } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
 import { Box, Button, Typography } from '@mui/material';
 import { getAuth } from 'firebase/auth';
-import { arrayUnion, doc, getDoc, setDoc } from 'firebase/firestore';
+import { arrayUnion, doc, getDoc, setDoc, increment } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { useScreenConfig } from '@/hooks/screenConfig';
+import { useToast } from '@/hooks/toast';
 
 pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.js';
 
@@ -24,6 +26,7 @@ export default function PDFLessonViewer({ lessonId, fileUrl, onCompleteFinal }: 
   const [isCompleteTriggered, setIsCompleteTriggered] = useState(false);
   const { isMobile, isDesktop } = useScreenConfig();
   const user = getAuth().currentUser;
+  const { showToast } = useToast();
 
   useEffect(() => {
     if (user) {
@@ -65,10 +68,18 @@ export default function PDFLessonViewer({ lessonId, fileUrl, onCompleteFinal }: 
         progress: cappedProgress,
       }, { merge: true });
 
+      // Award XP for unlocking a page
+      const metaRef = doc(db, `users/${user.uid}/meta`, 'academyStats');
+      await setDoc(metaRef, {
+        xp: increment(3),
+        lastEarnedAt: new Date(),
+      }, { merge: true });
+
+      showToast('+3 XP for unlocking new page 🚀', 'info');
+
       if (cappedPage < numPages) {
         setPageNumber(cappedPage);
       } else {
-        // Final page reached
         if (!isCompleteTriggered) {
           setIsCompleteTriggered(true);
           setTimeout(() => {

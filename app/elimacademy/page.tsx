@@ -1,3 +1,4 @@
+// ElimSoul Academy - MSL Lessons
 'use client'
 
 import Grid from '@mui/material/Grid';
@@ -8,8 +9,10 @@ import MiniQuiz from '@/components/msl-comps/mini-quiz-checker';
 import PDFLessonViewer from '@/components/msl-comps/PDFLessonViewer';
 import { useScreenConfig } from '@/hooks/screenConfig';
 import { useToast } from '@/hooks/toast';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { doc, getDoc, setDoc, increment } from 'firebase/firestore';
+import { Timestamp } from 'firebase/firestore';
 import { db, auth } from '@/lib/firebase';
+import StreakBar from '@/components/msl-comps/streakXpSys';
 
 export default function Academy() {
   const [pdfPath, setPdfPath] = useState('');
@@ -19,6 +22,8 @@ export default function Academy() {
   const [currentLesson, setCurrentLesson] = useState<string>('');
   const [nextLessonId, setNextLessonId] = useState<string>('');
   const [lessonProgress, setLessonProgress] = useState<{ [key: string]: number }>({});
+  const [xp, setXp] = useState(0);
+  const [streak, setStreak] = useState(0);
   const { showToast } = useToast();
   const user = auth.currentUser;
 
@@ -54,6 +59,49 @@ export default function Academy() {
     fetchProgress();
   }, [user]);
 
+  useEffect(() => {
+    const syncStats = async () => {
+      if (!user) return;
+      const metaRef = doc(db, 'users', user.uid, 'meta', 'academyStats');
+      const snap = await getDoc(metaRef);
+      const today = new Date().toISOString().split('T')[0];
+      const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
+
+      if (snap.exists()) {
+        const data = snap.data();
+        const lastDate = data.lastLoginDate || today;
+        setXp(data.xp || 0);
+        let newStreak = 1;
+
+        if (lastDate === today) {
+          setStreak(data.streak || 1);
+          return;
+        }
+        if (lastDate === yesterday) {
+          newStreak = (data.streak || 1) + 1;
+        }
+
+        await setDoc(metaRef, {
+          lastLoginDate: today,
+          streak: newStreak,
+        }, { merge: true });
+
+        setStreak(newStreak);
+        showToast(`🔥 You're on a ${newStreak}-day streak!`, 'info');
+      } else {
+        await setDoc(metaRef, {
+          xp: 0,
+          streak: 1,
+          lastLoginDate: today,
+        });
+        setXp(0);
+        setStreak(1);
+        showToast('🔥 Your streak begins today!', 'info');
+      }
+    };
+    syncStats();
+  }, [user]);
+
   const handleStartLesson = (lessonId: string, nextId: string) => {
     setCurrentLesson(lessonId);
     setNextLessonId(nextId);
@@ -68,21 +116,24 @@ export default function Academy() {
     if (passed && user && currentLesson) {
       const updated = { ...lessonProgress };
 
-      // Update current lesson to 100%
       const lessonRef = doc(db, 'users', user.uid, 'progress', currentLesson);
       await setDoc(lessonRef, { progress: 100 }, { merge: true });
       updated[currentLesson] = 100;
 
-      // Unlock next lesson
       if (nextLessonId) {
-        const nextLessonRef = doc(db, 'users', user.uid, 'progress', nextLessonId);
-        await setDoc(nextLessonRef, { progress: 10 }, { merge: true });
+        const nextRef = doc(db, 'users', user.uid, 'progress', nextLessonId);
+        await setDoc(nextRef, { progress: 10 }, { merge: true });
         updated[nextLessonId] = 10;
 
-        showToast('🎉 Congratulations! Next lesson unlocked.', 'success');
-      } else {
-        showToast('🎯 You completed the final lesson. Great work!', 'info');
+        showToast('🎉 Lesson complete! +20 XP earned.', 'success');
       }
+
+      const metaRef = doc(db, 'users', user.uid, 'meta', 'academyStats');
+      await setDoc(metaRef, {
+        xp: increment(20),
+        lastEarnedAt: Timestamp.now(),
+      }, { merge: true });
+      setXp((prev) => prev + 20);
 
       setLessonProgress({});
       setTimeout(() => {
@@ -92,10 +143,6 @@ export default function Academy() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }, 100);
     }
-
-    setPdfPath('');
-    setShowFinalQuiz(false);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
@@ -111,6 +158,8 @@ export default function Academy() {
             Dive into the beautiful world of Malawian Sign Language 🌍. Learn to sign the alphabet 🔤, emotions 😊, professions 👩🏽‍🏫, nature 🌳, and more — one lesson at a time!
           </Typography>
         </Box>
+
+        <StreakBar streak={streak} xp={xp} />
 
         <Box display='flex' flexWrap='wrap' justifyContent='center'>
           {lessonData.map((lesson, index) => (
