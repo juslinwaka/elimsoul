@@ -52,10 +52,10 @@ export default function SignIn() {
   
         const userData = userDoc.data();
         if (!userData.fullName || !userData.role){
-          router.push('/')
+          router.push('/dashboard')
           hideLoading();
         }else{
-          router.push('/dashboard')
+          router.push('/signIn')
           hideLoading();
         }
       }
