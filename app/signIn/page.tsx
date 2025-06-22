@@ -115,25 +115,27 @@ export default function SignIn() {
       try{
         showLoading();
         const result = await signInWithPopup(auth, provider);
+
         const token = await result.user.getIdToken();
+  
         const res = await fetch('/api/set-token', {
           method: 'POST',
           headers: {'Content-Type': 'application/json'},
           body: JSON.stringify({token}),
         });
-
+  
         const data = await res.json();
-
-        if (!res.ok) {
-          showToast(data.message || "Failed to create session", "error");
-        return;
-      }
-
-    showToast("Signed in successfully", "success");
-
+        
+        if (!res.ok){
+          showToast(data.message || "Error signing in", "error");
+          return;
+        }
+  
+        showToast("Signed in successfully", "success");
         await checkUserProfileAndRedirect(result.user.uid);
-        showToast("Signed in successful", "success");
+        await new Promise((resolve) => setTimeout(resolve, 500));
         router.push('/dashboard');
+  
       }catch (error: any) {
         showToast(error.message, "error");
       }finally{
