@@ -227,7 +227,7 @@ export default function SignIn() {
 
                 {isMobile && (
             <Box justifyContent='center' >
-                <Box width={300}
+                <Box width={280}
                 display='flow' 
                 height={550} 
                 sx={{margin: 2, backgroundColor: 'rgba(0, 123, 255, 0.2)', borderRadius: 2, boxShadow: 3}}
