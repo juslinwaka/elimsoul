@@ -29,7 +29,7 @@ const LogoutButton = () => {
   const handleLogout = async () => {
     try {
       await signOut(auth);
-      router.push('/');
+      router.push('/signIn');
     } catch (error) {
       console.error('Error signing out:', error);
     } finally {

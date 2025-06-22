@@ -39,7 +39,7 @@ const TopNavBar = () => {
   };
 
   return (
-    <AppBar position="fixed" color='default' elevation={1}>
+    <AppBar position='sticky' color='default' elevation={1} sx={{margin: 'auto'}}>
       <Toolbar disableGutters className='bg-gradient-blue' >
         <Grid container alignItems="center">
           {isMobile && (
