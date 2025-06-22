@@ -109,7 +109,7 @@ export default function Home() {
         variant="contained"
         fullWidth
         sx={{ mt: 2 }}
-        onClick={() => router.push('/dashboard')}
+        onClick={() => router.push('/signIn')}
       >
         Start My Journey 🌱
       </Button>
@@ -211,7 +211,7 @@ export default function Home() {
         variant="contained"
         fullWidth
         sx={{ mt: 2 }}
-        onClick={() => router.push('/dashboard')}
+        onClick={() => router.push('/signIn')}
       >
         Start My Journey 🌱
       </Button>
