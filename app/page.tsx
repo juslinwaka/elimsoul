@@ -22,7 +22,6 @@ export default function Home() {
       <Box sx={{margin: 'auto'}} justifyContent='center' justifyItems='center'>
         <Box width={1200}
           display='flow'
-          
           sx={{
             px: 4,
             py: 6, 
@@ -122,7 +121,7 @@ export default function Home() {
 
     {isMobile && (
       <Box justifyContent='center' justifyItems='center'>
-        <Box width={280}
+        <Box width={250}
           display='flow'
           
           sx={{
