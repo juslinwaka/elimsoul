@@ -42,24 +42,33 @@ export default function SignIn() {
     const router = useRouter();
   
     const checkUserProfileAndRedirect = async (uid: string) => {
-      const userDoc = await getDoc(doc(db, 'users', uid));
-  
-      if (!userDoc.exists()){
-        showToast("User profile not found. Redirecting to onboarding.", "info");
-        router.push('/')
-        hideLoading();
-      }else{
-  
-        const userData = userDoc.data();
-        if (!userData.fullName || !userData.role){
-          router.push('/signIn')
-          hideLoading();
-        }else{
-          router.push('/dashboard')
-          hideLoading();
-        }
-      }
+  try {
+    const userDoc = await getDoc(doc(db, 'users', uid));
+
+    if (!userDoc.exists()) {
+      showToast("User profile not found. Redirecting to onboarding.", "info");
+      router.push('/');
+      return;
     }
+
+    const userData = userDoc.data();
+
+    if (!userData || !userData.fullName || !userData.role) {
+      showToast("Incomplete profile. Redirecting to onboarding.", "info");
+      router.push('/onboarding'); // not /signIn
+      return;
+    }
+
+    router.push('/dashboard');
+  } catch (error) {
+    console.error("Error fetching user profile:", error);
+    showToast("Error verifying profile", "error");
+    router.push('/error');
+  } finally {
+    hideLoading();
+  }
+};
+
 
     const handleForgotPassword = async () => {
       if (!email) {
