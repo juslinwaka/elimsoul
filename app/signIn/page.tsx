@@ -226,7 +226,7 @@ export default function SignIn() {
         )}
 
                 {isMobile && (
-            <Box sx={{ margin: 'auto'}} justifyContent='center' >
+            <Box justifyContent='center' >
                 <Box width={300}
                 display='flow' 
                 height={550} 
