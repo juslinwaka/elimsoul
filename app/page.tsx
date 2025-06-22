@@ -122,7 +122,7 @@ export default function Home() {
 
     {isMobile && (
       <Box sx={{margin: 'auto'}} justifyContent='center' justifyItems='center'>
-        <Box width={320}
+        <Box width={300}
           display='flow'
           
           sx={{
