@@ -117,6 +117,7 @@ export default function SignIn() {
         const result = await signInWithPopup(auth, provider);
         await checkUserProfileAndRedirect(result.user.uid);
         showToast("Signed in successful", "success");
+        router.push('/dashboard');
       }catch (error: any) {
         showToast(error.message, "error");
       }finally{
