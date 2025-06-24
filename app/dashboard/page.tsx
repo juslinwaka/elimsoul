@@ -2,19 +2,27 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Grid, Typography, Box, CircularProgress, Button } from '@mui/material';
-import { doc, getDoc } from 'firebase/firestore';
+import { Grid, Typography, Box, CircularProgress } from '@mui/material';
+import { collection, doc, getDoc, getDocs, query } from 'firebase/firestore';
 import { db, auth } from '@/lib/firebase';
 import XPSummary from '@/components/msl-comps/xpBadgeRank';
 import StreakBar from '@/components/msl-comps/streakXpSys';
-import { useScreenConfig } from '@/hooks/screenConfig';
+import { PieChart, Pie, Cell, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+
+interface LeaderboardEntry {
+  uid: string;
+  name: string;
+  xp: number;
+}
 
 export default function Dashboard() {
   const [xp, setXp] = useState<number>(0);
   const [streak, setStreak] = useState<number>(0);
   const [lessonStats, setLessonStats] = useState<{ completed: number; total: number }>({ completed: 0, total: 0 });
+  const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
+  const [weeklyXpData, setWeeklyXpData] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const { isMobile, isDesktop } = useScreenConfig();
+  const COLORS = ['#0088FE', '#FFBB28'];
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -46,17 +54,52 @@ export default function Dashboard() {
         })
       );
       setLessonStats({ completed, total: lessonIds.length });
+
+      // Leaderboard XP from all users
+      const usersQuery = query(collection(db, 'users'));
+      const usersSnap = await getDocs(usersQuery);
+      const entries: LeaderboardEntry[] = [];
+
+      for (const userDoc of usersSnap.docs) {
+        const metaRef = doc(db, 'users', userDoc.id, 'meta', 'academyStats');
+        const metaSnap = await getDoc(metaRef);
+        if (metaSnap.exists()) {
+          const xpVal = metaSnap.data().xp || 0;
+          const name = userDoc.data()?.name || userDoc.id.slice(0, 6);
+          entries.push({ uid: userDoc.id, name, xp: xpVal });
+        }
+      }
+
+      const sorted = entries.sort((a, b) => b.xp - a.xp).slice(0, 5);
+      setLeaderboard(sorted);
+
+      // Weekly XP (for now, mock with fake data)
+      setWeeklyXpData([
+        { day: 'Mon', xp: 10 },
+        { day: 'Tue', xp: 20 },
+        { day: 'Wed', xp: 30 },
+        { day: 'Thu', xp: 15 },
+        { day: 'Fri', xp: 40 },
+        { day: 'Sat', xp: 50 },
+        { day: 'Sun', xp: 25 },
+      ]);
+
       setLoading(false);
     };
 
     fetchStats();
   }, []);
 
+  const getMedal = (index: number) => {
+    if (index === 0) return '🥇';
+    if (index === 1) return '🥈';
+    if (index === 2) return '🥉';
+    return '🎖️';
+  };
+
   return (
     <Box p={3}>
-      {isMobile && (
-        <Box pt={6}>
-          <Typography sx={{ color: 'white', fontSize: 30, fontWeight: 'bold', textAlign: 'center' }}>
+      <Typography variant="h4" gutterBottom>
         🎓 Your ElimSoul Academy Dashboard
       </Typography>
 
@@ -69,60 +112,47 @@ export default function Dashboard() {
           <StreakBar streak={streak} xp={xp} />
           <XPSummary xp={xp} />
 
-          <Box mt={3} textAlign="center">
-            <Typography variant="h6"
-            sx={{ color: 'pink' }}>
-              
-              📝 Lessons Completed: {lessonStats.completed} / {lessonStats.total}
-            </Typography>
-            <Button href='/elimacademy' variant='outlined'>Continue Lesson...</Button>
-            <Typography
-              variant="body2" sx={{ color: 'white', marginTop: 2, fontSize: 25, fontWeight: 'italic' }}>
-              Keep going! You're building sign language mastery day by day! 💪
-            </Typography>
+          <Box mt={4} display="flex" justifyContent="center" alignItems="center" flexWrap="wrap">
+            <Box textAlign="center" m={2}>
+              <Typography variant="h6">📝 Lessons Completed</Typography>
+              <PieChart width={120} height={120}>
+                <Pie
+                  data={[{ name: 'Done', value: lessonStats.completed }, { name: 'Remaining', value: lessonStats.total - lessonStats.completed }]}
+                  dataKey="value"
+                  outerRadius={50}
+                  fill="#8884d8"
+                >
+                  {COLORS.map((color, index) => (
+                    <Cell key={`cell-${index}`} fill={color} />
+                  ))}
+                </Pie>
+              </PieChart>
+              <Typography>{lessonStats.completed} / {lessonStats.total}</Typography>
+            </Box>
+
+            <Box textAlign="center" m={2}>
+              <Typography variant="h6">🏆 Leaderboard</Typography>
+              {leaderboard.map((entry, index) => (
+                <Typography key={entry.uid}>
+                  {getMedal(index)} {entry.name} — {entry.xp} XP
+                </Typography>
+              ))}
+            </Box>
+
+            <Box textAlign="center" m={2}>
+              <Typography variant="h6">📊 Weekly XP</Typography>
+              <ResponsiveContainer width={280} height={180}>
+                <LineChart data={weeklyXpData}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="day" />
+                  <YAxis />
+                  <Tooltip />
+                  <Line type="monotone" dataKey="xp" stroke="#82ca9d" strokeWidth={2} />
+                </LineChart>
+              </ResponsiveContainer>
+            </Box>
           </Box>
         </>
-      )}
-
-        </Box>
-      )}
-
-      {isDesktop && (
-        <Box  pt={6}>
-          <Box display='flex' justifyContent='center'>
-            <XPSummary xp={xp} />
-          <Typography sx={{ color: 'white', fontSize: 30, 
-            fontWeight: 'bold', textAlign: 'center', marginTop: 6, marginLeft: 20 }}>
-        🎓 Your ElimSoul Academy Dashboard
-      </Typography>
-
-          </Box>
-          
-      {loading ? (
-        <Box display="flex" justifyContent="center" mt={4}>
-          <CircularProgress />
-        </Box>
-      ) : (
-        <>
-          <Typography></Typography>
-          <StreakBar streak={streak} xp={xp} />
-
-          <Box mt={3} textAlign="center">
-            <Typography variant="h6"
-            sx={{ color: 'pink' }}>
-              
-              📝 Lessons Completed: {lessonStats.completed} / {lessonStats.total}
-            </Typography>
-            <Button href='/elimacademy' variant='outlined'>Continue Lesson...</Button>
-            <Typography
-              variant="body2" sx={{ color: 'white', marginTop: 2, fontSize: 25, fontWeight: 'italic' }}>
-              Keep going! You're building sign language mastery day by day! 💪
-            </Typography>
-          </Box>
-        </>
-      )}
-
-    </Box>
       )}
     </Box>
   );

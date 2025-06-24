@@ -10,7 +10,7 @@ export default function Settings() {
     <ProtectedRoute>
       <title>Settings | ElimSoul</title>
         <Grid container spacing={2}>
-          <Grid size={13}>
+          <Grid size={12}>
           </Grid>
      
       </Grid>

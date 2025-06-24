@@ -102,7 +102,7 @@ export default function MessageBoard() {
 
       </Grid>
 
-      <Grid container spacing={2} p={2} >
+      <Grid container spacing={2}>
         {topics.length > 0 ? (
           topics.map((topic) => (
             <Grid key={topic.id} justifyContent='center' justifySelf='center' justifyItems='center'>

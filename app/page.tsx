@@ -16,209 +16,130 @@ export default function Home() {
   const router = useRouter();
 
   return (
-  <Grid>
-    <title>Getting Started | Elimsoul </title>
+  <Grid container spacing={2}>
     {isDesktop && (
-      <Box sx={{margin: 'auto'}} justifyContent='center' justifyItems='center'>
-        <Box width={1200}
-          display='flow'
-          sx={{
-            px: 4,
-            py: 6, 
-            maxWidth: 800,
-            mx: 'auto',
-            backdropFilter: 'blur(6px)',
-            backgroundColor: 'rgb(0, 123, 255, 0.05)',
-            borderRadius: 4,
-            boxShadow: 3
-          }}
-          justifyItems='center'>
-             <Typography variant="h3" sx={{color: 'white'}} fontWeight="bold" gutterBottom>
-        ✨ Get Started with ElimSoul
-      </Typography>
+      <Box sx={{margin: 'auto'}} justifyContent='center'>
+        <Box 
+          width={1200}
+            display='flex'  
+            sx={{margin: 2,padding: 2, backgroundColor: 'rgba(0, 123, 255, 0.2)', borderRadius: 2, boxShadow: 3}}
+                >
+                  <Box justifyContent='center'>
+                    <Typography sx={{fontSize: 35, fontWeight: '600',
+                      color: 'rgb(205, 255, 200, 0.6)',
+                      marginTop: 2, marginLeft: 3}}>Your Journey Begins Here.</Typography>
+                    <Typography 
+                      variant='h5'
+                      sx={{fontWeight: 600, 
+                      fontSize: 30, 
+                      padding: 5,
+                      maxWidth: 300,
+                      color: 'rgb(025, 255, 200, 0.6)'}}>Unlocking potential by bridging the education gap</Typography>
 
-      <Typography variant="h6" color="text.secondary" mb={4}>
-        Where purpose meets growth.
-      </Typography>
+                      <Typography sx={{color: 'white'}}>ElimSoul is a transformative digital platform designed to nurture underprivileged children. It blends AI-powered learning, sign language support,
+                         and challenge-based engagement to build purpose, confidence, and connection.</Typography>
 
-      {/* Step 1 */}
-      <Typography variant="h5" sx={{color: 'white'}} fontWeight="medium" gutterBottom>
-        🚀 Step 1: Create or Sign In
-      </Typography>
-      <Typography mb={2} sx={{color: 'white'}}>
-        Sign up to begin your journey or log in to continue. You’ll unlock access to AI support, lesson paths, XP rewards, and more.
-      </Typography>
-      <Stack direction="row" spacing={2} mb={4} >
-        <Button variant="contained" onClick={() => router.push('/signUp')}>
-          Sign Up
-        </Button>
-        <Button variant="outlined" onClick={() => router.push('/signIn')}>
-          Sign In
-        </Button>
-      </Stack>
+                      <Box display='flex' justifyItems='center' justifyContent='center' marginTop={1}>
+                        <Button variant='contained'
+                          sx={{marginLeft: 6}}
+                          href='/signIn'>Sign In</Button>
+                        <Button variant='outlined'
+                          sx={{marginLeft: 6}}
+                          href='/signUp'>Create An Account</Button>
 
-      <Divider sx={{ my: 4, '&::before, &::after': { borderColor: 'primary.light' } }}>
-        OR
-      </Divider>
+                      </Box>
 
-      {/* Step 2 */}
-      <Typography variant="h5" fontWeight="medium" gutterBottom sx={{color: 'white'}}>
-        📚 Step 2: Choose Your Path
-      </Typography>
-      <Typography mb={2} >
-        Explore a world of learning and spiritual growth:
-      </Typography>
-      <ul >
-        <li ><strong>ElimSoul Academy</strong> – Learn core school subjects with interactive XP-tracked lessons.</li>
-        <li><strong>MSL Zone</strong> – Master sign language through animated gloss-based videos.</li>
-        <li><strong>Voice of Purpose</strong> – Share your voice, be heard, and get featured.</li>
-        <li><strong>Light Challenge</strong> – Join a 7-day transformational challenge.</li>
-      </ul>
+                    <Button 
+                      variant='outlined'
+                      fullWidth
+                      sx={{margin: 3}}
+                      href='/dashboard'>Get Started</Button>
 
-      <Divider sx={{ my: 4 }} />
+                  </Box>
 
-      {/* Step 3 */}
-      <Typography sx={{color: 'white'}} variant="h5" fontWeight="medium" gutterBottom>
-        🌟 Step 3: Engage, Earn, and Grow
-      </Typography>
-      <Typography mb={2}>
-        Complete lessons, earn XP, maintain streaks, and grow your soul and mind.
-      </Typography>
-      <ul>
-        <li>🧩 Solve quizzes to unlock content</li>
-        <li>🎖️ Earn badges and track your streaks</li>
-        <li>💬 Share your voice to inspire others</li>
-        <li>🎁 Refer friends and unlock secret content</li>
-      </ul>
-
-      {/* Help Section */}
-      <Box mt={4}>
-        <Typography variant="body1" color="text.secondary" sx={{color: 'white'}}>
-          🙋 Need help? Click <strong>"Ask ElimSoul"</strong> anytime for instant support from our AI guide.
-        </Typography>
-      </Box>
-
-      <Divider sx={{ my: 4 }} />
-
-      {/* Final CTA */}
-      <Typography variant="h6" mb={2} sx={{color: 'white'}}>
-        You have greatness inside you. Let’s unlock it together.
-      </Typography>
-      <Button
-        size="large"
-        variant="contained"
-        fullWidth
-        sx={{ mt: 2 }}
-        onClick={() => router.push('/signIn')}
-      >
-        Start My Journey 🌱
-      </Button>
-
-        </Box>
+                  <Box marginLeft={20} justifyContent='center' justifyItems='center'>
+                    <Image
+                      src="/children.png"
+                      alt="Hero Image"
+                      width={600}
+                      height={450}
+                      style={{borderRadius: '10px'}}
+                    />
+                    <Typography sx={{fontSize: 35, fontWeight: '600',
+                      color: 'rgb(205, 255, 200, 0.6)',
+                      marginTop: 2}}>Welcome to Elimsoul</Typography>
+                       <Typography 
+                      variant='h5'
+                      sx={{fontWeight: 600, 
+                      fontSize: 15, 
+                      color: 'rgb(025, 255, 200, 0.6)'}}>I see you, I hear you. You are allowed to learn and Dream</Typography>
+                  </Box>
+                  
 
       </Box>
+    </Box>
     )}
 
     {isMobile && (
-      <Box justifyContent='center' justifyItems='center'>
-        <Box width={250}
-          display='flow'
-          
-          sx={{
-            px: 4,
-            py: 6, 
-            maxWidth: 800,
-            mx: 'auto',
-            backdropFilter: 'blur(6px)',
-            backgroundColor: 'rgb(0, 123, 255, 0.05)',
-            borderRadius: 4,
-            boxShadow: 3
-          }}
-          justifyItems='center'>
-             <Typography variant="h3" sx={{color: 'white'}} fontWeight="bold" gutterBottom>
-        ✨ Get Started with ElimSoul
-      </Typography>
+      <Box justifyContent='center'>
+        <Box 
+          width={250}
+            display='flow'  
+            sx={{margin: 2,padding: 2, backgroundColor: 'rgba(0, 123, 255, 0.2)', borderRadius: 2, boxShadow: 3}}
+                >
+                   <Box justifyContent='center' justifyItems='center'>
+                    <Image
+                      src="/children.png"
+                      alt="Hero Image"
+                      width={200}
+                      height={200}
+                      style={{borderRadius: '10px'}}
+                    />
+                    <Typography sx={{fontSize: 25, fontWeight: '600',
+                      color: 'rgb(205, 255, 200, 0.6)',
+                      marginTop: 2}}>Welcome to Elimsoul</Typography>
+                       <Typography 
+                      variant='h5'
+                      sx={{fontWeight: 600, 
+                      fontSize: 15, 
+                      color: 'rgb(025, 255, 200, 0.6)'}}>I see you, I hear you. You are allowed to learn and Dream</Typography>
+                  </Box>
 
-      <Typography variant="h6" color="text.secondary" mb={4}>
-        Where purpose meets growth.
-      </Typography>
+                  <Box justifyContent='center'>
+                    <Typography sx={{fontSize: 35, fontWeight: '600',
+                      color: 'rgb(205, 255, 200, 0.6)',
+                      marginTop: 2, marginLeft: 3}}>Your Journey Begins Here.</Typography>
+                    <Typography 
+                      variant='h5'
+                      sx={{fontWeight: 600, 
+                      fontSize: 25, 
+                      padding: 5,
+                      maxWidth: 300,
+                      color: 'rgb(025, 255, 200, 0.6)'}}>Unlocking potential by bridging the education gap</Typography>
 
-      {/* Step 1 */}
-      <Typography variant="h5" sx={{color: 'white'}} fontWeight="medium" gutterBottom>
-        🚀 Step 1: Create or Sign In
-      </Typography>
-      <Typography mb={2} sx={{color: 'white'}}>
-        Sign up to begin your journey or log in to continue. You’ll unlock access to AI support, lesson paths, XP rewards, and more.
-      </Typography>
-      <Stack direction="row" spacing={2} mb={4} >
-        <Button variant="contained" onClick={() => router.push('/signUp')}>
-          Sign Up
-        </Button>
-        <Button variant="outlined" onClick={() => router.push('/signIn')}>
-          Sign In
-        </Button>
-      </Stack>
+                      <Typography sx={{color: 'white'}}>ElimSoul is a transformative digital platform designed to nurture underprivileged children. It blends AI-powered learning, sign language support,
+                         and challenge-based engagement to build purpose, confidence, and connection.</Typography>
 
-      <Divider sx={{ my: 4, '&::before, &::after': { borderColor: 'primary.light' } }}>
-        OR
-      </Divider>
+                      <Box display='flex'>
+                        <Button variant='contained'
+                        fullWidth
+                        sx={{mrginBottom: 2}}
+                          href='/signIn'>Sign In</Button>
+                        <Button variant='outlined'
+                          href='/signUp'>Create An Account</Button>
+                      </Box>
 
-      {/* Step 2 */}
-      <Typography variant="h5" fontWeight="medium" gutterBottom sx={{color: 'white'}}>
-        📚 Step 2: Choose Your Path
-      </Typography>
-      <Typography mb={2} >
-        Explore a world of learning and spiritual growth:
-      </Typography>
-      <ul >
-        <li ><strong>ElimSoul Academy</strong> – Learn core school subjects with interactive XP-tracked lessons.</li>
-        <li><strong>MSL Zone</strong> – Master sign language through animated gloss-based videos.</li>
-        <li><strong>Voice of Purpose</strong> – Share your voice, be heard, and get featured.</li>
-        <li><strong>Light Challenge</strong> – Join a 7-day transformational challenge.</li>
-      </ul>
+                    <Button 
+                      variant='outlined'
+                      fullWidth
+                      sx={{marginTop: 2}}
+                      href='/dashboard'>Get Started</Button>
 
-      <Divider sx={{ my: 4 }} />
-
-      {/* Step 3 */}
-      <Typography sx={{color: 'white'}} variant="h5" fontWeight="medium" gutterBottom>
-        🌟 Step 3: Engage, Earn, and Grow
-      </Typography>
-      <Typography mb={2}>
-        Complete lessons, earn XP, maintain streaks, and grow your soul and mind.
-      </Typography>
-      <ul>
-        <li>🧩 Solve quizzes to unlock content</li>
-        <li>🎖️ Earn badges and track your streaks</li>
-        <li>💬 Share your voice to inspire others</li>
-        <li>🎁 Refer friends and unlock secret content</li>
-      </ul>
-
-      {/* Help Section */}
-      <Box mt={4}>
-        <Typography variant="body1" color="text.secondary" sx={{color: 'white'}}>
-          🙋 Need help? Click <strong>"Ask ElimSoul"</strong> anytime for instant support from our AI guide.
-        </Typography>
-      </Box>
-
-      <Divider sx={{ my: 4 }} />
-
-      {/* Final CTA */}
-      <Typography variant="h6" mb={2} sx={{color: 'white'}}>
-        You have greatness inside you. Let’s unlock it together.
-      </Typography>
-      <Button
-        size="large"
-        variant="contained"
-        fullWidth
-        sx={{ mt: 2 }}
-        onClick={() => router.push('/signIn')}
-      >
-        Start My Journey 🌱
-      </Button>
-
-        </Box>
+                  </Box>
+  
 
       </Box>
+    </Box>
     )}
   </Grid>
   );

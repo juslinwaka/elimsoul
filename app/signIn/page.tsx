@@ -175,7 +175,8 @@ export default function SignIn() {
                 <Box width={500}
                 display='flow' 
                 height={550} 
-                sx={{margin: 2, backgroundColor: 'rgba(0, 123, 255, 0.2)', borderRadius: 2, boxShadow: 3}}
+                sx={{margin: 2, padding: 2, 
+                  backgroundColor: 'rgba(0, 123, 255, 0.2)', borderRadius: 2, boxShadow: 3}}
                 //justifyContent='center'
                 justifyItems='center'>
                     <AccountCircle fontSize='large' sx={{fontSize: 100, marginTop: 5, color: 'white'}}/>
@@ -218,7 +219,7 @@ export default function SignIn() {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required/>
-                    </form>
+                    
 
                     <Button
                         variant='outlined'
@@ -236,18 +237,21 @@ export default function SignIn() {
                     <Button
                         fullWidth
                         variant='text' 
+                        href='/signUp'
                         sx={{marginTop: 2,
                             Color: 'rgba(0, 123, 255, 0.5)'
-                        }}>Don't have an account. <Link href='/signUp'> Sign Up</Link></Button>
+                        }}>Don't have an account. Sign Up</Button>
 
                     <Divider sx={{my: 2, color: 'white', marginTop: 2, marginBottom: 2, width: '100%'}}>OR</Divider>
 
                     <Button variant='outlined'
-                     sx={{marginLeft: 2, marginRight: 2, 
+                     sx={{ 
                         backgroundColor: 'orange', color: 'black',
                      }}
                      fullWidth
                      onClick={handleGoogleSignIn}>Sign In With Google</Button>
+
+                   </form>
                 </Box>
 
             </Box>
@@ -255,9 +259,8 @@ export default function SignIn() {
 
                 {isMobile && (
             <Box justifyContent='center' >
-                <Box width={280}
+                <Box width={275}
                 display='flow' 
-                height={550} 
                 sx={{margin: 2, backgroundColor: 'rgba(0, 123, 255, 0.2)', borderRadius: 2, boxShadow: 3}}
                 //justifyContent='center'
                 justifyItems='center'>
@@ -301,7 +304,7 @@ export default function SignIn() {
                             }}
                             onChange={(e) => setPassword(e.target.value)}
                             required/>
-                </form>
+                
                     <Button
                         variant='outlined'
                         fullWidth 
@@ -326,11 +329,13 @@ export default function SignIn() {
                     <Divider sx={{my: 2, color: 'white', marginTop: 2, marginBottom: 2, width: '100%'}}>OR</Divider>
 
                     <Button variant='outlined'
+                    
                      sx={{
-                        backgroundColor: 'orange', color: 'black',
+                        backgroundColor: 'orange', color: 'black'
                      }}
                      fullWidth
                      onClick={handleGoogleSignIn}>Sign In With Google</Button>
+                     </form>
                 </Box>
 
             </Box>

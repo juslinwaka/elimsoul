@@ -60,6 +60,7 @@ const TopNavBar = () => {
                   alt="Logo"
                   width={40}
                   height={40}
+                  onClick={{href: '/'}}
                 />
               </Grid>
 
