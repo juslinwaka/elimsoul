@@ -8,6 +8,24 @@ import { db, auth } from '@/lib/firebase';
 import XPSummary from '@/components/msl-comps/xpBadgeRank';
 import StreakBar from '@/components/msl-comps/streakXpSys';
 import { PieChart, Pie, Cell, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { useScreenConfig } from '@/hooks/screenConfig';
+import Sidebar from '@/components/SideBar';
+
+import {
+  Drawer,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Toolbar
+} from '@mui/material';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import HomeWorks from '@/components/homeworkSideBar';
+
+const drawerWidth = 240;
 
 interface LeaderboardEntry {
   uid: string;
@@ -23,11 +41,25 @@ export default function Dashboard() {
   const [weeklyXpData, setWeeklyXpData] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const COLORS = ['#0088FE', '#FFBB28'];
+  const [userName, setUserName] = useState<string | null>(null);
+
+
+  const {isMobile, isDesktop} = useScreenConfig();
 
   useEffect(() => {
     const fetchStats = async () => {
       const user = auth.currentUser;
       if (!user) return;
+
+      // Fetch user's name from Firestore
+      const userRef = doc(db, 'users', user.uid);
+      const userSnap = await getDoc(userRef);
+      if (userSnap.exists()) {
+        const data = userSnap.data();
+        setUserName(data.name || 'friend');
+      } else {
+        setUserName('friend');
+      }
 
       // XP and streak
       const metaRef = doc(db, 'users', user.uid, 'meta', 'academyStats');
@@ -98,62 +130,313 @@ export default function Dashboard() {
   };
 
   return (
-    <Box p={3}>
-      <Typography variant="h4" gutterBottom>
-        🎓 Your ElimSoul Academy Dashboard
-      </Typography>
+    <Box>
+      {isDesktop && (
+        <Grid size={12}>
+          <Box
+            display='flow' 
+            sx={{margin: 1, 
+              backgroundColor: 'rgba(02, 205, 255, 0.6)', borderRadius: 2, boxShadow: 3}}>
+                <Grid container spacing={1}>
+                  <Grid size={3}>
+                    <Box
+                      display='flow' 
+                      sx={{margin: 2,
+                      backgroundColor: 'rgba(02, 205, 255, 0.6)', borderRadius: 2, boxShadow: 3}}>
+                       <Sidebar />
 
-      {loading ? (
-        <Box display="flex" justifyContent="center" mt={4}>
-          <CircularProgress />
-        </Box>
-      ) : (
-        <>
-          <StreakBar streak={streak} xp={xp} />
-          <XPSummary xp={xp} />
+                      </Box>
 
-          <Box mt={4} display="flex" justifyContent="center" alignItems="center" flexWrap="wrap">
-            <Box textAlign="center" m={2}>
-              <Typography variant="h6">📝 Lessons Completed</Typography>
-              <PieChart width={120} height={120}>
-                <Pie
-                  data={[{ name: 'Done', value: lessonStats.completed }, { name: 'Remaining', value: lessonStats.total - lessonStats.completed }]}
-                  dataKey="value"
-                  outerRadius={50}
-                  fill="#8884d8"
-                >
-                  {COLORS.map((color, index) => (
-                    <Cell key={`cell-${index}`} fill={color} />
-                  ))}
-                </Pie>
-              </PieChart>
-              <Typography>{lessonStats.completed} / {lessonStats.total}</Typography>
-            </Box>
+                  </Grid>
 
-            <Box textAlign="center" m={2}>
-              <Typography variant="h6">🏆 Leaderboard</Typography>
-              {leaderboard.map((entry, index) => (
-                <Typography key={entry.uid}>
-                  {getMedal(index)} {entry.name} — {entry.xp} XP
-                </Typography>
-              ))}
-            </Box>
+                  <Grid size={6}>
+                    <Box
+                      display='flow' 
+                      sx={{margin: 2, padding: 2, 
+                      backgroundColor: 'rgba(02, 205, 255, 0.6)', borderRadius: 2, boxShadow: 3}}>
+                        <Typography sx={{fontWeight: 300, color: 'white', fontSize: 20}}>Welcome Back, {userName}!</Typography>
+                        <Typography sx={{fontSize: 12}}>Your current summary and activities.</Typography>
 
-            <Box textAlign="center" m={2}>
-              <Typography variant="h6">📊 Weekly XP</Typography>
-              <ResponsiveContainer width={280} height={180}>
-                <LineChart data={weeklyXpData}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="day" />
-                  <YAxis />
-                  <Tooltip />
-                  <Line type="monotone" dataKey="xp" stroke="#82ca9d" strokeWidth={2} />
-                </LineChart>
-              </ResponsiveContainer>
-            </Box>
+                        <StreakBar streak={streak} xp={xp} />
+
+                        <Box display='flex' sx={{padding: 1,
+                        backgroundColor: 'rgba(02, 205, 255, 0.6)', borderRadius: 2, boxShadow: 3}}>
+
+                          <Box display='flow'
+                            width={150}
+                            height={60}
+                            justifyItems='center'
+                            justifyContent='center'  
+                            sx={{padding: 1,
+                            backgroundColor: 'rgba(02, 105, 255, 0.6)', borderRadius: 2, boxShadow: 3}}>
+                            <Typography sx={{fontSize: 12, color: 'white'}}>Completed Courses</Typography>
+                            <Typography sx={{marginTop: 1, fontSize: 25, color: 'white'}}>0</Typography>
+                          </Box>
+
+                          <Box display='flow'
+                            width={150}
+                            height={60} 
+                            justifyItems='center' 
+                            justifyContent='center'
+                            sx={{padding: 1, marginLeft: 2,
+                            backgroundColor: 'rgba(02, 105, 255, 0.6)', borderRadius: 2, boxShadow: 3}}>
+                            <Typography sx={{fontSize: 12, color: 'white'}}>In progress course</Typography>
+                            <Typography sx={{marginTop: 1, fontSize: 25, color: 'white'}}>0</Typography>
+                          </Box>
+
+                          <Box display='flow'
+                            width={150}
+                            height={60}
+                            justifyItems='center'
+                            justifyContent='center'   
+                            sx={{padding: 1, marginLeft: 2,
+                            backgroundColor: 'rgba(02, 105, 255, 0.6)', borderRadius: 2, boxShadow: 3}}>
+                            <Typography sx={{fontSize: 12, color: 'white'}}>Up coming course</Typography>
+                            <Typography sx={{marginTop: 1, fontSize: 25, color: 'white'}}>0</Typography>
+                          </Box>
+
+                        </Box>
+                      </Box>
+
+                  </Grid>
+
+                  <Grid size={3}>
+                    <Box
+                      display='flow'
+                      sx={{margin: 2,
+                      backgroundColor: 'rgba(02, 205, 255, 0.6)', borderRadius: 2, boxShadow: 3}}>
+                        
+                        <HomeWorks /> 
+                      </Box>
+
+                  </Grid>
+
+                  <Grid size={12}>
+                    <Box
+                      display='flex'
+                      sx={{margin: 1,
+                        padding: 1,
+                      backgroundColor: 'rgba(02, 205, 255, 0.6)', borderRadius: 2, boxShadow: 3}}>
+                        <Box sx={{marginLeft: 2, padding: 1,
+                          backgroundColor: 'rgba(02, 105, 255, 0.6)', borderRadius: 2, boxShadow: 3
+                          }}>
+                            <XPSummary xp={xp}/>
+                        </Box>
+                         
+                      
+                      <Box display='flow' width={250} justifyContent='center' justifyItems='center' sx={{marginLeft: 2, pading: 2, 
+                        backgroundColor: 'rgba(02, 105, 255, 0.6)', borderRadius: 2, boxShadow: 3
+                        }}>
+                          <Typography sx={{fontSize: 15, color: 'white'}}>📝 Lessons Completed</Typography>
+                        <PieChart width={120} height={120}>
+                        <Pie
+                            data={[{ name: 'Done', value: lessonStats.completed }, { name: 'Remaining', value: lessonStats.total - lessonStats.completed }]}
+                            dataKey="value"
+                            outerRadius={50}
+                            fill="#8884d8"
+                        >
+                        {COLORS.map((color, index) => (
+                        <Cell key={`cell-${index}`} fill={color} />
+                        ))}
+                      </Pie>
+                      </PieChart>
+                      <Typography sx={{fontWeight: 'bold'}}>{lessonStats.completed} / {lessonStats.total}</Typography>
+                      </Box>
+                        
+                      <Box sx={{marginLeft: 2, padding: 1,
+                        backgroundColor: 'rgba(02, 105, 255, 0.6)', borderRadius: 2, boxShadow: 3,
+                        width: 350}}>
+                          <XPSummary xp={xp}/>
+                      </Box>
+
+                      <Box sx={{marginLeft: 2, padding: 1,
+                        backgroundColor: 'rgba(02, 105, 255, 0.6)', borderRadius: 2, boxShadow: 3,
+                        width: 200}}>
+                          <Typography variant="h6">🏆 Leaderboard</Typography>
+                              {leaderboard.map((entry, index) => (
+                                <Typography key={entry.uid}>
+                                    {getMedal(index)} {entry.name} — {entry.xp} XP
+                                </Typography>
+                          ))}
+                      </Box>
+
+                      <Box display='flow' sx={{marginLeft: 2, padding:1,
+                        backgroundColor: 'rgba(02, 105, 255, 0.6)',color: 'white', borderRadius: 2, boxShadow: 3,
+                        width: 200}}>
+                          <Typography>📊 Weekly XP</Typography>
+                                        <ResponsiveContainer  height={150}>
+                                          <LineChart data={weeklyXpData}>
+                                            <CartesianGrid strokeDasharray="3 3" />
+                                            <XAxis dataKey="day" />
+                                            <YAxis />
+                                            <Tooltip />
+                                            <Line type="monotone" dataKey="xp" stroke="#82ca9d" strokeWidth={2} />
+                                          </LineChart>
+                                        </ResponsiveContainer>
+                      </Box>
+                    </Box>
+
+                  </Grid>
+                </Grid>
+
           </Box>
-        </>
+
+        </Grid>
       )}
-    </Box>
+
+      {isMobile && (
+        <Grid size={12}>
+          <Box
+            display='flow' 
+            sx={{margin: 1, 
+              backgroundColor: 'rgba(02, 205, 255, 0.6)', borderRadius: 2, boxShadow: 3}}>
+                <Grid container spacing={1}>
+
+                  <Grid size={12}>
+                    <Box
+                      display='flow' 
+                      sx={{margin: 2, padding: 2, 
+                      backgroundColor: 'rgba(02, 205, 255, 0.6)', borderRadius: 2, boxShadow: 3}}>
+                        <Typography sx={{fontWeight: 300, color: 'white', fontSize: 20}}>Welcome Back, {userName}!</Typography>
+                        <Typography sx={{fontSize: 12}}>Your current summary and activities.</Typography>
+
+                        <StreakBar streak={streak} xp={xp} />
+
+                        <Box justifyItems='center' display='flow' sx={{padding: 1,
+                        backgroundColor: 'rgba(02, 205, 255, 0.6)', borderRadius: 2, boxShadow: 3}}>
+
+                          <Box display='flow'
+                            width={150}
+                            height={60}
+                            justifyItems='center'
+                            justifyContent='center'  
+                            sx={{padding: 1,
+                            backgroundColor: 'rgba(02, 105, 255, 0.6)', borderRadius: 2, boxShadow: 3}}>
+                            <Typography sx={{fontSize: 12, color: 'white'}}>Completed Courses</Typography>
+                            <Typography sx={{marginTop: 1, fontSize: 25, color: 'white'}}>0</Typography>
+                          </Box>
+
+                          <Box display='flow'
+                            width={150}
+                            height={60} 
+                            justifyItems='center' 
+                            justifyContent='center'
+                            sx={{padding: 1, marginTop: 2,
+                            backgroundColor: 'rgba(02, 105, 255, 0.6)', borderRadius: 2, boxShadow: 3}}>
+                            <Typography sx={{fontSize: 12, color: 'white'}}>In progress course</Typography>
+                            <Typography sx={{marginTop: 1, fontSize: 25, color: 'white'}}>0</Typography>
+                          </Box>
+
+                          <Box display='flow'
+                            width={150}
+                            height={60}
+                            justifyItems='center'
+                            justifyContent='center'   
+                            sx={{padding: 1, marginTop: 2,
+                            backgroundColor: 'rgba(02, 105, 255, 0.6)', borderRadius: 2, boxShadow: 3}}>
+                            <Typography sx={{fontSize: 12, color: 'white'}}>Up coming course</Typography>
+                            <Typography sx={{marginTop: 1, fontSize: 25, color: 'white'}}>0</Typography>
+                          </Box>
+
+                        </Box>
+                      </Box>
+
+                  </Grid>
+
+                  <Grid size={12}>
+                    <Box
+                      display='flow' 
+                      sx={{margin: 2,
+                      backgroundColor: 'rgba(02, 205, 255, 0.6)', borderRadius: 2, boxShadow: 3}}>
+                       <Sidebar />
+
+                      </Box>
+
+                  </Grid>
+
+                  <Grid size={12}>
+                    <Box
+                      display='flow'
+                      sx={{margin: 2,
+                      backgroundColor: 'rgba(02, 205, 255, 0.6)', borderRadius: 2, boxShadow: 3}}>
+                        
+                        <HomeWorks /> 
+                      </Box>
+
+                  </Grid>
+
+                  <Grid size={12}>
+                    <Box
+                      display='flow'
+                      sx={{margin: 1,
+                        padding: 1,
+                      backgroundColor: 'rgba(02, 205, 255, 0.6)', borderRadius: 2, boxShadow: 3}}>
+                        <Box sx={{padding: 1,
+                          backgroundColor: 'rgba(02, 105, 255, 0.6)', borderRadius: 2, boxShadow: 3
+                          }}>
+                            <XPSummary xp={xp}/>
+                        </Box>
+                         
+                      
+                      <Box display='flow' justifyContent='center' justifyItems='center' sx={{pading: 2, marginTop: 2, 
+                        backgroundColor: 'rgba(02, 105, 255, 0.6)', borderRadius: 2, boxShadow: 3
+                        }}>
+                          <Typography sx={{fontSize: 15, color: 'white'}}>📝 Lessons Completed</Typography>
+                        <PieChart width={150} height={150}>
+                        <Pie
+                            data={[{ name: 'Done', value: lessonStats.completed }, { name: 'Remaining', value: lessonStats.total - lessonStats.completed }]}
+                            dataKey="value"
+                            outerRadius={50}
+                            fill="#8884d8"
+                        >
+                        {COLORS.map((color, index) => (
+                        <Cell key={`cell-${index}`} fill={color} />
+                        ))}
+                      </Pie>
+                      </PieChart>
+                      <Typography sx={{fontWeight: 'bold'}}>{lessonStats.completed} / {lessonStats.total}</Typography>
+                      </Box>
+                        
+                      <Box sx={{padding: 1, marginTop: 2,
+                        backgroundColor: 'rgba(02, 105, 255, 0.6)', borderRadius: 2, boxShadow: 3,
+                        width: 250}}>
+                          <XPSummary xp={xp}/>
+                      </Box>
+
+                      <Box sx={{padding: 1, marginTop: 2,
+                        backgroundColor: 'rgba(02, 105, 255, 0.6)', borderRadius: 2, boxShadow: 3,
+                        width: 250}}>
+                          <Typography variant="h6">🏆 Leaderboard</Typography>
+                              {leaderboard.map((entry, index) => (
+                                <Typography key={entry.uid}>
+                                    {getMedal(index)} {entry.name} — {entry.xp} XP
+                                </Typography>
+                          ))}
+                      </Box>
+
+                      <Box display='flow' sx={{padding:1, marginTop: 2,
+                        backgroundColor: 'rgba(02, 105, 255, 0.6)',color: 'white', borderRadius: 2, boxShadow: 3,
+                        width: 250}}>
+                          <Typography>📊 Weekly XP</Typography>
+                                        <ResponsiveContainer  height={150}>
+                                          <LineChart data={weeklyXpData}>
+                                            <CartesianGrid strokeDasharray="3 3" />
+                                            <XAxis dataKey="day" />
+                                            <YAxis />
+                                            <Tooltip />
+                                            <Line type="monotone" dataKey="xp" stroke="#82ca9d" strokeWidth={2} />
+                                          </LineChart>
+                                        </ResponsiveContainer>
+                      </Box>
+                    </Box>
+
+                  </Grid>
+                </Grid>
+
+          </Box>
+
+        </Grid>
+      )}
+  </Box>
   );
 }
