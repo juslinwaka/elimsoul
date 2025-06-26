@@ -4,11 +4,11 @@
 import Grid from '@mui/material/Grid';
 import { Box, Typography } from '@mui/material';
 import React, { useState, useEffect } from 'react';
+import LessonCard from '@/components/msl-comps/LessonCard';
 import MiniQuiz from '@/components/msl-comps/mini-quiz-checker';
 import PDFLessonViewer from '@/components/msl-comps/PDFLessonViewer';
 import { useScreenConfig } from '@/hooks/screenConfig';
 import { useToast } from '@/hooks/toast';
-import { useSearchParams } from 'next/navigation';
 import { doc, getDoc, setDoc, increment } from 'firebase/firestore';
 import { Timestamp } from 'firebase/firestore';
 import { db, auth } from '@/lib/firebase';
@@ -17,6 +17,7 @@ import StreakBar from '@/components/msl-comps/streakXpSys';
 export default function Academy() {
   const [pdfPath, setPdfPath] = useState('');
   const { isMobile, isDesktop } = useScreenConfig();
+  const [showQuiz, setShowQuiz] = useState(false);
   const [showFinalQuiz, setShowFinalQuiz] = useState(false);
   const [currentLesson, setCurrentLesson] = useState<string>('');
   const [nextLessonId, setNextLessonId] = useState<string>('');
@@ -25,8 +26,6 @@ export default function Academy() {
   const [streak, setStreak] = useState(0);
   const { showToast } = useToast();
   const user = auth.currentUser;
-  const searchParams = useSearchParams();
-  const lessonQuery = searchParams.get('lesson');
 
   const lessonData = [
     { title: 'MSL Alphabet', lessonId: 'alphabet', pdf: '/docs/Alphabets.pdf' },
@@ -103,20 +102,15 @@ export default function Academy() {
     syncStats();
   }, [user]);
 
-  useEffect(() => {
-    if (lessonQuery) {
-      const current = lessonData.find((l) => l.lessonId === lessonQuery);
-      const next = lessonData[lessonData.findIndex((l) => l.lessonId === lessonQuery) + 1];
-
-      if (current) {
-        setCurrentLesson(current.lessonId);
-        setNextLessonId(next?.lessonId || '');
-        setPdfPath(current.pdf);
-        setShowFinalQuiz(false);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
-    }
-  }, [lessonQuery]);
+  const handleStartLesson = (lessonId: string, nextId: string) => {
+    setCurrentLesson(lessonId);
+    setNextLessonId(nextId);
+    const selected = lessonData.find(lesson => lesson.lessonId === lessonId);
+    setPdfPath(selected?.pdf || '');
+    setShowQuiz(false);
+    setShowFinalQuiz(false);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   const handleFinalQuizCompletion = async (passed: boolean) => {
     if (passed && user && currentLesson) {
@@ -155,24 +149,42 @@ export default function Academy() {
     <Grid container spacing={2} justifyContent='center' alignItems='center'>
       <title>Academy Lab | ElimSoul</title>
 
-      <Grid size={12} pt={6} justifyContent='center' justifyItems='center'>
-        <Box sx={{margin: 2,width: 1000, padding: 2, 
-              backgroundColor: 'rgba(02, 205, 255, 0.6)', borderRadius: 2, boxShadow: 3}}>
+      <Grid size={12} pt={6}>
+        <Box mt={2} textAlign="center">
+          <Typography variant="h5" fontWeight="semibold" sx={{ color: 'white' }}>
+            👋 Welcome to ElimSoul Academy – MSL Lessons 📚🤟
+          </Typography>
+          <Typography variant="body1" mt={1} sx={{ color: 'white' }}>
+            Dive into the beautiful world of Malawian Sign Language 🌍. Learn to sign the alphabet 🔤, emotions 😊, professions 👩🏽‍🏫, nature 🌳, and more — one lesson at a time!
+          </Typography>
+        </Box>
 
-                {pdfPath && (
+        <StreakBar streak={streak} xp={xp} />
+
+        <Box display='flex' flexWrap='wrap' justifyContent='center'>
+          {lessonData.map((lesson, index) => (
+            <LessonCard
+              key={lesson.lessonId}
+              title={lesson.title}
+              lessonId={lesson.lessonId}
+              previousLessonId={index === 0 ? undefined : lessonData[index - 1].lessonId}
+              onClick={() => handleStartLesson(lesson.lessonId, lessonData[index + 1]?.lessonId || '')}
+              progress={lessonProgress[lesson.lessonId] || 0}
+            />
+          ))}
+        </Box>
+
+        {pdfPath && (
+          <Grid size={12} mt={4}>
             <PDFLessonViewer
               fileUrl={pdfPath}
               lessonId={currentLesson}
               onCompleteFinal={() => setShowFinalQuiz(true)}
             />
+          </Grid>
         )}
 
-        </Box>
-
-        
-
-        {showFinalQuiz && <MiniQuiz lessonId={currentLesson} 
-          nextLessonId={nextLessonId} onComplete={handleFinalQuizCompletion} />}
+        {showFinalQuiz && <MiniQuiz lessonId={currentLesson} nextLessonId={nextLessonId} onComplete={handleFinalQuizCompletion} />}
       </Grid>
     </Grid>
   );

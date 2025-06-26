@@ -92,9 +92,9 @@ export default function PDFLessonViewer({ lessonId, fileUrl, onCompleteFinal }: 
   };
 
   return (
-    <Box sx={{ backgroundColor: 'white', p: 2 }}>
+    <Box sx={{ backgroundColor: 'white', maxHeight:800}}>
       <Document file={fileUrl} onLoadSuccess={onDocumentLoadSuccess}>
-        <Page pageNumber={pageNumber} width={isMobile ? 320 : 900} />
+        <Page pageNumber={pageNumber} width={700} height={100} />
       </Document>
 
       <Typography align="center" mt={1}>Page {pageNumber} of {numPages}</Typography>

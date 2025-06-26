@@ -59,7 +59,7 @@ export default function Home() {
 
                   <Box marginLeft={20} justifyContent='center' justifyItems='center'>
                     <Image
-                      src="/children.png"
+                      src="/Gifs/Project 1.gif"
                       alt="Hero Image"
                       width={600}
                       height={450}
@@ -88,8 +88,8 @@ export default function Home() {
             sx={{margin: 2,padding: 2, backgroundColor: 'rgba(0, 123, 255, 0.2)', borderRadius: 2, boxShadow: 3}}
                 >
                    <Box justifyContent='center' justifyItems='center'>
-                    <Image
-                      src="/children.png"
+                    <img
+                      src="/Gifs/Project 1.gif"
                       alt="Hero Image"
                       width={200}
                       height={200}
