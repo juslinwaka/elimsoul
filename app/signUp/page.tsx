@@ -1,3 +1,5 @@
+// app/signUp.tsx
+
 'use client'
 import { Box, Typography, TextField, 
   RadioGroup, Radio, FormControlLabel,

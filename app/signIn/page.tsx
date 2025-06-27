@@ -1,3 +1,5 @@
+// app/signIn.tsx
+
 'use client'
 import Link from 'next/link'
 import React, {useState} from 'react';
@@ -55,11 +57,16 @@ export default function SignIn() {
 
     if (!userData || !userData.fullName || !userData.role) {
       showToast("Incomplete profile. Redirecting to onboarding.", "info");
-      router.push('/onboarding'); // not /signIn
+      router.push('/onboarding');
       return;
     }
 
-    router.push('/dashboard');
+    // ✅ Redirect based on role
+    if (userData.role === 'Instructor') {
+      router.push('/instructorsDashboard');
+    } else {
+      router.push('/dashboard');
+    }
   } catch (error) {
     console.error("Error fetching user profile:", error);
     showToast("Error verifying profile", "error");
@@ -89,36 +96,34 @@ export default function SignIn() {
 
   
     const handleSignIn = async () => {
-      try{
-        showLoading();
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
-  
-        const token = await userCredential.user.getIdToken();
-  
-        const res = await fetch('/api/set-token', {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({token}),
-        });
-  
-        const data = await res.json();
-        
-        if (!res.ok){
-          showToast(data.message || "Error signing in", "error");
-          return;
-        }
-  
-        showToast("Signed in successfully", "success");
-        await checkUserProfileAndRedirect(userCredential.user.uid);
-        await new Promise((resolve) => setTimeout(resolve, 500));
-        router.push('/dashboard');
-  
-      }catch (error: any) {
-        showToast(error.message, "error");
-      }finally{
-        hideLoading();
-      }
+  try {
+    showLoading();
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const token = await userCredential.user.getIdToken();
+
+    const res = await fetch('/api/set-token', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token }),
+    });
+
+    if (!res.ok) {
+      showToast("Error signing in", "error");
+      return;
     }
+
+    showToast("Signed in successfully", "success");
+
+    // Use the uid from sign-in result (NOT auth.currentUser)
+    await checkUserProfileAndRedirect(userCredential.user.uid);
+
+  } catch (error: any) {
+    showToast(error.message || 'Sign-in error', 'error');
+  } finally {
+    hideLoading();
+  }
+};
+
   
     const handleGoogleSignIn = async () => {
       try{
