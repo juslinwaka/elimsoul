@@ -49,7 +49,7 @@ export default function SignIn() {
 
     if (!userDoc.exists()) {
       showToast("User profile not found. Redirecting to onboarding.", "info");
-      router.push('/');
+    
       return;
     }
 
@@ -57,7 +57,6 @@ export default function SignIn() {
 
     if (!userData || !userData.fullName || !userData.role) {
       showToast("Incomplete profile. Redirecting to onboarding.", "info");
-      router.push('/onboarding');
       return;
     }
 
@@ -172,7 +171,7 @@ export default function SignIn() {
     })
 
   return (
-    <Grid container spacing={2}>
+    <Grid container spacing={2} width='100%'>
         <title>Sign In | Elimsoul</title>
         {isDesktop && (
             <Box sx={{ margin: 'auto'}} justifyContent='center' >
@@ -264,14 +263,15 @@ export default function SignIn() {
 
                 {isMobile && (
             <Box justifyContent='center' >
-                <Box width={275}
+                <Box width='auto'
                 display='flow' 
                 sx={{margin: 2, backgroundColor: 'rgba(0, 123, 255, 0.2)', borderRadius: 2, boxShadow: 3}}
                 //justifyContent='center'
                 justifyItems='center'>
                     <AccountCircle fontSize='large' sx={{fontSize: 100, marginTop: 5, color: 'white'}}/>
-                    <Typography variant='h6'>Welcome to Elimsoul</Typography>
-                <form>
+                    <Typography variant='h6' justifySelf='center'>Welcome to Elimsoul</Typography>
+
+                <form >
                     <TextField
                         label='Email'
                         sx={{marginTop: 2,

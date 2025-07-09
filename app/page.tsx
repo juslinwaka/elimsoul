@@ -8,6 +8,7 @@ import { Button, Typography, TextField,
   Divider, Stack } from '@mui/material'
 import { useScreenConfig } from '@/hooks/screenConfig'
 import { useRouter } from 'next/navigation';
+import ProtectedRoute from '@/components/ProtectedRoute'
 
 import '@/app/src/styles.css'
 
@@ -16,11 +17,11 @@ export default function Home() {
   const router = useRouter();
 
   return (
-  <Grid container spacing={2}>
+  <Grid container spacing={2} width='100%'>
     {isDesktop && (
       <Box sx={{margin: 'auto'}} justifyContent='center'>
         <Box 
-          width={1200}
+          width='auto'
             display='flex'  
             sx={{margin: 2,padding: 2, backgroundColor: 'rgba(0, 123, 255, 0.2)', borderRadius: 2, boxShadow: 3}}
                 >
@@ -83,7 +84,7 @@ export default function Home() {
     {isMobile && (
       <Box justifyContent='center'>
         <Box 
-          width={250}
+          width='auto'
             display='flow'  
             sx={{margin: 2,padding: 2, backgroundColor: 'rgba(0, 123, 255, 0.2)', borderRadius: 2, boxShadow: 3}}
                 >

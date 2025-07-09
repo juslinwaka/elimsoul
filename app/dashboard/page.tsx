@@ -10,6 +10,7 @@ import StreakBar from '@/components/msl-comps/streakXpSys';
 import { PieChart, Pie, Cell, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { useScreenConfig } from '@/hooks/screenConfig';
 import Sidebar from '@/components/SideBar';
+import BottomNavBar from '@/components/bottomNavBar'
 
 import {
   Drawer,
@@ -19,10 +20,7 @@ import {
   ListItemText,
   Toolbar
 } from '@mui/material';
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import MenuBookIcon from '@mui/icons-material/MenuBook';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+
 import HomeWorks from '@/components/homeworkSideBar';
 
 const drawerWidth = 240;
@@ -290,6 +288,7 @@ export default function Dashboard() {
             display='flow' 
             sx={{margin: 1, 
               backgroundColor: 'rgba(02, 205, 255, 0.6)', borderRadius: 2, boxShadow: 3}}>
+              <BottomNavBar />
                 <Grid container spacing={1}>
 
                   <Grid size={12}>
