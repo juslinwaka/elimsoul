@@ -4,7 +4,6 @@ import jwt from 'jsonwebtoken';
 const APP_ID = process.env.NEXT_PUBLIC_JAAS_APP_ID; // Set in .env.local
 const PRIVATE_KEY_RAW = process.env.NEXT_PUBLIC_JAAS_PRIVATE_KEY;
 const PRIVATE_KEY = PRIVATE_KEY_RAW ? PRIVATE_KEY_RAW.replace(/\\n/g, '\n') : undefined; // Set in .env.local
-const PUBLIC_KEY = process.env.NEXT_PUBLIC_JAAS_API_KEY;
 
 
 export async function POST(req) {

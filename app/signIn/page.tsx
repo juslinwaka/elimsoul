@@ -49,6 +49,7 @@ export default function SignIn() {
 
     if (!userDoc.exists()) {
       showToast("User profile not found. Redirecting to onboarding.", "info");
+      router.push('dashboard')
     
       return;
     }
@@ -171,7 +172,7 @@ export default function SignIn() {
     })
 
   return (
-    <Grid container spacing={2} width='100%'>
+    <Grid container spacing={2} width='100%' justifyContent='center'>
         <title>Sign In | Elimsoul</title>
         {isDesktop && (
             <Box sx={{ margin: 'auto'}} justifyContent='center' >

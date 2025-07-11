@@ -118,15 +118,17 @@ export default function Home() {
                       maxWidth: 300,
                       color: 'rgb(025, 255, 200, 0.6)'}}>Unlocking potential by bridging the education gap</Typography>
 
-                      <Typography sx={{color: 'white'}}>ElimSoul is a transformative digital platform designed to nurture underprivileged children. It blends AI-powered learning, sign language support,
+                      <Typography sx={{color: 'white', marginBottom: 2}}>ElimSoul is a transformative digital platform designed to nurture underprivileged children. It blends AI-powered learning, sign language support,
                          and challenge-based engagement to build purpose, confidence, and connection.</Typography>
 
-                      <Box display='flex'>
+                      <Box display='flow'>
                         <Button variant='contained'
                         fullWidth
                         sx={{mrginBottom: 2}}
                           href='/signIn'>Sign In</Button>
+
                         <Button variant='outlined'
+                        fullWidth
                           href='/signUp'>Create An Account</Button>
                       </Box>
 
@@ -135,10 +137,7 @@ export default function Home() {
                       fullWidth
                       sx={{marginTop: 2}}
                       href='/dashboard'>Get Started</Button>
-
                   </Box>
-  
-
       </Box>
     </Box>
     )}

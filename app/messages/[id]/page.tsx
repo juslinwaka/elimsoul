@@ -219,7 +219,7 @@ export default function TopicPage() {
 
   return (
     <main className="p-6" style={{ position: 'relative'}}>
-      <Typography p={2} variant="subtitle1" gutterBottom>
+      <Typography p={2} sx={{color: 'white'}} variant="subtitle1" gutterBottom>
         Author: {topic.author}
       </Typography>
 
@@ -292,7 +292,7 @@ export default function TopicPage() {
 
       <Divider className="my-4" style={{margin:3}}/>
 
-      <Typography variant="h6" gutterBottom>
+      <Typography variant="h6" gutterBottom sx={{color: 'white'}}>
         Replies
       </Typography>
 
@@ -313,7 +313,7 @@ export default function TopicPage() {
 
       <Divider className="my-4" />
       
-            <Typography variant="h6" color='success' gutterBottom style={{color: 'black'}}>
+            <Typography variant="h6" sx={{color: 'gray'}} gutterBottom>
               Add a Reply
             </Typography>
             <TextField
