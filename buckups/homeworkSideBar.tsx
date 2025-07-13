@@ -1,5 +1,3 @@
-// Assignment display component integrated from provided UI
-
 'use client';
 
 import {
@@ -12,7 +10,12 @@ import {
   Paper,
   CircularProgress,
 } from '@mui/material';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AssignmentIcon from '@mui/icons-material/Assignment';
+import { Report } from '@mui/icons-material';
+import { IntegrationInstructionsRounded } from '@mui/icons-material';
 import { useEffect, useState } from 'react';
 import { db, auth } from '@/lib/firebase';
 import { collection, getDocs } from 'firebase/firestore';
@@ -23,7 +26,7 @@ interface Assignment {
   status: string;
 }
 
-export default function AlphabetAssignmentBoard() {
+export default function HomeWorks() {
   const [assignments, setAssignments] = useState<Assignment[]>([]);
   const [loading, setLoading] = useState(true);
   const user = auth.currentUser;
@@ -86,7 +89,7 @@ export default function AlphabetAssignmentBoard() {
               <ListItem
                 key={assignment.id}
                 component="a"
-                href={`/assignmentView/${assignment.id}`}
+                href={`/assignments/${assignment.id}`}
                 sx={{
                   backgroundColor: 'rgba(255,255,255,0.1)',
                   borderRadius: 1,

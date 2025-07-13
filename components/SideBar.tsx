@@ -60,6 +60,7 @@ export default function CustomSidebar() {
     { title: 'Time', lessonId: 'time' },
     { title: 'Sport', lessonId: 'sport' },
     { title: 'Transportation', lessonId: 'transportation' },
+    {title: 'Weather & Nature', lessonId: 'weather_nature' },
   ];
 
   const courseData = [
@@ -285,11 +286,31 @@ export default function CustomSidebar() {
                 >
                   <MenuItem sx={{backgroundColor: 'black', color: 'white'}} onClick={() => handleClose('Instructors')} 
                   component="a" href="/profile/view">
-                    View Profile
+                    MSL Instructors
                   </MenuItem>
                   <MenuItem sx={{backgroundColor: 'black', color: 'white'}} onClick={() => handleClose('Instructors')} 
                   component="a" href="/profile/settings">
-                    Settings
+                    English Language Instructors
+                  </MenuItem>
+                  <MenuItem sx={{backgroundColor: 'black', color: 'white'}} onClick={() => handleClose('Instructors')} 
+                  component="a" href="/profile/view">
+                    Mathematics Instructors
+                  </MenuItem>
+                  <MenuItem sx={{backgroundColor: 'black', color: 'white'}} onClick={() => handleClose('Instructors')} 
+                  component="a" href="/profile/settings">
+                    Social and Moral Studies Instructors
+                  </MenuItem>
+                  <MenuItem sx={{backgroundColor: 'black', color: 'white'}} onClick={() => handleClose('Instructors')} 
+                  component="a" href="/profile/view">
+                    General Science Instructors
+                  </MenuItem>
+                  <MenuItem sx={{backgroundColor: 'black', color: 'white'}} onClick={() => handleClose('Instructors')} 
+                  component="a" href="/profile/settings">
+                    Civil/Religious Instructors
+                  </MenuItem>
+                  <MenuItem sx={{backgroundColor: 'black', color: 'white'}} onClick={() => handleClose('Instructors')} 
+                  component="a" href="/profile/settings">
+                    Agriculture Instructors
                   </MenuItem>
                 </Menu>
         
@@ -323,10 +344,25 @@ export default function CustomSidebar() {
                   onClose={() => handleClose('Resources')}
                 >
                   <MenuItem sx={{backgroundColor: 'black', color: 'white'}} onClick={() => handleClose('Resources')} component="a" href="/profile/view">
-                    View Profile
+                    MSL Resources
                   </MenuItem>
                   <MenuItem sx={{backgroundColor: 'black', color: 'white'}} onClick={() => handleClose('Resources')} component="a" href="/profile/settings">
-                    Settings
+                    English Language Resources
+                  </MenuItem>
+                  <MenuItem sx={{backgroundColor: 'black', color: 'white'}} onClick={() => handleClose('Resources')} component="a" href="/profile/settings">
+                    Mathematics Resources
+                  </MenuItem>
+                  <MenuItem sx={{backgroundColor: 'black', color: 'white'}} onClick={() => handleClose('Resources')} component="a" href="/profile/settings">
+                    Social and Moral Studies Resources
+                  </MenuItem>
+                  <MenuItem sx={{backgroundColor: 'black', color: 'white'}} onClick={() => handleClose('Resources')} component="a" href="/profile/settings">
+                    General Science Resources
+                  </MenuItem>
+                  <MenuItem sx={{backgroundColor: 'black', color: 'white'}} onClick={() => handleClose('Resources')} component="a" href="/profile/settings">
+                    Civil/Religious Resources
+                  </MenuItem>
+                  <MenuItem sx={{backgroundColor: 'black', color: 'white'}} onClick={() => handleClose('Resources')} component="a" href="/profile/settings">
+                    Agriculture Resources
                   </MenuItem>
                 </Menu>
       </List>

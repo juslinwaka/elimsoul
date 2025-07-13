@@ -10,10 +10,10 @@ interface XPSummaryProps {
 
 export default function XPSummary({ xp }: XPSummaryProps) {
   const getRank = (xp: number) => {
-    if (xp >= 1000) return { label: 'Diamond', color: '#b9f2ff' };
-    if (xp >= 500) return { label: 'Gold', color: 'gold' };
-    if (xp >= 250) return { label: 'Silver', color: 'silver' };
-    if (xp >= 100) return { label: 'Bronze', color: '#cd7f32' };
+    if (xp >= 3000) return { label: 'Diamond', color: '#b9f2ff' };
+    if (xp >= 1000) return { label: 'Gold', color: 'gold' };
+    if (xp >= 450) return { label: 'Silver', color: 'silver' };
+    if (xp >= 200) return { label: 'Bronze', color: '#cd7f32' };
     return { label: 'Beginner', color: '#bbb' };
   };
 

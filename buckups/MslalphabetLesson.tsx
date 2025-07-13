@@ -17,7 +17,6 @@ import Avatar from '@mui/material/Avatar';
 import { Slide } from 'react-awesome-reveal';
 import useSound from 'use-sound';
 import ReactHowler from 'react-howler';
-import {useRouter} from 'next/navigation'
 
 import alphabetData from '@/data/msl_alphabet_data.json';
 
@@ -43,9 +42,6 @@ export default function MSLAlphabetLesson({ lessonId, nextLessonId, onComplete }
   const [bgPlaying, setBgPlaying] = useState(true);
   const { showToast } = useToast();
   const user = auth.currentUser;
-  const router = useRouter();
-  const [assignmentId, setAssignmentId] = useState('');
-  const [countdown, setCountdown] = useState(5);
 
   const [playCorrect] = useSound('/sounds/correct.mp3');
   const [playWrong] = useSound('/sounds/wrong.mp3');
@@ -82,15 +78,6 @@ export default function MSLAlphabetLesson({ lessonId, nextLessonId, onComplete }
     loadProgress();
   }, [user]);
 
-  useEffect(() => {
-    if (assignmentId && countdown > 0) {
-      const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
-      return () => clearTimeout(timer);
-    } else if (assignmentId && countdown === 0) {
-      router.push(`/assignmentView/${assignmentId}`);
-    }
-  }, [assignmentId, countdown]);
-
   const createAssignment = async () => {
     if (!user || assignmentCreated) return;
     const dueDate = Timestamp.fromDate(new Date(Date.now() + 7 * 24 * 60 * 60 * 1000));
@@ -102,10 +89,9 @@ export default function MSLAlphabetLesson({ lessonId, nextLessonId, onComplete }
       dueAt: dueDate,
       lessonRef: lessonId,
     };
-    const docRef = await addDoc(collection(db, 'students', user.uid, 'assignments'), assignment);
-    setAssignmentId(docRef.id);
+    await addDoc(collection(db, 'students', user.uid, 'assignments'), assignment);
     setAssignmentCreated(true);
-    showToast('📘 Assignment posted to your blackboard! Redirecting in 5s…', 'success');
+    showToast('📘 Assignment posted to your blackboard!', 'success');
   };
 
   const saveProgress = async () => {
@@ -116,7 +102,7 @@ export default function MSLAlphabetLesson({ lessonId, nextLessonId, onComplete }
 
       const metaRef = doc(db, 'users', user.uid, 'meta', 'academyStats');
       await setDoc(metaRef, {
-        xp: increment(15),
+        xp: increment(20),
         lastEarnedAt: new Date()
       }, { merge: true });
     }
