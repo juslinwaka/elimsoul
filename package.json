@@ -25,6 +25,7 @@
     "D": "^1.0.0",
     "firebase": "^11.6.0",
     "firebase-admin": "^13.3.0",
+    "framer-motion": "^12.23.3",
     "howler": "^2.2.4",
     "jsonwebtoken": "^9.0.2",
     "mammoth": "^1.9.0",

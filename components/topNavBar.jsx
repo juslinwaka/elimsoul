@@ -94,7 +94,6 @@ const TopNavBar = () => {
                   <Button href='/dashboard' variant="text" passHref>Dashboard</Button>
                   <Button href='/elimqa' variant="text" passHref>Elim Q&A</Button>
                   <Button href='/summarizer' variant="text" passHref>Elim Summerizer</Button>
-                  <Button href='/elimacademy' variant="text" passHref>Elim Academy</Button>
                   <Button href='/religious' variant="text" passHref>ElimSoul Religious</Button>
                 </Box>
               </Grid>
@@ -157,8 +156,8 @@ const TopNavBar = () => {
             <Link href="/summarizer" passHref legacyBehavior>
               <MenuItem onClick={handleDrawerToggle}>Elim Summarizer</MenuItem>
             </Link>
-            <Link href="/elimacademy" passHref legacyBehavior>
-              <MenuItem onClick={handleDrawerToggle}>Elim Academy</MenuItem>
+            <Link href="/messages" passHref legacyBehavior>
+              <MenuItem onClick={handleDrawerToggle}>ElimSoul Forum</MenuItem>
             </Link>
             <Link href="/religious" passHref legacyBehavior>
               <MenuItem onClick={handleDrawerToggle}>ElimSoul Religous</MenuItem>

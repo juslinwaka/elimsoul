@@ -1,11 +1,7 @@
-// ElimSoul Academy - MSL Lessons
 'use client'
-
-import Grid from '@mui/material/Grid';
-import { Box, Typography } from '@mui/material';
 import React, { useState, useEffect } from 'react';
-import MiniQuiz from '@/components/msl-comps/mini-quiz-checker';
-import PDFLessonViewer from '@/components/msl-comps/PDFLessonViewer';
+import Grid from '@mui/material/Grid';
+import { Box } from '@mui/material';
 import { useScreenConfig } from '@/hooks/screenConfig';
 import { useToast } from '@/hooks/toast';
 import { useSearchParams } from 'next/navigation';
@@ -14,8 +10,12 @@ import { Timestamp } from 'firebase/firestore';
 import { db, auth } from '@/lib/firebase';
 import StreakBar from '@/components/msl-comps/streakXpSys';
 
+// Import all interactive lessons
+import MSLAlphabetLesson from '@/components/msl-comps/MslalphabetLesson';
+//import NumbersLesson from '@/components/msl-comps/NumbersLesson';
+//import ColorsLesson from '@/components/msl-comps/ColorsLesson';
+
 export default function Academy() {
-  const [pdfPath, setPdfPath] = useState('');
   const { isMobile, isDesktop } = useScreenConfig();
   const [showFinalQuiz, setShowFinalQuiz] = useState(false);
   const [currentLesson, setCurrentLesson] = useState<string>('');
@@ -29,21 +29,18 @@ export default function Academy() {
   const lessonQuery = searchParams.get('lesson');
 
   const lessonData = [
-    { title: 'MSL Alphabet', lessonId: 'alphabet', pdf: '/docs/Alphabets.pdf' },
-    { title: 'MSL Basic Conversation', lessonId: 'basic_convo', pdf: '/docs/Basic Conversation.pdf' },
-    { title: 'MSL Numbers', lessonId: 'numbers', pdf: '/docs/Numbers.pdf' },
-    { title: 'MSL Colors', lessonId: 'colors', pdf: '/docs/Colors.pdf' },
-    { title: 'MSL Education', lessonId: 'education', pdf: '/docs/Education.pdf' },
-    { title: 'MSL Emotions', lessonId: 'emotions', pdf: '/docs/Emotions.pdf' },
-    { title: 'MSL Family & People', lessonId: 'family_people', pdf: '/docs/Family And People.pdf' },
-    { title: 'MSL Health', lessonId: 'health', pdf: '/docs/Health.pdf' },
-    { title: 'MSL Professions', lessonId: 'professions', pdf: '/docs/Profession.pdf' },
-    { title: 'MSL Places', lessonId: 'places', pdf: '/docs/Religion.pdf' },
-    { title: 'MSL Religion', lessonId: 'religion', pdf: '/docs/Religion.pdf' },
-    { title: 'MSL Time', lessonId: 'time', pdf: '/docs/Time.pdf' },
-    { title: 'MSL Sport', lessonId: 'sport', pdf: '/docs/Sport.pdf' },
-    { title: 'MSL Transportation', lessonId: 'transportation', pdf: '/docs/Transport.pdf' }
+    { title: 'MSL Alphabet', lessonId: 'alphabet' },
+    { title: 'MSL Numbers', lessonId: 'numbers' },
+    { title: 'MSL Colors', lessonId: 'colors' },
+    // Add more lessons here...
   ];
+
+  const lessonComponents: { [key: string]: React.FC<any> } = {
+    alphabet: MSLAlphabetLesson,
+    //numbers: NumbersLesson,
+    //colors: ColorsLesson,
+    // Add more mappings here...
+  };
 
   useEffect(() => {
     const fetchProgress = async () => {
@@ -111,7 +108,6 @@ export default function Academy() {
       if (current) {
         setCurrentLesson(current.lessonId);
         setNextLessonId(next?.lessonId || '');
-        setPdfPath(current.pdf);
         setShowFinalQuiz(false);
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
@@ -144,36 +140,64 @@ export default function Academy() {
       setLessonProgress({});
       setTimeout(() => {
         setLessonProgress(updated);
-        setPdfPath('');
         setShowFinalQuiz(false);
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }, 100);
     }
   };
 
+  const CurrentLessonComponent = currentLesson && lessonComponents[currentLesson];
+
   return (
     <Grid container spacing={2} justifyContent='center' alignItems='center'>
       <title>Academy Lab | ElimSoul</title>
-
-      <Grid size={12} pt={6} justifyContent='center' justifyItems='center'>
-        <Box sx={{margin: 2,width: 1000, padding: 2, 
-              backgroundColor: 'rgba(02, 205, 255, 0.6)', borderRadius: 2, boxShadow: 3}}>
-
-                {pdfPath && (
-            <PDFLessonViewer
-              fileUrl={pdfPath}
+      {isDesktop && (
+        <Box>
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
+          <Grid size={12} pt={6} justifyContent='center' justifyItems='center'>
+        <Box sx={{ margin: 2, width: 1000, padding: 2, backgroundColor: 
+          'rgba(02, 205, 255, 0.6)', borderRadius: 2, boxShadow: 3 }}>
+          {CurrentLessonComponent && (
+            <CurrentLessonComponent
               lessonId={currentLesson}
-              onCompleteFinal={() => setShowFinalQuiz(true)}
+              nextLessonId={nextLessonId}
+              onComplete={() => setShowFinalQuiz(true)}
             />
-        )}
-
+          )}
         </Box>
 
-        
-
-        {showFinalQuiz && <MiniQuiz lessonId={currentLesson} 
-          nextLessonId={nextLessonId} onComplete={handleFinalQuizCompletion} />}
+        {showFinalQuiz && (
+          <div className="mt-6">
+            <p className="text-center font-bold text-green-600">🎉 You've unlocked the next lesson!</p>
+          </div>
+        )}
       </Grid>
+
+        </Box>
+      )}
+      {isMobile && (
+        <Box>
+          <Grid p={2}>
+        <Box sx={{ margin: 2, width: 'auto', padding: 2, 
+          backgroundColor: 'rgba(02, 205, 255, 0.6)', borderRadius: 2, boxShadow: 3 }}>
+          {CurrentLessonComponent && (
+            <CurrentLessonComponent
+              lessonId={currentLesson}
+              nextLessonId={nextLessonId}
+              onComplete={() => setShowFinalQuiz(true)}
+            />
+          )}
+        </Box>
+
+        {showFinalQuiz && (
+          <div className="mt-6">
+            <p className="text-center font-bold text-green-600">🎉 You've unlocked the next lesson!</p>
+          </div>
+        )}
+      </Grid>
+        </Box>
+      )}
+
     </Grid>
   );
 }
