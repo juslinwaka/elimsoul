@@ -152,10 +152,6 @@ export default function CustomSidebar() {
                   key={course.lessonId}
                   disabled={isLocked}
                   sx={{ backgroundColor: 'black', color: isLocked ? 'gray' : 'white' }}
-                  onClick={() => {
-                    if (!isLocked) router.push(`/elimacademy?lesson=${course.lessonId}`);
-                    handleClose('Courses');
-                  }}
                 >
                   {isLocked ? `🔒 ${course.title}` : course.title}
                 </MenuItem>

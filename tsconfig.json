@@ -22,6 +22,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "components/topNavBar.jsx", "components/bottomNavBar.jsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "components/topNavBar.jsx", "components/bottomNavBar.jsx", "app/api/mega-upload/route.js"],
   "exclude": ["node_modules"]
 }

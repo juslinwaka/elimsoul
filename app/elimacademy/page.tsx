@@ -12,6 +12,7 @@ import StreakBar from '@/components/msl-comps/streakXpSys';
 
 // Import all interactive lessons
 import MSLAlphabetLesson from '@/components/msl-comps/MslalphabetLesson';
+// import BasicConversationLesson from '@/components/msl-comps/BasicConversationLesson';
 //import NumbersLesson from '@/components/msl-comps/NumbersLesson';
 //import ColorsLesson from '@/components/msl-comps/ColorsLesson';
 
@@ -30,6 +31,7 @@ export default function Academy() {
 
   const lessonData = [
     { title: 'MSL Alphabet', lessonId: 'alphabet' },
+    { title: 'MSL Basic Conversation', lessonId: 'basiconvo' },
     { title: 'MSL Numbers', lessonId: 'numbers' },
     { title: 'MSL Colors', lessonId: 'colors' },
     // Add more lessons here...
@@ -37,6 +39,7 @@ export default function Academy() {
 
   const lessonComponents: { [key: string]: React.FC<any> } = {
     alphabet: MSLAlphabetLesson,
+    // basiconvo: BasicConversationLesson,
     //numbers: NumbersLesson,
     //colors: ColorsLesson,
     // Add more mappings here...

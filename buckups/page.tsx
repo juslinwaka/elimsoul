@@ -7,6 +7,7 @@ import {
   doc,
   getDoc,
   setDoc,
+  serverTimestamp,
   Timestamp
 } from 'firebase/firestore';
 import {
@@ -16,7 +17,6 @@ import {
   TextField,
   CircularProgress,
   Paper,
-  Input,
 } from '@mui/material';
 import { UploadFile } from '@mui/icons-material';
 
@@ -24,10 +24,9 @@ export default function AssignmentView() {
   const params = useParams();
   const assignmentId = params?.id as string;
   const [assignment, setAssignment] = useState<any>(null);
-  const [uploading, setUploading] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
   const [videoUrl, setVideoUrl] = useState('');
-  const [file, setFile] = useState<File | null>(null);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
   const user = auth.currentUser;
 
   useEffect(() => {
@@ -38,38 +37,22 @@ export default function AssignmentView() {
       if (snap.exists()) {
         setAssignment(snap.data());
         if (snap.data().submittedAt) setSubmitted(true);
-        if (snap.data().videoUrl) setVideoUrl(snap.data().videoUrl);
       }
     };
     fetchAssignment();
   }, [user, assignmentId]);
 
-  const handleUpload = async () => {
-    if (!file) return;
-    setUploading(true);
-
-    const formData = new FormData();
-    formData.append('file', file);
-
-    const res = await fetch('/api/mega-upload', {
-      method: 'POST',
-      body: formData,
-    });
-
-    const data = await res.json();
-    if (data.url) {
-      const ref = doc(db, 'students', user!.uid, 'assignments', assignmentId);
-      await setDoc(ref, {
-        videoUrl: data.url,
-        status: 'submitted',
-        submittedAt: Timestamp.now(),
-      }, { merge: true });
-
-      setVideoUrl(data.url);
-      setSubmitted(true);
-    }
-
-    setUploading(false);
+  const handleSubmit = async () => {
+    if (!videoUrl || !user) return;
+    setSubmitting(true);
+    const ref = doc(db, 'students', user.uid, 'assignments', assignmentId);
+    await setDoc(ref, {
+      videoUrl,
+      status: 'submitted',
+      submittedAt: Timestamp.now(),
+    }, { merge: true });
+    setSubmitted(true);
+    setSubmitting(false);
   };
 
   if (!assignment) {
@@ -82,37 +65,45 @@ export default function AssignmentView() {
 
   return (
     <Box maxWidth={600} mx="auto" mt={4}>
-      <Paper sx={{ p: 4 }}>
-        <Typography variant="h5" fontWeight={700} gutterBottom>
+      <Paper sx={{ p: 4, backgroundColor: 
+          'rgba(02, 205, 255, 0.6)' }}>
+        <Typography color="white" variant="h5" fontWeight={500} gutterBottom>
           {assignment.title}
         </Typography>
-        <Typography variant="body1" mb={2}>
+        <Typography color='white' variant="body1" mb={2}>
           {assignment.description}
         </Typography>
-        <Typography variant="caption" color="gray">
+        <Typography variant="caption" color="black">
           Due: {assignment.dueAt?.toDate().toDateString()}
         </Typography>
 
         {submitted ? (
           <Typography mt={4} color="success.main">
-            ✅ Assignment Submitted! Link: <a href={videoUrl} target="_blank" rel="noopener noreferrer">View Video</a>
+            ✅ Assignment Submitted. Awaiting review.
           </Typography>
         ) : (
           <Box mt={4}>
-            <Input
-              type="file"
-              onChange={(e) => setFile((e.target as HTMLInputElement).files?.[0] || null)}
-              disabled={uploading}
+            <TextField
+              fullWidth
+              sx={{marginTop: 2,
+                            input: {color: 'white'},
+                            label: {color: 'white'},
+                            backgroundColor: 'rgba(255, 255, 255, 0.1)'
+                        }}
+              label="Video Link (YouTube, Google Drive, etc)"
+              value={videoUrl}
+              onChange={(e) => setVideoUrl(e.target.value)}
+              disabled={submitting}
             />
             <Button
               variant="contained"
               color="primary"
               sx={{ mt: 2 }}
               startIcon={<UploadFile />}
-              onClick={handleUpload}
-              disabled={!file || uploading}
+              onClick={handleSubmit}
+              disabled={!videoUrl || submitting}
             >
-              {uploading ? 'Uploading...' : 'Submit Assignment'}
+              Submit Assignment
             </Button>
           </Box>
         )}

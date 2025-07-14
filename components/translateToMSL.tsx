@@ -58,7 +58,7 @@ export default function TranslateToMSL({ text }: Props) {
 
           <div className="flex flex-wrap gap-2 mt-2">
             {videoLinks.map((src, i) => (
-              <video key={i} src={src} controls width="120" />
+              <video key={i} src={src} controls width="220" />
             ))}
           </div>
         </>
