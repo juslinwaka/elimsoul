@@ -307,7 +307,7 @@ export default function MSLAlphabetLesson({ lessonId, nextLessonId, onComplete }
             🏅 Congratulations!
           </Typography>
           <Typography variant="body1">
-            You've completed the MSL Alphabet Course. Keep going strong!
+            You've completed the MSL Basic Conversation. Keep going strong!
           </Typography>
         </Box>
       )}
