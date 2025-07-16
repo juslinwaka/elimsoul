@@ -13,7 +13,6 @@ import {
   Box,
   Typography,
   Button,
-  TextField,
   CircularProgress,
   Paper,
   Input,
@@ -45,31 +44,43 @@ export default function AssignmentView() {
   }, [user, assignmentId]);
 
   const handleUpload = async () => {
-    if (!file) return;
+    if (!file || !user) return;
+
     setUploading(true);
 
-    const formData = new FormData();
-    formData.append('file', file);
+    try {
+      // 1. Get pre-signed upload URL from Vercel API
+      const res = await fetch(`/api/r2/upload-url?filename=${file.name}`);
+      const { uploadURL, key } = await res.json();
 
-    const res = await fetch('/api/mega-upload', {
-      method: 'POST',
-      body: formData,
-    });
+      // 2. Upload video directly to Cloudflare R2
+      const uploadRes = await fetch(uploadURL, {
+        method: 'PUT',
+        headers: { 'Content-Type': file.type },
+        body: file,
+      });
 
-    const data = await res.json();
-    if (data.url) {
-      const ref = doc(db, 'students', user!.uid, 'assignments', assignmentId);
-      await setDoc(ref, {
-        videoUrl: data.url,
+      // Check if the upload was successful
+      if (!uploadRes.ok) {
+        throw new Error('Video upload failed');
+      }
+
+      // 3. Save R2 key (or full public URL) in Firestore
+      const videoPublicUrl = `https://pub-94eeff28256f46ffacbde082ed48e9c3.r2.dev/${key}`;
+      const ref = doc(db, 'students', user.uid, 'assignments', assignmentId);
+       setDoc(ref, {
+        videoUrl: videoPublicUrl,
         status: 'submitted',
         submittedAt: Timestamp.now(),
       }, { merge: true });
 
-      setVideoUrl(data.url);
-      setSubmitted(true);
-    }
+        setVideoUrl(videoPublicUrl);
+        setSubmitted(true);
+      } catch (err) {
+        console.error("Upload failed:", err);
+      }
 
-    setUploading(false);
+      setUploading(false);
   };
 
   if (!assignment) {
@@ -95,14 +106,17 @@ export default function AssignmentView() {
 
         {submitted ? (
           <Typography mt={4} color="success.main">
-            ✅ Assignment Submitted! Link: <a href={videoUrl} target="_blank" rel="noopener noreferrer">View Video</a>
+            ✅ Assignment Submitted! Link:{' '}
+            <a href={videoUrl} target="_blank" rel="noopener noreferrer">View Video</a>
           </Typography>
         ) : (
           <Box mt={4}>
-            <Input
+            <input
               type="file"
+              accept="video/*"
               onChange={(e) => setFile((e.target as HTMLInputElement).files?.[0] || null)}
               disabled={uploading}
+              style={{ marginTop: 8, marginBottom: 8 }}
             />
             <Button
               variant="contained"
