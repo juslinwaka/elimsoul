@@ -205,7 +205,7 @@ export default function MSLAlphabetLesson({ lessonId, nextLessonId, onComplete }
                 <Button
                   variant="outlined"
                   size="small"
-                  sx={{color: 'white',  borderBlockColor: 'white', border: 2}}
+                  sx={{color: 'white',  borderBlockColor: 'white', border: 2, borderRadius: 2}}
                   disabled={!isEnabled}
                   onClick={() => {
                     if (isEnabled) {
