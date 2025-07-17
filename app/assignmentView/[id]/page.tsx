@@ -72,7 +72,7 @@ export default function AssignmentView() {
         videoUrl: videoPublicUrl,
         status: 'submitted',
         submittedAt: Timestamp.now(),
-      }, { merge: true });
+      }, { merge: true }); 
 
         setVideoUrl(videoPublicUrl);
         setSubmitted(true);

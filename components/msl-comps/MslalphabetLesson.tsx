@@ -1,23 +1,23 @@
+// (File top remains unchanged...)
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { useToast } from '@/hooks/toast';
 import { db, auth } from '@/lib/firebase';
-import { doc, getDoc, setDoc, increment, collection, addDoc, Timestamp } from 'firebase/firestore';
+import {
+  doc, getDoc, setDoc, increment, collection, addDoc, Timestamp
+} from 'firebase/firestore';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
 import TextField from '@mui/material/TextField';
 import Avatar from '@mui/material/Avatar';
 import { Slide } from 'react-awesome-reveal';
 import useSound from 'use-sound';
 import ReactHowler from 'react-howler';
-import {useRouter} from 'next/navigation'
+import { useRouter } from 'next/navigation';
 
 import alphabetData from '@/data/msl_alphabet_data.json';
 
@@ -122,6 +122,25 @@ export default function MSLAlphabetLesson({ lessonId, nextLessonId, onComplete }
     }
   };
 
+  const handleChoiceAnswer = (selected: string) => {
+    const correct = alphabetData[quizIndex % alphabetData.length].letter;
+    if (selected === correct) {
+      playCorrect();
+      showToast('✅ Correct!', 'success');
+      nextQuiz();
+    } else {
+      playWrong();
+      if (attempts < 1) {
+        setAttempts(attempts + 1);
+        showToast('🔁 Try again', 'warning');
+      } else {
+        showToast(`❌ It's ${correct}`, 'error');
+        setFailedIndices([...failedIndices, quizIndex]);
+        nextQuiz();
+      }
+    }
+  };
+
   const handleInputAnswer = () => {
     const comboIndex = quizIndex - alphabetData.length;
     const [firstIdx, secondIdx] = combinationIndices[comboIndex];
@@ -138,25 +157,6 @@ export default function MSLAlphabetLesson({ lessonId, nextLessonId, onComplete }
         showToast('🔁 Try again', 'warning');
       } else {
         showToast(`❌ It was "${word}"`, 'error');
-        setFailedIndices([...failedIndices, quizIndex]);
-        nextQuiz();
-      }
-    }
-  };
-
-  const handleChoiceAnswer = (selected: string) => {
-    const correct = alphabetData[quizIndex % alphabetData.length].letter;
-    if (selected === correct) {
-      playCorrect();
-      showToast('✅ Correct!', 'success');
-      nextQuiz();
-    } else {
-      playWrong();
-      if (attempts < 1) {
-        setAttempts(attempts + 1);
-        showToast('🔁 Try again', 'warning');
-      } else {
-        showToast(`❌ It's ${correct}`, 'error');
         setFailedIndices([...failedIndices, quizIndex]);
         nextQuiz();
       }
@@ -188,6 +188,42 @@ export default function MSLAlphabetLesson({ lessonId, nextLessonId, onComplete }
     setInputAnswer('');
   };
 
+  // ✨ Milestone buttons: always visible, only unlocked are enabled
+  const renderMilestoneButtons = () => {
+    const totalMilestones = Math.ceil((alphabetData.length + combinationIndices.length) / batchSize);
+    const currentMilestone = Math.floor(quizIndex / batchSize) + 1;
+    return (
+      <Box textAlign="center" mt={4}>
+        <Typography variant="h6" color="secondary">📚 Milestones</Typography>
+        <Grid container spacing={1} justifyContent="center" mt={1}>
+          {[...Array(totalMilestones)].map((_, i) => {
+            const milestoneNum = i + 1;
+            // Enable if milestoneNum <= currentMilestone
+            const isEnabled = milestoneNum <= currentMilestone;
+            return (
+              <Grid key={milestoneNum}>
+                <Button
+                  variant="outlined"
+                  size="small"
+                  sx={{color: 'white'}}
+                  disabled={!isEnabled}
+                  onClick={() => {
+                    if (isEnabled) {
+                      setQuizIndex(i * batchSize);
+                      setCurrentStep('quiz');
+                    }
+                  }}
+                >
+                  Milestone {milestoneNum}
+                </Button>
+              </Grid>
+            );
+          })}
+        </Grid>
+      </Box>
+    );
+  };
+
   const renderQuizMode = () => {
     if (quizIndex < alphabetData.length) {
       const index = quizIndex;
@@ -200,24 +236,12 @@ export default function MSLAlphabetLesson({ lessonId, nextLessonId, onComplete }
       return (
         <Slide direction="up">
           <Box textAlign="center" mt={4}>
-            <Typography variant="h6" gutterBottom>
-              Match Sign {quizIndex + 1}
-            </Typography>
-            <Image
-              src={alphabetData[index].image}
-              alt="Quiz Sign"
-              width={200}
-              height={200}
-              style={{ borderRadius: 12, marginBottom: 16 }}
-            />
+            <Typography variant="h6" gutterBottom>Match Sign {quizIndex + 1}</Typography>
+            <Image src={alphabetData[index].image} alt="Quiz Sign" width={200} height={200} style={{ borderRadius: 12, marginBottom: 16 }} />
             <Grid container spacing={2} justifyContent="center">
               {options.map((opt, i) => (
                 <Grid key={i}>
-                  <Button
-                    variant="contained"
-                    color="secondary"
-                    onClick={() => handleChoiceAnswer(opt.letter)}
-                  >
+                  <Button variant="contained" color="secondary" onClick={() => handleChoiceAnswer(opt.letter)}>
                     {opt.letter}
                   </Button>
                 </Grid>
@@ -235,26 +259,14 @@ export default function MSLAlphabetLesson({ lessonId, nextLessonId, onComplete }
       return (
         <Slide direction="up">
           <Box textAlign="center" mt={4}>
-            <Typography variant="h6" gutterBottom>
-              Type the word for these two signs
-            </Typography>
+            <Typography variant="h6" gutterBottom>Type the word for these two signs</Typography>
             <Box display="flex" justifyContent="center" gap={2} mb={2}>
               <Image src={first.image} alt={first.letter} width={120} height={120} style={{ borderRadius: 10 }} />
               <Image src={second.image} alt={second.letter} width={120} height={120} style={{ borderRadius: 10 }} />
             </Box>
-            <TextField
-              label="Enter the combination"
-              value={inputAnswer}
-              onChange={(e) => setInputAnswer(e.target.value)}
-              variant="outlined"
-            />
+            <TextField label="Enter the combination" value={inputAnswer} onChange={(e) => setInputAnswer(e.target.value)} variant="outlined" />
             <Box mt={2}>
-              <Button
-                variant="contained"
-                color="secondary"
-                onClick={handleInputAnswer}
-                disabled={!inputAnswer.trim()}
-              >
+              <Button variant="contained" color="secondary" onClick={handleInputAnswer} disabled={!inputAnswer.trim()}>
                 Submit Answer
               </Button>
             </Box>
@@ -268,57 +280,37 @@ export default function MSLAlphabetLesson({ lessonId, nextLessonId, onComplete }
     <Box sx={{ p: 2 }}>
       <ReactHowler src="/sounds/bg-music.mp3" playing={bgPlaying} loop volume={0.3} />
 
-      <Typography variant="h4" align="center" sx={{color: 'white'}} fontWeight={700} gutterBottom>
+      <Typography variant="h4" align="center" sx={{ color: 'white' }} fontWeight={700} gutterBottom>
         MSL Alphabet Lesson
       </Typography>
-      <Typography align="center" sx={{color: 'white'}} fontWeight={500} gutterBottom>
+      <Typography align="center" sx={{ color: 'white' }} fontWeight={500} gutterBottom>
         MSL Alphabet Lesson
       </Typography>
+
+      {renderMilestoneButtons()}
 
       {currentStep === 'quiz' && !showContinuePrompt && !showCertificate && renderQuizMode()}
 
       {showContinuePrompt && !showCertificate && (
         <Box textAlign="center" mt={6}>
-          <Avatar
-            alt="Encouragement"
-            src="/images/avatars/clap.gif"
-            sx={{ width: 100, height: 100, margin: 'auto' }}
-          />
+          <Avatar alt="Encouragement" src="/images/avatars/clap.gif" sx={{ width: 100, height: 100, margin: 'auto' }} />
           <Typography variant="h6" color="primary" gutterBottom>
             🎉 Great job! You've completed {quizIndex + 1} quizzes!
           </Typography>
-          <Typography variant="body1" gutterBottom>
-            Ready for the next batch?
-          </Typography>
-          <Button variant="contained" color="primary" onClick={handleContinue}>
-            Continue
-          </Button>
+          <Typography variant="body1" gutterBottom>Ready for the next batch?</Typography>
+          <Button variant="contained" color="primary" onClick={handleContinue}>Continue</Button>
         </Box>
       )}
 
       {showCertificate && (
         <Box textAlign="center" mt={8}>
-          <Avatar
-            alt="Certificate"
-            src="/images/avatars/certificate.png"
-            sx={{ width: 120, height: 120, margin: 'auto' }}
-          />
-          <Typography variant="h5" color="success.main" gutterBottom>
-            🏅 Congratulations!
-          </Typography>
-          <Typography variant="body1">
-            You've completed the MSL Alphabet Course. Keep going strong!
-          </Typography>
+          <Avatar alt="Certificate" src="/images/avatars/certificate.png" sx={{ width: 120, height: 120, margin: 'auto' }} />
+          <Typography variant="h5" color="success.main" gutterBottom>🏅 Congratulations!</Typography>
+          <Typography variant="body1">You've completed the MSL Alphabet Course. Keep going strong!</Typography>
         </Box>
       )}
 
-      {currentStep === 'learn' && (
-        <Box textAlign="center" mt={4}>
-          <Button variant="contained" color="primary" size="large" onClick={() => setCurrentStep('quiz')}>
-            Sign Mission Challenges
-          </Button>
-        </Box>
-      )}
+      
     </Box>
   );
 }
