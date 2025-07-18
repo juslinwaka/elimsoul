@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { useToast } from '@/hooks/toast';
 import { db, auth } from '@/lib/firebase';
@@ -10,18 +9,15 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import TextField from '@mui/material/TextField';
 import Avatar from '@mui/material/Avatar';
 import { Slide } from 'react-awesome-reveal';
 import useSound from 'use-sound';
 import ReactHowler from 'react-howler';
 import {useRouter} from 'next/navigation'
 
-import alphabetData from '@/data/msl_alphabet_data.json';
+import convoData from '@/data/msl-basic-cons.json';
 
-interface MSLAlphabetLessonProps {
+interface BasicConvoProps {
   lessonId: string;
   nextLessonId?: string;
   onComplete: () => void;
@@ -29,7 +25,7 @@ interface MSLAlphabetLessonProps {
 
 const batchSize = 10;
 
-export default function MSLAlphabetLesson({ lessonId, nextLessonId, onComplete }: MSLAlphabetLessonProps) {
+export default function BasicConvo({ lessonId, nextLessonId, onComplete }: BasicConvoProps) {
   const [currentStep, setCurrentStep] = useState<'learn' | 'quiz'>('learn');
   const [quizIndex, setQuizIndex] = useState(0);
   const [score, setScore] = useState(0);
@@ -50,21 +46,7 @@ export default function MSLAlphabetLesson({ lessonId, nextLessonId, onComplete }
   const [playCorrect] = useSound('/sounds/correct.mp3');
   const [playWrong] = useSound('/sounds/wrong.mp3');
 
-  const generateCombinationIndices = () => {
-    const result: number[][] = [];
-    for (let i = 0; i < alphabetData.length; i += 5) {
-      const batch = alphabetData.slice(i, i + 5);
-      for (let a = 0; a < batch.length; a++) {
-        for (let b = 0; b < batch.length; b++) {
-          result.push([i + a, i + b]);
-        }
-      }
-    }
-    return result;
-  };
-
-  const combinationIndices = generateCombinationIndices();
-  const totalLessons = alphabetData.length + combinationIndices.length;
+  const totalLessons = convoData.length;
 
   useEffect(() => {
     const loadProgress = async () => {
@@ -95,8 +77,8 @@ export default function MSLAlphabetLesson({ lessonId, nextLessonId, onComplete }
     if (!user || assignmentCreated) return;
     const dueDate = Timestamp.fromDate(new Date(Date.now() + 7 * 24 * 60 * 60 * 1000));
     const assignment = {
-      title: 'Sign the Alphabet + 10 Words',
-      description: 'Submit a video signing all 26 MSL alphabet signs and 10 signed words.',
+      title: 'Sign Basic Conversation',
+      description: 'Make a peer video of you signing the basic conversation signs. Under ElimSoul Forum create a topic under your peer group name and start a call. Record the conversation and upload it here.',
       status: 'pending',
       createdAt: Timestamp.now(),
       dueAt: dueDate,
@@ -122,30 +104,8 @@ export default function MSLAlphabetLesson({ lessonId, nextLessonId, onComplete }
     }
   };
 
-  const handleInputAnswer = () => {
-    const comboIndex = quizIndex - alphabetData.length;
-    const [firstIdx, secondIdx] = combinationIndices[comboIndex];
-    const word = `${alphabetData[firstIdx].letter}${alphabetData[secondIdx].letter}`.toLowerCase();
-
-    if (inputAnswer.trim().toLowerCase() === word) {
-      playCorrect();
-      showToast('✅ Correct!', 'success');
-      nextQuiz();
-    } else {
-      playWrong();
-      if (attempts < 1) {
-        setAttempts(attempts + 1);
-        showToast('🔁 Try again', 'warning');
-      } else {
-        showToast(`❌ It was "${word}"`, 'error');
-        setFailedIndices([...failedIndices, quizIndex]);
-        nextQuiz();
-      }
-    }
-  };
-
   const handleChoiceAnswer = (selected: string) => {
-    const correct = alphabetData[quizIndex % alphabetData.length].letter;
+    const correct = convoData[quizIndex % convoData.length].word;
     if (selected === correct) {
       playCorrect();
       showToast('✅ Correct!', 'success');
@@ -169,7 +129,7 @@ export default function MSLAlphabetLesson({ lessonId, nextLessonId, onComplete }
     if (nextIndex % batchSize === 0 && !isReviewMode) {
       setShowContinuePrompt(true);
       saveProgress();
-    } else if (nextIndex >= alphabetData.length && !isReviewMode && failedIndices.length > 0) {
+    } else if (nextIndex >= convoData.length && !isReviewMode && failedIndices.length > 0) {
       setQuizIndex(failedIndices[0]);
       setFailedIndices(failedIndices.slice(1));
       setIsReviewMode(true);
@@ -189,22 +149,22 @@ export default function MSLAlphabetLesson({ lessonId, nextLessonId, onComplete }
   };
 
   const renderQuizMode = () => {
-    if (quizIndex < alphabetData.length) {
+    if (quizIndex < convoData.length) {
       const index = quizIndex;
       const options = [
-        alphabetData[index],
-        alphabetData[(index + 1) % alphabetData.length],
-        alphabetData[(index + 2) % alphabetData.length]
+        convoData[index],
+        convoData[(index + 1) % convoData.length],
+        convoData[(index + 2) % convoData.length]
       ].sort(() => Math.random() - 0.5);
 
       return (
         <Slide direction="up">
           <Box textAlign="center" mt={4}>
             <Typography variant="h6" gutterBottom>
-              Match Sign {quizIndex + 1}
+              What does this sign mean? {quizIndex + 1}
             </Typography>
             <Image
-              src={alphabetData[index].image}
+              src={convoData[index].image}
               alt="Quiz Sign"
               width={200}
               height={200}
@@ -216,9 +176,9 @@ export default function MSLAlphabetLesson({ lessonId, nextLessonId, onComplete }
                   <Button
                     variant="contained"
                     color="secondary"
-                    onClick={() => handleChoiceAnswer(opt.letter)}
+                    onClick={() => handleChoiceAnswer(opt.word)}
                   >
-                    {opt.letter}
+                    {opt.word}
                   </Button>
                 </Grid>
               ))}
@@ -227,40 +187,7 @@ export default function MSLAlphabetLesson({ lessonId, nextLessonId, onComplete }
         </Slide>
       );
     } else {
-      const comboIndex = quizIndex - alphabetData.length;
-      const [firstIdx, secondIdx] = combinationIndices[comboIndex];
-      const first = alphabetData[firstIdx];
-      const second = alphabetData[secondIdx];
-
-      return (
-        <Slide direction="up">
-          <Box textAlign="center" mt={4}>
-            <Typography variant="h6" gutterBottom>
-              Type the word for these two signs
-            </Typography>
-            <Box display="flex" justifyContent="center" gap={2} mb={2}>
-              <Image src={first.image} alt={first.letter} width={120} height={120} style={{ borderRadius: 10 }} />
-              <Image src={second.image} alt={second.letter} width={120} height={120} style={{ borderRadius: 10 }} />
-            </Box>
-            <TextField
-              label="Enter the combination"
-              value={inputAnswer}
-              onChange={(e) => setInputAnswer(e.target.value)}
-              variant="outlined"
-            />
-            <Box mt={2}>
-              <Button
-                variant="contained"
-                color="secondary"
-                onClick={handleInputAnswer}
-                disabled={!inputAnswer.trim()}
-              >
-                Submit Answer
-              </Button>
-            </Box>
-          </Box>
-        </Slide>
-      );
+      const comboIndex = quizIndex - convoData.length;
     }
   };
 
@@ -269,10 +196,10 @@ export default function MSLAlphabetLesson({ lessonId, nextLessonId, onComplete }
       <ReactHowler src="/sounds/bg-music.mp3" playing={bgPlaying} loop volume={0.3} />
 
       <Typography variant="h4" align="center" sx={{color: 'white'}} fontWeight={700} gutterBottom>
-        MSL Alphabet Lesson
+        MSL Basic Conversation Lesson
       </Typography>
       <Typography align="center" sx={{color: 'white'}} fontWeight={500} gutterBottom>
-        MSL Alphabet Lesson
+        Learn how to greet, thank, and introduce yourself in Malawian Sign Language. Start signing real conversations! today! 
       </Typography>
 
       {currentStep === 'quiz' && !showContinuePrompt && !showCertificate && renderQuizMode()}
@@ -307,18 +234,32 @@ export default function MSLAlphabetLesson({ lessonId, nextLessonId, onComplete }
             🏅 Congratulations!
           </Typography>
           <Typography variant="body1">
-            You've completed the MSL Basic Conversation. Keep going strong!
+            You've completed the MSL Basic Conversation Course. Keep going strong!
           </Typography>
         </Box>
       )}
 
       {currentStep === 'learn' && (
         <Box textAlign="center" mt={4}>
-          <Button variant="contained" color="primary" size="large" onClick={() => setCurrentStep('quiz')}>
-            Sign Mission Challenges
-          </Button>
-        </Box>
-      )}
+          <Typography variant="h6" gutterBottom>
+            Let's learn the basics of daily conversation in MSL!
+          </Typography>
+          <Grid container spacing={2} justifyContent="center">
+            {convoData.slice(0, 6).map((item, idx) => (
+            <Grid key={idx}>
+              <Box sx={{ p: 1, bgcolor: '#fff3', borderRadius: 2 }}>
+                <Image src={item.image} alt={item.word} width={120} height={120} style={{ borderRadius: 8 }} />
+                <Typography color="white">{item.word}</Typography>
+              </Box>
+            </Grid>
+            ))}
+          </Grid>
+            <Button variant="contained" color="primary" size="large" onClick={() => setCurrentStep('quiz')} sx={{ mt: 4 }}>
+              Start Conversation Challenges
+        </Button>
+  </Box>
+)}
+
     </Box>
   );
 }

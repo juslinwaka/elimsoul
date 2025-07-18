@@ -1,0 +1,48 @@
+
+
+[
+  {
+    "number": 0,
+    "image": "/images/numbers/number_0.jpeg"
+  },
+  {
+    "number": 1,
+    "image": "/images/numbers/number_1.jpeg"
+  },
+  {
+    "number": 2,
+    "image": "/images/numbers/number_2.jpeg"
+  },
+  {
+    "number": 3,
+    "image": "/images/numbers/number_3.jpeg"
+  },
+  {
+    "number": 4,
+    "image": "/images/numbers/number_4.jpeg"
+  },
+  {
+    "number": 5,
+    "image": "/images/numbers/number_5.jpeg"
+  },
+  {
+    "number": 6,
+    "image": "/images/numbers/number_6.jpeg"
+  },
+  {
+    "number": 7,
+    "image": "/images/numbers/number_7.jpeg"
+  },
+  {
+    "number": 8,
+    "image": "/images/numbers/number_8.jpeg"
+  },
+  {
+    "number": 9,
+    "image": "/images/numbers/number_9.jpeg"
+  },
+  {
+    "number": 10,
+    "image": "/images/numbers/number_10.jpeg"
+  }
+]

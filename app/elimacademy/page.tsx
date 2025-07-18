@@ -8,13 +8,16 @@ import { useSearchParams } from 'next/navigation';
 import { doc, getDoc, setDoc, increment } from 'firebase/firestore';
 import { Timestamp } from 'firebase/firestore';
 import { db, auth } from '@/lib/firebase';
-import StreakBar from '@/components/msl-comps/streakXpSys';
 
 // Import all interactive lessons
 import MSLAlphabetLesson from '@/components/msl-comps/MslalphabetLesson';
-// import BasicConversationLesson from '@/components/msl-comps/BasicConversationLesson';
-//import NumbersLesson from '@/components/msl-comps/NumbersLesson';
-//import ColorsLesson from '@/components/msl-comps/ColorsLesson';
+import BasicConversationLesson from '@/components/msl-comps/BasicConversationLesson';
+import NumbersLesson from '@/components/msl-comps/MSLNumbersLesson';
+// import ColorsLesson from '@/components/msl-comps/ColorsLesson';
+// import ShapesLesson from '@/components/msl-comps/ShapesLesson';
+// import AnimalsLesson from '@/components/msl-comps/AnimalsLesson';
+// import FoodLesson from '@/components/msl-comps/FoodLesson';
+// import Weather&NatureLesson from '@/components/msl-comps/Weather&NatureLesson';
 
 export default function Academy() {
   const { isMobile, isDesktop } = useScreenConfig();
@@ -31,16 +34,20 @@ export default function Academy() {
 
   const lessonData = [
     { title: 'MSL Alphabet', lessonId: 'alphabet' },
-    { title: 'MSL Basic Conversation', lessonId: 'basiconvo' },
-    { title: 'MSL Numbers', lessonId: 'numbers' },
-    { title: 'MSL Colors', lessonId: 'colors' },
+    { title: 'MSL Basic Conversation', lessonId: 'basic_convo' },
+    { title: 'MSL Numbers', lessonId: 'numbersLesson' },
+    // { title: 'MSL Colors', lessonId: 'colorsLesson' },
+    // { title: 'MSL Shapes', lessonId: 'shapesLesson' },
+    // { title: 'MSL Animals', lessonId: 'animalsLesson' },
+    // { title: 'MSL Food', lessonId: 'foodLesson' },
+    // { title: 'MSL Weather', lessonId: 'weatherLesson' },
     // Add more lessons here...
   ];
 
   const lessonComponents: { [key: string]: React.FC<any> } = {
     alphabet: MSLAlphabetLesson,
-    // basiconvo: BasicConversationLesson,
-    //numbers: NumbersLesson,
+    basic_convo: BasicConversationLesson,
+    numbersLesson: NumbersLesson,
     //colors: ColorsLesson,
     // Add more mappings here...
   };
@@ -200,7 +207,7 @@ export default function Academy() {
       </Grid>
         </Box>
       )}
-
+ 
     </Grid>
   );
 }

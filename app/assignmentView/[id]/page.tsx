@@ -49,23 +49,19 @@ export default function AssignmentView() {
     setUploading(true);
 
     try {
-      // 1. Get pre-signed upload URL from Vercel API
       const res = await fetch(`/api/r2/upload-url?filename=${file.name}`);
       const { uploadURL, key } = await res.json();
 
-      // 2. Upload video directly to Cloudflare R2
       const uploadRes = await fetch(uploadURL, {
         method: 'PUT',
         headers: { 'Content-Type': file.type },
         body: file,
       });
 
-      // Check if the upload was successful
       if (!uploadRes.ok) {
         throw new Error('Video upload failed');
       }
 
-      // 3. Save R2 key (or full public URL) in Firestore
       const videoPublicUrl = `https://pub-94eeff28256f46ffacbde082ed48e9c3.r2.dev/${key}`;
       const ref = doc(db, 'students', user.uid, 'assignments', assignmentId);
        setDoc(ref, {
@@ -94,10 +90,10 @@ export default function AssignmentView() {
   return (
     <Box maxWidth={600} mx="auto" mt={4}>
       <Paper sx={{ p: 4 }}>
-        <Typography variant="h5" fontWeight={700} gutterBottom>
+        <Typography sx={{color: 'white'}} variant="h5" fontWeight={500} gutterBottom>
           {assignment.title}
         </Typography>
-        <Typography variant="body1" mb={2}>
+        <Typography sx={{color: 'white'}} variant="body1" mb={2}>
           {assignment.description}
         </Typography>
         <Typography variant="caption" color="gray">

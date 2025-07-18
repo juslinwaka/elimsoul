@@ -288,7 +288,6 @@ export default function Dashboard() {
             display='flow' 
             sx={{margin: 1, 
               backgroundColor: 'rgba(02, 205, 255, 0.6)', borderRadius: 2, boxShadow: 3}}>
-              <BottomNavBar />
                 <Grid container spacing={1}>
 
                   <Grid size={12}>
