@@ -148,6 +148,42 @@ export default function BasicConvo({ lessonId, nextLessonId, onComplete }: Basic
     setInputAnswer('');
   };
 
+  // ✨ Milestone buttons: always visible, only unlocked are enabled
+    const renderMilestoneButtons = () => {
+      const totalMilestones = Math.ceil((convoData.length) / batchSize);
+      const currentMilestone = Math.floor(quizIndex / batchSize) + 1;
+      return (
+        <Box textAlign="center" mt={4}>
+          <Typography variant="h6" color="secondary">📚 Milestones</Typography>
+          <Grid container spacing={1} justifyContent="center" mt={1}>
+            {[...Array(totalMilestones)].map((_, i) => {
+              const milestoneNum = i + 1;
+              // Enable if milestoneNum <= currentMilestone
+              const isEnabled = milestoneNum <= currentMilestone;
+              return (
+                <Grid key={milestoneNum}>
+                  <Button
+                    variant="outlined"
+                    size="small"
+                    sx={{color: 'white',  borderBlockColor: 'white', border: 2, borderRadius: 2}}
+                    disabled={!isEnabled}
+                    onClick={() => {
+                      if (isEnabled) {
+                        setQuizIndex(i * batchSize);
+                        setCurrentStep('quiz');
+                      }
+                    }}
+                  >
+                    Milestone {milestoneNum}
+                  </Button>
+                </Grid>
+              );
+            })}
+          </Grid>
+        </Box>
+      );
+    };
+
   const renderQuizMode = () => {
     if (quizIndex < convoData.length) {
       const index = quizIndex;
@@ -238,28 +274,7 @@ export default function BasicConvo({ lessonId, nextLessonId, onComplete }: Basic
           </Typography>
         </Box>
       )}
-
-      {currentStep === 'learn' && (
-        <Box textAlign="center" mt={4}>
-          <Typography variant="h6" gutterBottom>
-            Let's learn the basics of daily conversation in MSL!
-          </Typography>
-          <Grid container spacing={2} justifyContent="center">
-            {convoData.slice(0, 6).map((item, idx) => (
-            <Grid key={idx}>
-              <Box sx={{ p: 1, bgcolor: '#fff3', borderRadius: 2 }}>
-                <Image src={item.image} alt={item.word} width={120} height={120} style={{ borderRadius: 8 }} />
-                <Typography color="white">{item.word}</Typography>
-              </Box>
-            </Grid>
-            ))}
-          </Grid>
-            <Button variant="contained" color="primary" size="large" onClick={() => setCurrentStep('quiz')} sx={{ mt: 4 }}>
-              Start Conversation Challenges
-        </Button>
-  </Box>
-)}
-
+      {renderMilestoneButtons()}
     </Box>
   );
 }

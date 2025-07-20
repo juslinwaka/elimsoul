@@ -31,7 +31,7 @@ export default function Academy() {
   const user = auth.currentUser;
   const searchParams = useSearchParams();
   const lessonQuery = searchParams.get('lesson');
-
+ 
   const lessonData = [
     { title: 'MSL Alphabet', lessonId: 'alphabet' },
     { title: 'MSL Basic Conversation', lessonId: 'basic_convo' },

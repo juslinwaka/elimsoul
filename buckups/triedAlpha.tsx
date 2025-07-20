@@ -215,6 +215,27 @@ export default function MSLAlphabetLesson({ lessonId, nextLessonId, onComplete }
           </Typography>
         </Box>
       )}
+      
+      {/* {currentStep === 'learn' && (
+        <Box textAlign="center" mt={4}>
+          <Typography variant="h6" gutterBottom>
+            Let's learn the basics of daily conversation in MSL!
+          </Typography>
+          <Grid container spacing={2} justifyContent="center">
+            {convoData.slice(0, 8).map((item, idx) => (
+            <Grid key={idx}>
+              <Box sx={{ p: 1, bgcolor: '#fff3', borderRadius: 2 }}>
+                <Image src={item.image} alt={item.word} width={120} height={120} style={{ borderRadius: 8 }} />
+                <Typography color="white">{item.word}</Typography>
+              </Box>
+            </Grid>
+            ))}
+          </Grid>
+          
+            
+        </Box>
+        )} */
+      }
 
       {currentStep === 'learn' && (
         <Box textAlign="center" mt={4}>

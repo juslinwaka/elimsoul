@@ -48,7 +48,7 @@ export default function CustomSidebar() {
   const lessonData = [
     { title: 'MSL Alphabet', lessonId: 'alphabet' },
     { title: 'Basic Conversation', lessonId: 'basic_convo' },
-    { title: 'Numbers', lessonId: 'numbers' },
+    { title: 'Numbers', lessonId: 'numbersLesson' },
     { title: 'Colors', lessonId: 'colors' },
     { title: 'Education', lessonId: 'education' },
     { title: 'Emotions', lessonId: 'emotions' },
