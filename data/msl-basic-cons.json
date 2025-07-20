@@ -1,110 +1,114 @@
 [
   {
-    "word": "A",
+    "word": "Communication | Kulumikizana",
     "image": "/images/basiConvo/msl_words_2_1.jpeg"
   },
   {
-    "word": "B",
+    "word": "Hello | Moni",
     "image": "/images/basiConvo/msl_words_2_2.jpeg"
   },
   {
-    "word": "C",
+    "word": "Name | Dzina",
     "image": "/images/basiConvo/msl_words_2_3.jpeg"
   },
   {
-    "word": "D",
+    "word": "Me | Ine",
     "image": "/images/basiConvo/msl_words_2_4.jpeg"
   },
   {
-    "word": "E",
+    "word": "No | Ayi",
     "image": "/images/basiConvo/msl_words_2_5.jpeg"
   },
   {
-    "word": "F",
+    "word": "You | Inu",
     "image": "/images/basiConvo/msl_words_2_6.jpeg"
   },
   {
-    "word": "G",
+    "word": "Age | Zaka",
     "image": "/images/basiConvo/msl_words_2_7.jpeg"
   },
   {
-    "word": "H",
+    "word": "Yes | Inde",
     "image": "/images/basiConvo/msl_words_2_8.jpeg"
   },
   {
-    "word": "I",
+    "word": "What | Chiyani",
     "image": "/images/basiConvo/msl_words_2_9.jpeg"
   },
   {
-    "word": "J",
+    "word": "Who | Ndani",
     "image": "/images/basiConvo/msl_words_2_10.jpeg"
   },
   {
-    "word": "K",
+    "word": "Where | Kuti",
     "image": "/images/basiConvo/msl_words_2_11.jpeg"
   },
   {
-    "word": "L",
+    "word": "Know | Dziwa",
     "image": "/images/basiConvo/msl_words_2_12.jpeg"
   },
   {
-    "word": "M",
+    "word": "Think | Ganiza",
     "image": "/images/basiConvo/msl_words_2_13.jpeg"
   },
   {
-    "word": "N",
+    "word": "Have | khala ndi chithu",
     "image": "/images/basiConvo/msl_words_2_14.jpeg"
   },
   {
-    "word": "O",
+    "word": "Welcome | Takulandirani",
     "image": "/images/basiConvo/msl_words_3_1.jpeg"
   },
   {
-    "word": "P",
+    "word": "Answer | Yankha",
     "image": "/images/basiConvo/msl_words_3_2.jpeg"
   },
   {
-    "word": "Q",
+    "word": "Call | Itana",
     "image": "/images/basiConvo/msl_words_3_3.jpeg"
   },
   {
-    "word": "R",
+    "word": "stop | Ima",
     "image": "/images/basiConvo/msl_words_3_4.jpeg"
   },
   {
-    "word": "S",
+    "word": "True",
     "image": "/images/basiConvo/msl_words_3_5.jpeg"
   },
   {
-    "word": "T",
+    "word": "Give | Pereka",
     "image": "/images/basiConvo/msl_words_3_6.jpeg"
   },
   {
-    "word": "T",
+    "word": "But | Koma",
     "image": "/images/basiConvo/msl_words_3_7.jpeg"
   },
   {
-    "word": "U",
+    "word": "Good | Khoza",
     "image": "/images/basiConvo/msl_words_3_8.jpeg"
   },
   {
-    "word": "V",
+    "word": "Nice | Chosangalatsa",
     "image": "/images/basiConvo/msl_words_3_9.jpeg"
   },
   {
-    "word": "W",
+    "word": "Bad | Ipa",
     "image": "/images/basiConvo/msl_words_3_10.jpeg"
   },
   {
-    "word": "X",
+    "word": "Challenge | Vuto",
     "image": "/images/basiConvo/msl_words_3_11.jpeg"
   },
   {
-    "word": "Y",
+    "word": "Maybe | Mwina",
     "image": "/images/basiConvo/msl_words_3_12.jpeg"
   },
   {
-    "word": "Z",
+    "word": "Example | Chitsanzo",
     "image": "/images/basiConvo/msl_words_3_13.jpeg"
+  },
+  {
+    "word": "Pass | Khoza",
+    "image": "/images/basiConvo/msl_words_3_14.jpeg"
   }
 ]
