@@ -1,7 +1,7 @@
 # ElimSoul
 
 **ElimSoul** is the flagship platform of the ORTHO Foundation – designed to transform the lives of underprivileged children by combining **spiritual development**, **academic empowerment**, and **holistic personal growth**.
-
+��������������������������������������������������������������������������������������������������������������������
 ---
 
 ## 🌟 Vision
