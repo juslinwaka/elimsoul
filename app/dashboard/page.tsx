@@ -10,16 +10,6 @@ import StreakBar from '@/components/msl-comps/streakXpSys';
 import { PieChart, Pie, Cell, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { useScreenConfig } from '@/hooks/screenConfig';
 import Sidebar from '@/components/SideBar';
-import BottomNavBar from '@/components/bottomNavBar'
-
-import {
-  Drawer,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Toolbar
-} from '@mui/material';
 
 import HomeWorks from '@/components/homeworkSideBar';
 
