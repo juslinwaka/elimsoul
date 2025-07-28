@@ -52,7 +52,7 @@ export default function StudentList() {
   );
 
   return (
-    <Paper sx={{ padding: 3 }}>
+    <Paper sx={{ color:'white', backgroundColor: 'rgba(02, 205, 255, 0.6)', width: '95%', padding: 3, marginTop: 2 }}>
       <Typography variant="h5" gutterBottom>
         👩‍🏫 Student List
       </Typography>
@@ -61,7 +61,7 @@ export default function StudentList() {
         fullWidth
         label="Search by name, email, or ID"
         variant="outlined"
-        sx={{ my: 2 }}
+        sx={{ my: 2, color:'white' }}
         value={filter}
         onChange={(e) => setFilter(e.target.value)}
       />
@@ -78,7 +78,6 @@ export default function StudentList() {
               <TableCell>Email</TableCell>
               <TableCell>XP</TableCell>
               <TableCell>Streak</TableCell>
-              <TableCell>UID</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -88,7 +87,6 @@ export default function StudentList() {
                 <TableCell>{student.email}</TableCell>
                 <TableCell>{student.xp || 0}</TableCell>
                 <TableCell>{student.streak || 0}</TableCell>
-                <TableCell>{student.uid}</TableCell>
               </TableRow>
             ))}
           </TableBody>

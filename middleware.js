@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 export async function middleware(req) {
   const token = req.cookies.get('token')?.value;
 
-  const protectedPaths = ['/dashboard'];
+  const protectedPaths = ['/dashboard', '/instructorDashboard'];
 
   if (protectedPaths.includes(req.nextUrl.pathname)) {
     if (!token) {
@@ -16,5 +16,5 @@ export async function middleware(req) {
 
 
 export const config = {
-  matcher: ['/dashboard'], 
+  matcher: ['/dashboard', '/instructorDashboard'], 
 };

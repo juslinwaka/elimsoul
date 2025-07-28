@@ -21,7 +21,7 @@ import { useToast } from '@/hooks/toast'
 import { useLoading } from '@/hooks/loadingspinners'
 import {auth, db, provider} from '@/lib/firebase'
 import {doc, getDoc} from 'firebase/firestore'
-import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
+import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth'
 import { sendPasswordResetEmail } from 'firebase/auth';
 import {useEffect} from 'react'
 import {onAuthStateChanged} from 'firebase/auth'
@@ -40,37 +40,42 @@ export default function SignIn() {
     const [password, setPassword] = useState("");
   
     const {showToast, Toast} = useToast();
-    const {showLoading, hideLoading}: { showLoading: () => void; hideLoading: () => void } = useLoading();
+    const {showLoading, hideLoading} = useLoading();
     const router = useRouter();
   
     const checkUserProfileAndRedirect = async (uid: string) => {
-    try {
-      const userDoc = await getDoc(doc(db, 'users', uid));
+  try {
+    const userDoc = await getDoc(doc(db, 'users', uid));
 
-      if (!userDoc.exists()) {
-        showToast("User profile not found. Redirecting to onboarding.", "info");
+    if (!userDoc.exists()) {
+      showToast("User profile not found. Redirecting to onboarding.", "info");
+      router.push('dashboard')
+    
       return;
     }
 
     const userData = userDoc.data();
 
     if (!userData || !userData.fullName || !userData.role) {
-      if (userData.role === 'instructor') {
-        router.push('/instructorDashboard');
-      }
-      else {
-        router.push('/dashboard')
-      }
+      showToast("Incomplete profile. Redirecting to onboarding.", "info");
       return;
     }
 
+    // ✅ Redirect based on role
+    if (userData.role === 'Instructor') {
+      router.push('/instructorsDashboard');
+    } else {
+      router.push('/dashboard');
+    }
   } catch (error) {
     console.error("Error fetching user profile:", error);
     showToast("Error verifying profile", "error");
+    router.push('/error');
   } finally {
     hideLoading();
   }
 };
+
 
     const handleForgotPassword = async () => {
       if (!email) {
@@ -106,9 +111,11 @@ export default function SignIn() {
       showToast("Error signing in", "error");
       return;
     }
+
+    showToast("Signed in successfully", "success");
+
     // Use the uid from sign-in result (NOT auth.currentUser)
     await checkUserProfileAndRedirect(userCredential.user.uid);
-    showToast("Signed in successfully", "success");
 
   } catch (error: any) {
     showToast(error.message || 'Sign-in error', 'error');
@@ -137,9 +144,11 @@ export default function SignIn() {
           showToast(data.message || "Error signing in", "error");
           return;
         }
+  
+        showToast("Signed in successfully", "success");
         await checkUserProfileAndRedirect(result.user.uid);
         await new Promise((resolve) => setTimeout(resolve, 500));
-        showToast("Signed in successfully", "success");
+        router.push('/dashboard');
   
       }catch (error: any) {
         showToast(error.message, "error");
@@ -155,6 +164,7 @@ export default function SignIn() {
     useEffect(() => {
       const unsubscribe = onAuthStateChanged(auth, (user) => {
         if (user){
+          router.push('/dashboard');
         }
       });
   

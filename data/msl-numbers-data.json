@@ -44,5 +44,25 @@
   {
     "number": 10,
     "image": "/images/numbers/number_10.jpg"
+  },
+  {
+    "number": 11,
+    "image": "/images/numbers/number_11.jpg"
+  },
+  {
+    "number": 12,
+    "image": "/images/numbers/number_12.jpg"
+  },
+  {
+    "number": 13,
+    "image": "/images/numbers/number_13.jpg"
+  },
+  {
+    "number": 14,
+    "image": "/images/numbers/number_14.jpg"
+  },
+  {
+    "number": 15,
+    "image": "/images/numbers/number_15.jpg"
   }
 ]

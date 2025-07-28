@@ -63,7 +63,7 @@ export default function SubmittedAssignments() {
       setLoading(true);
       try {
         // Fetch all submissions using collectionGroup
-        const snapshot = await getDocs(collectionGroup(db, 'submissions'));
+        const snapshot = await getDocs(collectionGroup(db, 'students'));
         const items: Submission[] = [];
 
         snapshot.forEach(docSnap => {
@@ -124,7 +124,7 @@ export default function SubmittedAssignments() {
   }
 
   return (
-    <Box>
+    <Box width='100%'>
       <Typography sx={{color: 'white'}} variant="h5" mb={3}>📹 Submitted Assignments</Typography>
       <Grid container spacing={3}>
         {submissions.length === 0 ? (
