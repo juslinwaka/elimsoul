@@ -47,6 +47,7 @@ export default function RootLayout({
         <ToastProvider>
           <LoadingProvider>
             {isExcluded ? Content : <ProtectedRoute>{Content}</ProtectedRoute>}
+            
           </LoadingProvider>
         </ToastProvider>
       </body>
