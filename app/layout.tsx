@@ -10,6 +10,7 @@ import '@/app/src/styles.css'
 import { usePathname } from 'next/navigation'
 import ProtectedRoute from '@/components/ProtectedRoute'
 import { useEffect } from 'react';
+import PwaUpdatePrompt from '@/components/PwaUpdatePrompt';
 
 export default function RootLayout({
   children,
@@ -47,7 +48,7 @@ export default function RootLayout({
         <ToastProvider>
           <LoadingProvider>
             {isExcluded ? Content : <ProtectedRoute>{Content}</ProtectedRoute>}
-            
+            <PwaUpdatePrompt />
           </LoadingProvider>
         </ToastProvider>
       </body>
