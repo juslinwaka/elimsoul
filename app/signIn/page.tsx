@@ -21,7 +21,7 @@ import { useToast } from '@/hooks/toast'
 import { useLoading } from '@/hooks/loadingspinners'
 import {auth, db, provider} from '@/lib/firebase'
 import {doc, getDoc} from 'firebase/firestore'
-import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
+import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth'
 import { sendPasswordResetEmail } from 'firebase/auth';
 import {useEffect} from 'react'
 import {onAuthStateChanged} from 'firebase/auth'

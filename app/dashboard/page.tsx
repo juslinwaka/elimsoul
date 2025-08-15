@@ -10,6 +10,7 @@ import StreakBar from '@/components/msl-comps/streakXpSys';
 import { PieChart, Pie, Cell, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { useScreenConfig } from '@/hooks/screenConfig';
 import Sidebar from '@/components/SideBar';
+import PwaUpdatePrompt from '@/components/PwaUpdatePrompt';
 
 import HomeWorks from '@/components/homeworkSideBar';
 
@@ -141,7 +142,8 @@ export default function Dashboard() {
                     <Box
                       display='flow' 
                       sx={{margin: 2, padding: 2, 
-                      backgroundColor: 'rgba(02, 205, 255, 0.6)', borderRadius: 2, boxShadow: 3}}>
+                      backgroundColor: 'rgba(02, 205, 255, 0.6)', borderRadius: 3, boxShadow: 3}}>
+                        <PwaUpdatePrompt />
                         <Typography sx={{fontWeight: 300, color: 'white', fontSize: 20}}>Welcome Back, {userName}!</Typography>
                         <Typography sx={{fontSize: 12}}>Your current summary and activities.</Typography>
 
@@ -211,7 +213,7 @@ export default function Dashboard() {
                             <XPSummary xp={xp}/>
                         </Box>
                          
-                      
+                    
                       <Box display='flow' width={250} justifyContent='center' justifyItems='center' sx={{marginLeft: 2, pading: 2, 
                         backgroundColor: 'rgba(02, 105, 255, 0.6)', borderRadius: 2, boxShadow: 3
                         }}>
@@ -230,7 +232,7 @@ export default function Dashboard() {
                       </PieChart>
                       <Typography sx={{fontWeight: 'bold'}}>{lessonStats.completed} / {lessonStats.total}</Typography>
                       </Box>
-                        
+                         
                       <Box sx={{marginLeft: 2, padding: 1,
                         backgroundColor: 'rgba(02, 105, 255, 0.6)', borderRadius: 2, boxShadow: 3,
                         width: 350}}>
@@ -263,12 +265,9 @@ export default function Dashboard() {
                                         </ResponsiveContainer>
                       </Box>
                     </Box>
-
                   </Grid>
                 </Grid>
-
           </Box>
-
         </Grid>
       )}
 
@@ -285,7 +284,9 @@ export default function Dashboard() {
                       display='flow' 
                       sx={{margin: 2, padding: 2, 
                       backgroundColor: 'rgba(02, 205, 255, 0.6)', borderRadius: 2, boxShadow: 3}}>
+
                         <Typography sx={{fontWeight: 300, color: 'white', fontSize: 20}}>Welcome Back, {userName}!</Typography>
+                        <PwaUpdatePrompt />
                         <Typography sx={{fontSize: 12}}>Your current summary and activities.</Typography>
 
                         <StreakBar streak={streak} xp={xp} />
@@ -325,10 +326,8 @@ export default function Dashboard() {
                             <Typography sx={{fontSize: 12, color: 'white'}}>Up coming course</Typography>
                             <Typography sx={{marginTop: 1, fontSize: 25, color: 'white'}}>0</Typography>
                           </Box>
-
                         </Box>
                       </Box>
-
                   </Grid>
 
                   <Grid size={12}>
@@ -364,7 +363,6 @@ export default function Dashboard() {
                           }}>
                             <XPSummary xp={xp}/>
                         </Box>
-                         
                       
                       <Box display='flow' justifyContent='center' justifyItems='center' sx={{pading: 2, marginTop: 2, 
                         backgroundColor: 'rgba(02, 105, 255, 0.6)', borderRadius: 2, boxShadow: 3
@@ -417,12 +415,9 @@ export default function Dashboard() {
                                         </ResponsiveContainer>
                       </Box>
                     </Box>
-
                   </Grid>
                 </Grid>
-
           </Box>
-
         </Grid>
       )}
   </Box>

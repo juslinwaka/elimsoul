@@ -9,6 +9,7 @@ import './globals.css'
 import '@/app/src/styles.css'
 import { usePathname } from 'next/navigation'
 import ProtectedRoute from '@/components/ProtectedRoute'
+import { useEffect } from 'react';
 
 export default function RootLayout({
   children,
@@ -27,6 +28,16 @@ export default function RootLayout({
     </ThemeProvider>
   );
 
+  useEffect(() => {
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker
+          .register("/sw.js")
+          .catch((err) => console.error("SW registration failed: ", err));
+      });
+    }
+  }, []);
+
   return (
     <html lang="en">
       <body
@@ -42,3 +53,5 @@ export default function RootLayout({
     </html>
   );
 }
+// (Removed incorrect local useEffect implementation)
+

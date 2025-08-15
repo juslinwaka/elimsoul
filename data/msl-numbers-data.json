@@ -64,5 +64,25 @@
   {
     "number": 15,
     "image": "/images/numbers/number_15.jpg"
+  },
+  {
+    "number": 16,
+    "image": "/images/numbers/number_16.jpg"
+  },
+  {
+    "number": 17,
+    "image": "/images/numbers/number_17.jpg"
+  },
+  {
+    "number": 18,
+    "image": "/images/numbers/number_18.jpg"
+  },
+  {
+    "number": 19,
+    "image": "/images/numbers/number_19.jpg"
+  },
+  {
+    "number": 20,
+    "image": "/images/numbers/number_20.jpg"
   }
 ]
