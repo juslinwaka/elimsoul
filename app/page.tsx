@@ -20,7 +20,6 @@ export default function Home() {
   <Grid container spacing={2} width='100%'>
     {isDesktop && (
       <Box sx={{margin: 'auto'}} justifyContent='center'>
-        <PwaUpdatePrompt />
         <Box 
           width='auto'
             display='flex'  

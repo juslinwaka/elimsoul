@@ -143,7 +143,7 @@ export default function Dashboard() {
                       display='flow' 
                       sx={{margin: 2, padding: 2, 
                       backgroundColor: 'rgba(02, 205, 255, 0.6)', borderRadius: 3, boxShadow: 3}}>
-                        <PwaUpdatePrompt />
+                        
                         <Typography sx={{fontWeight: 300, color: 'white', fontSize: 20}}>Welcome Back, {userName}!</Typography>
                         <Typography sx={{fontSize: 12}}>Your current summary and activities.</Typography>
 
@@ -286,7 +286,7 @@ export default function Dashboard() {
                       backgroundColor: 'rgba(02, 205, 255, 0.6)', borderRadius: 2, boxShadow: 3}}>
 
                         <Typography sx={{fontWeight: 300, color: 'white', fontSize: 20}}>Welcome Back, {userName}!</Typography>
-                        <PwaUpdatePrompt />
+                        
                         <Typography sx={{fontSize: 12}}>Your current summary and activities.</Typography>
 
                         <StreakBar streak={streak} xp={xp} />
@@ -420,6 +420,7 @@ export default function Dashboard() {
           </Box>
         </Grid>
       )}
+      <PwaUpdatePrompt />
   </Box>
   );
 }
