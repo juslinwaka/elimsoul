@@ -9,22 +9,33 @@ const nextConfig: NextConfig = withPWA({
   disable: process.env.NODE_ENV === 'development',
   buildExcludes: [
     /app-build-manifest\.json$/,
-    /middleware-manifest\.json$/
+    /middleware-manifest\.json$/,
+    /routes-manifest\.json$/,
+    /react-loadable-manifest\.json$/,
   ],
   runtimeCaching: [
     {
-      // AI API calls (Hugging Face)
+      // Hugging Face AI API calls
       urlPattern: /^https:\/\/huggingface\.co\/.*$/,
       handler: 'NetworkFirst',
       options: {
-        cacheName: 'huggingface-api',
+        cacheName: 'ai-api-cache',
         networkTimeoutSeconds: 10,
         expiration: { maxEntries: 50, maxAgeSeconds: 24 * 60 * 60 },
         cacheableResponse: { statuses: [0, 200] },
       },
     },
     {
-      // Any CDN / video / static assets
+      // Video files
+      urlPattern: /^https:\/\/cdn\.elimsoul\.org\/videos\/.*$/,
+      handler: 'CacheFirst',
+      options: {
+        cacheName: 'videos-cache',
+        expiration: { maxEntries: 20, maxAgeSeconds: 7 * 24 * 60 * 60 },
+      },
+    },
+    {
+      // Images or other CDN assets
       urlPattern: /^https:\/\/cdn\.elimsoul\.org\/.*$/,
       handler: 'CacheFirst',
       options: {

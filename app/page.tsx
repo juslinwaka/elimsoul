@@ -8,7 +8,7 @@ import { Button, Typography, TextField,
   Divider, Stack } from '@mui/material'
 import { useScreenConfig } from '@/hooks/screenConfig'
 import { useRouter } from 'next/navigation';
-import ProtectedRoute from '@/components/ProtectedRoute'
+import PwaUpdatePrompt from '@/components/PwaUpdatePrompt';
 
 import '@/app/src/styles.css'
 
@@ -20,6 +20,7 @@ export default function Home() {
   <Grid container spacing={2} width='100%'>
     {isDesktop && (
       <Box sx={{margin: 'auto'}} justifyContent='center'>
+        <PwaUpdatePrompt />
         <Box 
           width='auto'
             display='flex'  
