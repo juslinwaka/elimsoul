@@ -8,7 +8,6 @@ import { Button, Typography, TextField,
   Divider, Stack } from '@mui/material'
 import { useScreenConfig } from '@/hooks/screenConfig'
 import { useRouter } from 'next/navigation';
-import PwaUpdatePrompt from '@/components/PwaUpdatePrompt';
 
 import '@/app/src/styles.css'
 

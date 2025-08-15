@@ -7,15 +7,23 @@ const nextConfig: NextConfig = withPWA({
   register: true,
   skipWaiting: true,
   disable: process.env.NODE_ENV === 'development',
+
+  // Exclude all Next.js dynamic runtime files
   buildExcludes: [
     /app-build-manifest\.json$/,
     /middleware-manifest\.json$/,
     /routes-manifest\.json$/,
     /react-loadable-manifest\.json$/,
+    /_buildManifest\.js$/,
+    /_reactLoadableManifest\.js$/,
+    /_ssgManifest\.js$/,
+    /_middlewareManifest\.js$/,
+    /_flightManifest\.js$/,
   ],
+
   runtimeCaching: [
     {
-      // Hugging Face AI API calls
+      // AI API calls (Hugging Face)
       urlPattern: /^https:\/\/huggingface\.co\/.*$/,
       handler: 'NetworkFirst',
       options: {
@@ -26,7 +34,7 @@ const nextConfig: NextConfig = withPWA({
       },
     },
     {
-      // Video files
+      // Videos (CacheFirst)
       urlPattern: /^https:\/\/cdn\.elimsoul\.org\/videos\/.*$/,
       handler: 'CacheFirst',
       options: {
@@ -35,7 +43,7 @@ const nextConfig: NextConfig = withPWA({
       },
     },
     {
-      // Images or other CDN assets
+      // Other CDN assets (images, fonts)
       urlPattern: /^https:\/\/cdn\.elimsoul\.org\/.*$/,
       handler: 'CacheFirst',
       options: {
@@ -46,7 +54,7 @@ const nextConfig: NextConfig = withPWA({
   ],
 })({
   reactStrictMode: true,
-  experimental: {},
+  experimental: {}, // keep clean, no invalid keys
 });
 
 export default nextConfig;
