@@ -51,6 +51,17 @@ const nextConfig: NextConfig = withPWA({
         expiration: { maxEntries: 100, maxAgeSeconds: 7 * 24 * 60 * 60 },
       },
     },
+    {
+      // Site pages (NetworkFirst for offline support)
+      urlPattern: /^https:\/\/elimsoul\.vercel\.app\/.*$/,
+      handler: 'NetworkFirst',
+      options: {
+        cacheName: 'pages-cache',
+        networkTimeoutSeconds: 10,
+        expiration: { maxEntries: 50, maxAgeSeconds: 24 * 60 * 60 },
+        cacheableResponse: { statuses: [0, 200] },
+      },
+    },
   ],
 })({
   reactStrictMode: true,
