@@ -11,7 +11,6 @@ import { PieChart, Pie, Cell, LineChart, Line, XAxis, YAxis, CartesianGrid, Tool
 import { useScreenConfig } from '@/hooks/screenConfig';
 import Sidebar from '@/components/SideBar';
 import PwaUpdatePrompt from '@/components/PwaUpdatePrompt';
-
 import HomeWorks from '@/components/homeworkSideBar';
 
 const drawerWidth = 240;
