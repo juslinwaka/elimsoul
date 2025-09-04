@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Button, Typography, CircularProgress, Paper } from '@mui/material';
 
 type Props = {
@@ -10,10 +10,14 @@ export default function TranslateToMSL({ text }: Props) {
   const [gloss, setGloss] = useState('');
   const [loading, setLoading] = useState(false);
   const [videoLinks, setVideoLinks] = useState<string[]>([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
 
   const handleTranslate = async () => {
     setLoading(true);
     setGloss('');
+    setVideoLinks([]);
+    setCurrentIndex(0);
     try {
       const res = await fetch('https://juslin-elim-api.hf.space/gloss', {
         method: 'POST',
@@ -40,6 +44,17 @@ export default function TranslateToMSL({ text }: Props) {
     }
   };
 
+  const handleEnded = () => {
+    if (currentIndex < videoLinks.length - 1) {
+      setCurrentIndex((prev) => prev + 1);
+    }
+  };
+
+  // Reset player when new gloss comes in
+  useEffect(() => {
+    setCurrentIndex(0);
+  }, [videoLinks]);
+
   return (
     <Paper sx={{ backgroundColor: 'white', mt: 4, p: 2 }}>
       <Button
@@ -56,10 +71,29 @@ export default function TranslateToMSL({ text }: Props) {
             <strong>Gloss:</strong> {gloss}
           </Typography>
 
-          <div className="flex flex-wrap gap-2 mt-2">
-            {videoLinks.map((src, i) => (
-              <video key={i} src={src} controls width="220" />
-            ))}
+          <div className="mt-2 flex flex-col items-center">
+            {videoLinks.length > 0 ? (
+              <video
+                key={videoLinks[currentIndex]} // force reload on change
+                ref={videoRef}
+                src={videoLinks[currentIndex]}
+                autoPlay
+                playsInline
+                controls={false}
+                onEnded={handleEnded}
+                width="280"
+                className="rounded-xl shadow-md bg-black"
+              />
+            ) : (
+              <Typography variant="body2" color="textSecondary">
+                No sign clips available.
+              </Typography>
+            )}
+            {videoLinks.length > 0 && (
+              <Typography variant="caption" sx={{ mt: 1 }}>
+                Showing {currentIndex + 1} of {videoLinks.length}
+              </Typography>
+            )}
           </div>
         </>
       )}
