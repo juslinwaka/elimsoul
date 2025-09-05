@@ -1,6 +1,7 @@
 'use client';
 import React, { useState, useRef, useEffect } from 'react';
 import { Button, Typography, CircularProgress, Paper } from '@mui/material';
+import glossMap from '@/data/gloss_to_video-placeholder.json' assert {type: 'json'};
 
 type Props = {
   text: string; // Input from summarizer or Q&A
@@ -30,9 +31,14 @@ export default function TranslateToMSL({ text }: Props) {
       const data = await res.json();
       const glossOutput = data.gloss.trim();
       const words = glossOutput.split(' ');
-      const mapped = words.map(
-        (word: string) => `/clips/${word.toUpperCase()}.mp4`
-      );
+
+      const videoMap: Record<string, string> = glossMap;
+      const mapped = words.map((word: string) =>{
+        const clip = videoMap[word.toUpperCase()];
+
+        if (!clip) console.warn(`No clip found for word: ${word}`);
+        return clip;
+      }).filter(Boolean)
 
       setGloss(glossOutput);
       setVideoLinks(mapped);
@@ -44,16 +50,29 @@ export default function TranslateToMSL({ text }: Props) {
     }
   };
 
-  const handleEnded = () => {
-    if (currentIndex < videoLinks.length - 1) {
-      setCurrentIndex((prev) => prev + 1);
-    }
-  };
-
-  // Reset player when new gloss comes in
+  // Play next video automatically when one ends
   useEffect(() => {
-    setCurrentIndex(0);
-  }, [videoLinks]);
+    const player = videoRef.current;
+    if (!player) return;
+
+    const handleEnded = () => {
+      if (currentIndex < videoLinks.length - 1) {
+        setCurrentIndex((prev) => prev + 1);
+      }
+    };
+
+    player.addEventListener('ended', handleEnded);
+    return () => player.removeEventListener('ended', handleEnded);
+  }, [currentIndex, videoLinks]);
+
+  // Load next video when index changes
+  useEffect(() => {
+    const player = videoRef.current;
+    if (player && videoLinks[currentIndex]) {
+      player.src = videoLinks[currentIndex];
+      player.play().catch((err) => console.warn("Autoplay failed:", err));
+    }
+  }, [currentIndex, videoLinks]);
 
   return (
     <Paper sx={{ backgroundColor: 'white', mt: 4, p: 2 }}>
@@ -73,15 +92,12 @@ export default function TranslateToMSL({ text }: Props) {
 
           <div className="mt-2 flex flex-col items-center">
             {videoLinks.length > 0 ? (
-              <video
-                key={videoLinks[currentIndex]} // force reload on change
+              <video // force reload on change
                 ref={videoRef}
-                src={videoLinks[currentIndex]}
                 autoPlay
                 playsInline
-                controls={false}
-                onEnded={handleEnded}
-                width="280"
+                controls={true}
+                width="320"
                 className="rounded-xl shadow-md bg-black"
               />
             ) : (
